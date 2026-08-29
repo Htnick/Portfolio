@@ -4,7 +4,7 @@ description: "Combustion chamber sizing, preliminary CAD, and injector design fo
 date: "2026-01-01"
 status: "in-progress"
 tags: ["propulsion", "liquid rockets", "regenerative cooling", "additive manufacturing", "Python"]
-image: ""
+image: "regen-engine-hero.jpg"
 draft: false
 ---
 
@@ -12,9 +12,6 @@ draft: false
 
 I'm working with a team of engineers at CU SRL to develop a regeneratively cooled liquid rocket engine capable of 2,000 lbf of thrust. My work spans the combustion chamber sizing math, preliminary CAD, and the injector plate itself.
 
-<!--
-  <AstroImage src="/images/regen/full-assembly-cad.png" alt="Regen engine CAD assembly" figNo="01" caption="2,000 LBF REGEN ENGINE — PRELIMINARY ASSEMBLY, FUSION 360" />
--->
 
 ## Combustion chamber math
 
@@ -634,7 +631,8 @@ With chamber and throat dimensions established from the performance math, I buil
 **Working with RPA contour data.** Nozzle and chamber contour data was generated in RPA (a rocket propulsion analysis tool) and exported as DXF files. I imported these DXF contours directly into CAD as reference geometry, which let me build the chamber and nozzle profile around a validated aerodynamic contour instead of approximating it by hand.
 
 <!--
-  <AstroImage src="/images/regen/dxf-contour-import.png" alt="DXF contour imported into CAD" figNo="02" caption="RPA-GENERATED NOZZLE CONTOUR, IMPORTED AS DXF REFERENCE GEOMETRY" />
+  Still needed — see PHOTOS_NEEDED.md:
+  <AstroImage src="/images/regen/dxf-contour-import.png" alt="DXF contour imported into CAD" figNo="03" caption="RPA-GENERATED NOZZLE CONTOUR, IMPORTED AS DXF REFERENCE GEOMETRY" />
 -->
 
 ## Injector design
@@ -649,7 +647,8 @@ The injector plate for this engine is an unlike-doublet impinging design, additi
 - Used a gothic-arch geometry on the fuel side to maximize usable space for preheated kerosene routing into the regenerative cooling channels.
 
 <!--
-  <AstroImage src="/images/regen/injector-cad-iterations.png" alt="Injector CAD iteration history" figNo="03" caption="INJECTOR PLATE — CAD ITERATION HISTORY, V1 THROUGH CURRENT" />
+  Still needed — see PHOTOS_NEEDED.md:
+  <AstroImage src="/images/regen/injector-cad-iterations.png" alt="Injector CAD iteration history" figNo="04" caption="INJECTOR PLATE — CAD ITERATION HISTORY, V1 THROUGH CURRENT" />
 -->
 
 ### Topological optimization
@@ -660,9 +659,13 @@ Once the injector's flow geometry was locked in, I ran it through topological op
 - Balanced mass reduction against the structural loads driven by the combustion chamber environment (pressure, thermal gradients at the injector face).
 - Iterated between the optimized topology and the manufacturing constraints of the printer, since a mathematically optimal shape isn't useful if it can't actually be printed reliably.
 
-<!--
-  <AstroImage src="/images/regen/topology-optimization.png" alt="Topology optimization result on injector plate" figNo="04" caption="INJECTOR PLATE — TOPOLOGY-OPTIMIZED MASS DISTRIBUTION" />
--->
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-topology.jpg" alt="Topology-optimized injector plate, CAD render showing the scalloped lightening cutouts and central orifice boss" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE — TOPOLOGY-OPTIMIZED MASS DISTRIBUTION, CAD RENDER</p>
 
 ## Cooling analysis
 

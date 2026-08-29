@@ -15,11 +15,12 @@ the shot list to actually fill them in, roughly in priority order.
    section). Swap in a real hardware or hot-fire photo later if you want —
    you actually fired this engine, so a real shot would hit harder than a
    render.
-3. **Regeneratively Cooled Liquid Rocket Engine** — since this one's still
-   in progress, a Fusion 360 assembly render or injector CAD screenshot is
-   a totally reasonable stand-in until there's hardware. (There's already a
-   commented-out image hint in that project's markdown file suggesting
-   exactly this.)
+3. ~~**Regeneratively Cooled Liquid Rocket Engine**~~ — done. Rendered
+   `regen-engine-hero.jpg` (full assembly) and `regen-injector-topology.jpg`
+   (the topology-optimized injector plate) directly from the STL CAD files
+   you sent over. Two placeholders remain in that project's write-up for
+   later — an RPA/DXF nozzle-contour screenshot and an injector CAD
+   iteration history shot — both still marked inline in the markdown file.
 
 ## Nice-to-have — fills out the rest of the project grid
 
