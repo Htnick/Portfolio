@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import BlueprintGraphic from "../components/BlueprintGraphic.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
@@ -17,31 +19,63 @@ const featured = allProjects
 
 <Layout title="Henry Nickless">
   <section class="hero">
-    <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
-    <h1>Henry Nickless</h1>
-    <p class="lede">
-      I design and build liquid rocket engines and precision instruments —
-      currently working on injector plates and regenerative cooling at CU's
-      Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
-    </p>
-    <div style="display: flex; gap: 1rem; margin-top: 1.75rem; flex-wrap: wrap;">
-      <a class="btn" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
-      <a class="btn" href={`${import.meta.env.BASE_URL}about`}>About Me</a>
-    </div>
+    <div class="hero-layout">
+      <div>
+        <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
+        <h1>Henry Nickless</h1>
+        <p class="lede">
+          I design and build liquid rocket engines and precision instruments —
+          currently working on injector plates and regenerative cooling at CU's
+          Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
+        </p>
+        <div style="display: flex; gap: 1rem; margin-top: 1.75rem; flex-wrap: wrap;">
+          <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
+          <a class="btn" href={`${import.meta.env.BASE_URL}about`}>About Me</a>
+        </div>
 
-    <div class="title-block">
-      <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
-      <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
-      <div><span class="label">Grad</span><span class="value">May 2028</span></div>
-      <div><span class="label">Focus</span><span class="value">Propulsion</span></div>
+        <div class="title-block">
+          <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
+          <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
+          <div><span class="label">Grad</span><span class="value">May 2028</span></div>
+          <div><span class="label">Focus</span><span class="value">Propulsion</span></div>
+        </div>
+      </div>
+
+      <BlueprintGraphic />
     </div>
   </section>
+
+  <div class="stat-band">
+    <div class="stat">
+      <span class="stat-number">650</span>
+      <span class="stat-label">LBF — Taipan Thrust</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">2,000</span>
+      <span class="stat-label">LBF — Regen Target</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">700</span>
+      <span class="stat-label">PSI Chamber Pressure</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">2028</span>
+      <span class="stat-label">Graduation</span>
+    </div>
+  </div>
 
   <div class="cut-line"><span>Selected Work</span></div>
 
   <div class="project-grid">
     {featured.map((project, i) => (
       <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
+        <div class="thumb-frame">
+          {project.data.image ? (
+            <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
+          ) : (
+            <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
+          )}
+        </div>
         <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline);" : ""}>
           SHT {String(i + 1).padStart(2, "0")} / {project.data.status === "completed" ? "COMPLETE" : "IN PROGRESS"}
         </span>
@@ -69,6 +103,17 @@ const featured = allProjects
       <span class="skill-chip">{skill}</span>
     ))}
   </div>
+
+  <div class="cut-line"><span>Get In Touch</span></div>
+
+  <section class="hero" style="padding-top: 0;">
+    <span class="eyebrow">// Say hello</span>
+    <h2>Always happy to talk propulsion, optics, or anything in between.</h2>
+    <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+      <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+      <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </section>
 </Layout>
 
 <style>
@@ -86,5 +131,10 @@ const featured = allProjects
     border: 1px solid var(--line-500);
     background: var(--ink-800);
     padding: 0.45rem 0.9rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .skill-chip:hover {
+    border-color: var(--redline);
+    color: var(--redline);
   }
 </style>

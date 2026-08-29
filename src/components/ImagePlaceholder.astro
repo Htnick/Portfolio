@@ -1,0 +1,24 @@
+---
+// A "photo pending" panel, styled like the rest of the drafting-sheet
+// theme, dropped in anywhere a real photo hasn't been added yet.
+// Swap it out for <AstroImage /> (or a plain <img>) once you have the shot —
+// see PHOTOS_NEEDED.md at the repo root for the full recommended list.
+interface Props {
+  label: string;
+  figNo?: string;
+  aspect?: 'landscape' | 'portrait' | 'square' | 'wide';
+  spec?: string;
+}
+
+const { label, figNo, aspect = 'landscape', spec } = Astro.props;
+---
+
+<div class="image-placeholder" data-aspect={aspect}>
+  {figNo && <span class="ph-figno">FIG. {figNo}</span>}
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.2l1.6-2.4A1 1 0 0 1 8.6 3h6.8a1 1 0 0 1 .83.45L18 6h3a2 2 0 0 1 2 2z"></path>
+    <circle cx="12" cy="13" r="4"></circle>
+  </svg>
+  <span class="ph-label">{label}</span>
+  {spec && <span class="ph-spec">{spec}</span>}
+</div>

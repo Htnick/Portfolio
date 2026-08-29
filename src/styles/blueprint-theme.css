@@ -1,33 +1,40 @@
 /* ==========================================================================
-   BLUEPRINT THEME — drafting-sheet aesthetic
-   Design tokens:
-     --ink-900   deep blueprint navy (background)
-     --ink-800   panel background
-     --line-500  gridlines / borders
-     --paper     primary text / linework white
-     --paper-dim secondary text
-     --redline   single accent — engineer's red pen, used sparingly
+   BLUEPRINT THEME — drafting-sheet aesthetic, "white sheet / orange pen"
+   Variable NAMES are kept from the original dark theme (so every page that
+   already references them keeps working); the VALUES are flipped to a
+   white background with an orange accent:
+     --ink-900   page background            (white)
+     --ink-800   panel / card background    (warm cream)
+     --line-500  gridlines / borders        (warm tan)
+     --paper     primary text               (near-black ink)
+     --paper-dim secondary text             (warm gray)
+     --redline   single accent — the engineer's pen, now true orange
    Type:
-     Display: 'Space Grotesk'  — technical, geometric
-     Body:    'IBM Plex Sans'  — clean, drafting-adjacent
-     Mono:    'IBM Plex Mono'  — data, labels, title-block fields
+     Display: 'Space Grotesk'   — technical, geometric (headings, nav)
+     Body:    'IBM Plex Sans'   — clean, drafting-adjacent (paragraphs)
+     Mono:    'IBM Plex Mono'   — data, labels, title-block fields
+     Serif:   'Fraunces'        — warm editorial serif (pull-quotes, lede)
+     Stat:    'Archivo Black'   — oversized numerals (stat band)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo+Black&display=swap');
 
 :root {
-  --ink-900: #0a1929;
-  --ink-800: #0f2942;
-  --line-500: #1d4468;
-  --line-500-soft: rgba(29, 68, 104, 0.5);
-  --paper: #eaf2f8;
-  --paper-dim: #7e9cb5;
-  --redline: #ff5a36;
-  --redline-dim: rgba(255, 90, 54, 0.15);
+  --ink-900: #ffffff;
+  --ink-800: #fdf6ec;
+  --line-500: #e6dac2;
+  --line-500-soft: rgba(198, 148, 84, 0.14);
+  --paper: #221b12;
+  --paper-dim: #7c6e5a;
+  --redline: #ff6a1a;
+  --redline-dim: rgba(255, 106, 26, 0.1);
+  --redline-deep: #d8500a;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'Fraunces', serif;
+  --font-stat: 'Archivo Black', sans-serif;
 
   --grid-size: 32px;
   --sheet-margin: clamp(1rem, 4vw, 2.5rem);
@@ -52,6 +59,11 @@ html {
   }
 }
 
+::selection {
+  background: var(--redline);
+  color: #fff;
+}
+
 body {
   margin: 0;
   background-color: var(--ink-900);
@@ -67,13 +79,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Faint vignette so the grid doesn't fight with content at edges */
+/* Soft warm wash bleeding from the top of the page — keeps the white sheet
+   from feeling stark, without fighting the grid. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 40%, var(--ink-900) 95%);
+  background: radial-gradient(ellipse 1200px 640px at 50% -12%, rgba(255, 106, 26, 0.08), transparent 65%);
   z-index: 0;
 }
 
@@ -132,8 +145,9 @@ a:focus-visible, button:focus-visible {
   position: fixed;
   width: 22px;
   height: 22px;
-  border-color: var(--line-500);
+  border-color: var(--redline);
   border-style: solid;
+  opacity: 0.55;
   z-index: 2;
   pointer-events: none;
 }
@@ -249,6 +263,92 @@ a:focus-visible, button:focus-visible {
   font-size: 1.1rem;
 }
 
+/* Two-column hero layout: copy on the left, technical line-art on the
+   right, so the page doesn't run out of content before it runs out of
+   width on wide viewports. */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-visual {
+  border: 1px solid var(--line-500);
+  background: var(--ink-800);
+  aspect-ratio: 6 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(34, 27, 18, 0.05);
+}
+
+.hero-visual svg {
+  width: 84%;
+  height: 84%;
+}
+
+.hero-visual .bg-centerline { stroke: var(--line-500); stroke-width: 1; }
+.hero-visual .bg-body {
+  fill: rgba(255, 106, 26, 0.06);
+  stroke: var(--redline);
+  stroke-width: 1.6;
+}
+.hero-visual .bg-detail-ring { fill: none; stroke: var(--line-500); stroke-width: 1; }
+.hero-visual .bg-detail circle:not(.bg-detail-ring) { fill: var(--redline); }
+.hero-visual .bg-leader { stroke: var(--line-500); stroke-width: 1; }
+.hero-visual .bg-caption {
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.05em;
+  fill: var(--paper-dim);
+  text-anchor: middle;
+}
+
+/* ==========================================================================
+   STAT BAND — a row of oversized numerals, drafting-log style. Bridges the
+   hero and the project grid with a quick set of hard numbers.
+   ========================================================================== */
+
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1.75rem 2rem;
+  margin: 3rem 0 0.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--line-500);
+  border-bottom: 1px solid var(--line-500);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stat .stat-number {
+  font-family: var(--font-stat);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  color: var(--redline);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.stat .stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
 /* ==========================================================================
    SECTION DIVIDER — dashed cut-line with an annotation, like a fold
    or section mark on a drawing sheet
@@ -295,12 +395,37 @@ a:focus-visible, button:focus-visible {
   flex-direction: column;
   gap: 0.75rem;
   position: relative;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 2px rgba(34, 27, 18, 0.04);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .project-card:hover {
   border-color: var(--redline);
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 27, 18, 0.08);
+}
+
+/* Thumbnail strip along the top of the card — bleeds to the card's own
+   edges via negative margin, whether it holds a real photo or the
+   dashed placeholder. */
+.project-card .thumb-frame {
+  aspect-ratio: 16 / 10;
+  margin: -1.5rem -1.5rem 0.5rem;
+  border-bottom: 1px solid var(--line-500);
+  overflow: hidden;
+}
+.project-card .thumb-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+.project-card:hover .thumb-frame img { transform: scale(1.04); }
+.project-card .thumb-frame .image-placeholder {
+  height: 100%;
+  border: none;
+  border-radius: 0;
 }
 
 .project-card .sheet-no {
@@ -342,11 +467,154 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ==========================================================================
+   IMAGE PLACEHOLDER — a "photo pending" panel in the same drafting-sheet
+   language as the rest of the site, used wherever a real photo hasn't
+   been dropped in yet (see ImagePlaceholder.astro).
+   ========================================================================== */
+
+.image-placeholder {
+  aspect-ratio: 16 / 10;
+  border: 1.5px dashed var(--line-500);
+  background: var(--ink-800);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  color: var(--paper-dim);
+}
+
+.image-placeholder[data-aspect="portrait"] { aspect-ratio: 3 / 4; }
+.image-placeholder[data-aspect="square"] { aspect-ratio: 1 / 1; }
+.image-placeholder[data-aspect="wide"] { aspect-ratio: 21 / 9; }
+
+.image-placeholder svg {
+  width: 26px;
+  height: 26px;
+  opacity: 0.5;
+}
+
+.image-placeholder .ph-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  max-width: 24ch;
+  line-height: 1.5;
+}
+
+.image-placeholder .ph-spec {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+.image-placeholder .ph-figno {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--redline);
+  letter-spacing: 0.06em;
+}
+
+/* ==========================================================================
+   ABOUT PAGE — two-column intro, pull-quotes, timeline, gallery
+   ========================================================================== */
+
+.about-intro {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2.25rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 700px) {
+  .about-intro {
+    grid-template-columns: 1fr;
+  }
+  .about-intro .image-placeholder {
+    max-width: 220px;
+  }
+}
+
+.pull-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--paper);
+  border-left: 3px solid var(--redline);
+  padding-left: 1.25rem;
+  margin: 2.5rem 0;
+  max-width: 58ch;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--line-500);
+}
+.timeline-item:first-child { border-top: none; }
+
+@media (max-width: 560px) {
+  .timeline-item { grid-template-columns: 1fr; gap: 0.35rem; }
+}
+
+.timeline-item .t-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--redline);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-top: 0.2rem;
+}
+
+.timeline-item h4 {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  color: var(--paper);
+  margin: 0 0 0.35rem;
+}
+
+.timeline-item p {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* ==========================================================================
    CODE BLOCKS — for Python/MATLAB snippets in project write-ups
    ========================================================================== */
 
 pre {
-  background: var(--ink-800);
+  /* !important beats Shiki's inline background-color/color on the <pre>
+     tag itself, so the code block still sits on our cream panel color
+     even though syntax-highlighted tokens keep their own inline colors. */
+  background: var(--ink-800) !important;
+  color: var(--paper) !important;
   border: 1px solid var(--line-500);
   border-left: 3px solid var(--redline);
   padding: 1.1rem 1.25rem;
@@ -418,9 +686,22 @@ th {
 }
 
 .btn:hover {
-  color: var(--ink-900);
+  color: #fff;
   background: var(--redline);
   border-color: var(--redline);
+}
+
+/* Primary CTA — solid orange from the start, for the one action per page
+   that matters most. */
+.btn-primary {
+  color: #fff;
+  background: var(--redline);
+  border-color: var(--redline);
+}
+.btn-primary:hover {
+  background: var(--redline-deep);
+  border-color: var(--redline-deep);
+  color: #fff;
 }
 
 /* ==========================================================================

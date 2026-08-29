@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import AstroImage from '../../components/AstroImage.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -30,6 +32,14 @@ const { Content } = await render(entry);
       {entry.data.role && <div><span class="label">Role</span><span class="value">{entry.data.role}</span></div>}
       <div><span class="label">Tags</span><span class="value">{entry.data.tags?.join(", ")}</span></div>
     </div>
+
+    {entry.data.image ? (
+      <AstroImage src={`${import.meta.env.BASE_URL}images/${entry.data.image}`} alt={entry.data.title} figNo="01" caption={entry.data.title.toUpperCase()} />
+    ) : (
+      <div style="margin-bottom: 2rem;">
+        <ImagePlaceholder label={`Hero photo — ${entry.data.title}`} aspect="wide" spec="1800×900, landscape" figNo="01" />
+      </div>
+    )}
 
     <div class="project-content">
       <Content />

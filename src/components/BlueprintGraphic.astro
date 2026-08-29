@@ -1,0 +1,33 @@
+---
+// Pure-vector technical line art of a bipropellant engine profile —
+// combustion chamber, converging/diverging nozzle, and a "Detail A"
+// callout of an impinging-injector orifice pattern. No image asset
+// required; sits in the hero next to the intro copy so the page doesn't
+// run out of content before it runs out of width.
+---
+
+<div class="hero-visual" aria-hidden="true">
+  <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+    <line x1="6" y1="100" x2="234" y2="100" class="bg-centerline" stroke-dasharray="4 4" />
+
+    <path
+      class="bg-body"
+      d="M20,70 L66,70 C85,70 100,78 110,95 C140,90 190,60 222,38
+         L222,162 C190,140 140,110 110,105 C100,122 85,130 66,130 L20,130 Z"
+    />
+
+    <g class="bg-detail" transform="translate(150,20)">
+      <circle class="bg-detail-ring" r="22" />
+      <circle cx="0" cy="0" r="2.3" />
+      <circle cx="10" cy="0" r="2.3" />
+      <circle cx="-10" cy="0" r="2.3" />
+      <circle cx="5" cy="9" r="2.3" />
+      <circle cx="-5" cy="9" r="2.3" />
+      <circle cx="5" cy="-9" r="2.3" />
+      <circle cx="-5" cy="-9" r="2.3" />
+      <line x1="-16" y1="14" x2="-124" y2="78" class="bg-leader" stroke-dasharray="2 3" />
+    </g>
+
+    <text x="150" y="58" class="bg-caption">DETAIL A — INJECTOR FACE</text>
+  </svg>
+</div>

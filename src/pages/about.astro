@@ -1,28 +1,43 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+
+const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC"];
 ---
 
 <Layout title="About | Henry Nickless">
   <section class="about">
+    <span class="eyebrow">// Bio</span>
     <h1>About Me</h1>
 
-    <p>
-      Since my first engineering class in high school, I've been curious
-      about the delicacy and precision that go into the engineering process.
-      Taking apart old electronics wasn't enough to stifle that curiosity —
-      it's just pulled me further into the engineering rabbit hole ever
-      since.
-    </p>
+    <div class="about-intro">
+      <ImagePlaceholder label="Headshot — Henry Nickless" aspect="portrait" spec="Portrait, min. 800×1000px" figNo="01" />
 
-    <p>
-      I'm studying to become an aerospace engineer at the University of
-      Colorado Boulder (Class of 2028), minoring in Astrophysical and
-      Planetary Sciences. When I'm not studying, I'm usually playing
-      volleyball or working on engineering projects — split between
-      astrophotography builds and CU's Sounding Rocket Lab. I frequently
-      work with other people to push ideas forward and like collaborating
-      through the problems that come up along the way. Most people know me
-      as a hard worker who adjusts easily to new situations.
+      <div>
+        <p>
+          Since my first engineering class in high school, I've been curious
+          about the delicacy and precision that go into the engineering process.
+          Taking apart old electronics wasn't enough to stifle that curiosity —
+          it's just pulled me further into the engineering rabbit hole ever
+          since.
+        </p>
+
+        <p>
+          I'm studying to become an aerospace engineer at the University of
+          Colorado Boulder (Class of 2028), minoring in Astrophysical and
+          Planetary Sciences. When I'm not studying, I'm usually playing
+          volleyball or working on engineering projects — split between
+          astrophotography builds and CU's Sounding Rocket Lab. I frequently
+          work with other people to push ideas forward and like collaborating
+          through the problems that come up along the way. Most people know me
+          as a hard worker who adjusts easily to new situations.
+        </p>
+      </div>
+    </div>
+
+    <p class="pull-quote">
+      "Most people know me as a hard worker who adjusts easily to new
+      situations."
     </p>
 
     <p>
@@ -63,10 +78,21 @@ import Layout from "../layouts/Layout.astro";
       with a 20° trim range at under a gram of mass.
     </p>
 
-    <p>
-      <strong>Tools I use often:</strong> Fusion 360, SolidWorks, Python,
-      MATLAB, C++, R, 3D printing/CNC.
-    </p>
+    <div class="cut-line"><span>Toolset</span></div>
+
+    <div class="skills-strip">
+      {tools.map((tool) => (
+        <span class="skill-chip">{tool}</span>
+      ))}
+    </div>
+
+    <div class="cut-line"><span>In The Field</span></div>
+
+    <div class="gallery-grid">
+      <ImagePlaceholder label="CU SRL test stand" spec="1200×900" figNo="02" />
+      <ImagePlaceholder label="Workshop — CAD & build" spec="1200×900" figNo="03" />
+      <ImagePlaceholder label="Telescope, in the field" spec="1200×900" figNo="04" />
+    </div>
 
     <p>
       I'm looking forward to developing my skills further and meeting
@@ -80,14 +106,24 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
   .about {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 3rem 1.5rem;
     line-height: 1.7;
   }
 
+  .about .eyebrow {
+    font-family: var(--font-mono);
+    color: var(--redline);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
   .about h1 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     font-size: 2rem;
   }
 
@@ -98,5 +134,22 @@ import Layout from "../layouts/Layout.astro";
   .about a {
     color: inherit;
     text-decoration: underline;
+  }
+
+  .about .skills-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about .skill-chip {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--paper);
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 0.45rem 0.9rem;
   }
 </style>
