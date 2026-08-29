@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} | Henry Nickless`}>
+  <a href="/projects" class="mono" style="display: inline-block; margin-bottom: 1.5rem; text-decoration: none; color: var(--paper-dim);">← Back to projects</a>
+
+  <article>
+    <span class="eyebrow" style="font-family: var(--font-mono); color: var(--redline); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.75rem;">
+      {entry.data.status === "completed" ? "// Completed" : "// In Progress"}
+    </span>
+    <h1>{entry.data.title}</h1>
+    <p class="lede" style="margin-bottom: 2rem;">{entry.data.description}</p>
+
+    <div class="title-block" style="margin-bottom: 2.5rem;">
+      <div><span class="label">Date</span><span class="value">{entry.data.date}</span></div>
+      <div><span class="label">Status</span><span class="value">{entry.data.status}</span></div>
+      {entry.data.role && <div><span class="label">Role</span><span class="value">{entry.data.role}</span></div>}
+      <div><span class="label">Tags</span><span class="value">{entry.data.tags?.join(", ")}</span></div>
+    </div>
+
+    <div class="project-content">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .project-content :global(h2) {
+    margin-top: 2.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line-500);
+  }
+
+  .project-content :global(h3) {
+    margin-top: 1.75rem;
+    color: var(--paper-dim);
+  }
+
+  .project-content :global(ul),
+  .project-content :global(ol) {
+    padding-left: 1.25rem;
+  }
+
+  .project-content :global(li) {
+    margin-bottom: 0.5rem;
+    color: var(--paper);
+  }
+
+  .project-content :global(strong) {
+    color: var(--paper);
+  }
+</style>

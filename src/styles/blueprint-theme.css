@@ -1,0 +1,452 @@
+/* ==========================================================================
+   BLUEPRINT THEME — drafting-sheet aesthetic
+   Design tokens:
+     --ink-900   deep blueprint navy (background)
+     --ink-800   panel background
+     --line-500  gridlines / borders
+     --paper     primary text / linework white
+     --paper-dim secondary text
+     --redline   single accent — engineer's red pen, used sparingly
+   Type:
+     Display: 'Space Grotesk'  — technical, geometric
+     Body:    'IBM Plex Sans'  — clean, drafting-adjacent
+     Mono:    'IBM Plex Mono'  — data, labels, title-block fields
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --ink-900: #0a1929;
+  --ink-800: #0f2942;
+  --line-500: #1d4468;
+  --line-500-soft: rgba(29, 68, 104, 0.5);
+  --paper: #eaf2f8;
+  --paper-dim: #7e9cb5;
+  --redline: #ff5a36;
+  --redline-dim: rgba(255, 90, 54, 0.15);
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --grid-size: 32px;
+  --sheet-margin: clamp(1rem, 4vw, 2.5rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--ink-900);
+  background-image:
+    linear-gradient(var(--line-500-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-500-soft) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: -1px -1px;
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint vignette so the grid doesn't fight with content at edges */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, var(--ink-900) 95%);
+  z-index: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+}
+
+h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.05; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.15rem; }
+
+p { color: var(--paper); margin: 0 0 1.25em; }
+
+a {
+  color: var(--paper);
+  text-decoration-color: var(--line-500);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+a:hover { color: var(--redline); text-decoration-color: var(--redline); }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--redline);
+  outline-offset: 3px;
+}
+
+/* Mono utility — for labels, eyebrows, data callouts */
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--paper-dim);
+}
+
+/* ==========================================================================
+   SHEET FRAME — every page sits inside a drafting-sheet border with
+   registration/crop marks in the corners, like a real drawing sheet.
+   ========================================================================== */
+
+.sheet {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--sheet-margin);
+  z-index: 1;
+}
+
+.sheet::before,
+.sheet::after,
+.sheet-frame::before,
+.sheet-frame::after {
+  content: '';
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border-color: var(--line-500);
+  border-style: solid;
+  z-index: 2;
+  pointer-events: none;
+}
+.sheet::before { top: 14px; left: 14px; border-width: 1.5px 0 0 1.5px; }
+.sheet::after { top: 14px; right: 14px; border-width: 1.5px 1.5px 0 0; }
+.sheet-frame::before { bottom: 14px; left: 14px; border-width: 0 0 1.5px 1.5px; }
+.sheet-frame::after { bottom: 14px; right: 14px; border-width: 0 1.5px 1.5px 0; }
+
+/* ==========================================================================
+   NAV — styled as a drawing-sheet header bar
+   ========================================================================== */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 0 1.25rem;
+  border-bottom: 1px solid var(--line-500);
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.site-nav .brand {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+}
+.site-nav .brand:hover { color: var(--redline); }
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper-dim);
+}
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--redline); }
+
+/* ==========================================================================
+   TITLE BLOCK — the signature element. Modeled on the stamp in the
+   bottom-right corner of a real engineering drawing: NO. / TITLE /
+   SCALE / DRAWN BY / REV. Reused (smaller) on project cards.
+   ========================================================================== */
+
+.title-block {
+  border: 1px solid var(--line-500);
+  background: var(--ink-800);
+  display: inline-grid;
+  grid-template-columns: repeat(4, auto);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--paper-dim);
+  margin-top: 2rem;
+}
+
+.title-block div {
+  padding: 0.5rem 0.85rem;
+  border-right: 1px solid var(--line-500);
+  border-top: 1px solid var(--line-500);
+}
+.title-block div:first-child,
+.title-block div:nth-child(5) { border-top: none; }
+.title-block div:last-child,
+.title-block div:nth-child(4) { border-right: none; }
+
+.title-block .label {
+  display: block;
+  color: var(--paper-dim);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.15rem;
+}
+.title-block .value {
+  color: var(--paper);
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero {
+  padding: 2rem 0 3rem;
+  position: relative;
+}
+
+.hero .eyebrow {
+  font-family: var(--font-mono);
+  color: var(--redline);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hero .lede {
+  max-width: 60ch;
+  color: var(--paper-dim);
+  font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   SECTION DIVIDER — dashed cut-line with an annotation, like a fold
+   or section mark on a drawing sheet
+   ========================================================================== */
+
+.cut-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 3.5rem 0 2rem;
+  color: var(--paper-dim);
+}
+.cut-line::before,
+.cut-line::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed var(--line-500);
+}
+.cut-line span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   PROJECT CARDS — each one is a little drawing sheet
+   ========================================================================== */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  border: 1px solid var(--line-500);
+  background: var(--ink-800);
+  padding: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.project-card:hover {
+  border-color: var(--redline);
+  transform: translateY(-2px);
+}
+
+.project-card .sheet-no {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.05em;
+}
+
+.project-card h3 {
+  margin: 0;
+  color: var(--paper);
+}
+
+.project-card:hover h3 { color: var(--redline); }
+
+.project-card p {
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.project-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.project-card .tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  border: 1px solid var(--line-500);
+  padding: 0.15rem 0.5rem;
+}
+
+/* ==========================================================================
+   CODE BLOCKS — for Python/MATLAB snippets in project write-ups
+   ========================================================================== */
+
+pre {
+  background: var(--ink-800);
+  border: 1px solid var(--line-500);
+  border-left: 3px solid var(--redline);
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+p code, li code {
+  background: var(--ink-800);
+  border: 1px solid var(--line-500);
+  padding: 0.1em 0.4em;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--paper);
+}
+
+/* Tables — for example-output data */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  border: 1px solid var(--line-500);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+th {
+  background: var(--ink-800);
+  color: var(--paper-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper);
+  border: 1px solid var(--paper);
+  padding: 0.65rem 1.25rem;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  color: var(--ink-900);
+  background: var(--redline);
+  border-color: var(--redline);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-500);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--paper-dim);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .site-nav { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .title-block { grid-template-columns: repeat(2, auto); }
+  .title-block div:nth-child(2) { border-right: none; }
+  .title-block div:nth-child(3) { border-top: 1px solid var(--line-500); }
+}

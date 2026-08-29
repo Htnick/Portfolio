@@ -1,11 +1,90 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allProjects = await getCollection("projects", ({ data }) => !data.draft);
+
+// Feature the 3 most recent projects, completed work first
+const featured = allProjects
+  .sort((a, b) => {
+    if (a.data.status !== b.data.status) {
+      return a.data.status === "completed" ? -1 : 1;
+    }
+    return b.data.date.localeCompare(a.data.date);
+  })
+  .slice(0, 3);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Henry Nickless">
+  <section class="hero">
+    <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
+    <h1>Henry Nickless</h1>
+    <p class="lede">
+      I design and build liquid rocket engines and precision instruments —
+      currently working on injector plates and regenerative cooling at CU's
+      Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
+    </p>
+    <div style="display: flex; gap: 1rem; margin-top: 1.75rem; flex-wrap: wrap;">
+      <a class="btn" href="/projects">View Projects</a>
+      <a class="btn" href="/about">About Me</a>
+    </div>
+
+    <div class="title-block">
+      <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
+      <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
+      <div><span class="label">Grad</span><span class="value">May 2028</span></div>
+      <div><span class="label">Focus</span><span class="value">Propulsion</span></div>
+    </div>
+  </section>
+
+  <div class="cut-line"><span>Selected Work</span></div>
+
+  <div class="project-grid">
+    {featured.map((project, i) => (
+      <a class="project-card" href={`/projects/${project.id}`}>
+        <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline);" : ""}>
+          SHT {String(i + 1).padStart(2, "0")} / {project.data.status === "completed" ? "COMPLETE" : "IN PROGRESS"}
+        </span>
+        <h3>{project.data.title}</h3>
+        <p>{project.data.description}</p>
+        <div class="tags">
+          {project.data.tags?.slice(0, 3).map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <p style="text-align: right; margin-top: 1.5rem;">
+    <a class="mono" href="/projects" style="text-decoration: none; color: var(--paper-dim); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;">
+      View all projects →
+    </a>
+  </p>
+
+  <div class="cut-line"><span>Toolset</span></div>
+
+  <div class="skills-strip">
+    {["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC", "NASA CEA / RocketCEA"].map((skill) => (
+      <span class="skill-chip">{skill}</span>
+    ))}
+  </div>
 </Layout>
+
+<style>
+  .skills-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-chip {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--paper);
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 0.45rem 0.9rem;
+  }
+</style>

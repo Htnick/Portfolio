@@ -1,0 +1,53 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  figNo?: string; // e.g. "01"
+  caption: string; // mono caption, drafting-log style — e.g. "M42, ORION NEBULA — 45×30s EXP."
+}
+
+const { src, alt, figNo, caption } = Astro.props;
+---
+
+<figure class="astro-figure">
+  <div class="astro-figure__frame">
+    <img src={src} alt={alt} loading="lazy" />
+  </div>
+  <figcaption class="mono">
+    {figNo && <span class="astro-figure__no">FIG. {figNo}</span>}
+    {caption}
+  </figcaption>
+</figure>
+
+<style>
+  .astro-figure {
+    margin: 1.75rem 0;
+  }
+
+  .astro-figure__frame {
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 0.4rem;
+    line-height: 0;
+  }
+
+  .astro-figure__frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .astro-figure figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  .astro-figure__no {
+    color: var(--redline);
+    margin-right: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+</style>

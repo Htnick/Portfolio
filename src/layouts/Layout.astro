@@ -1,23 +1,45 @@
+---
+import "../styles/blueprint-theme.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/astro.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="sheet sheet-frame">
+      <nav class="site-nav">
+        <a class="brand" href="/">Henry Nickless</a>
+        <ul>
+          <li><a href="/" aria-current={currentPath === "/" ? "page" : undefined}>Home</a></li>
+          <li><a href="/projects" aria-current={currentPath.startsWith("/projects") ? "page" : undefined}>Projects</a></li>
+          <li><a href="/about" aria-current={currentPath === "/about" ? "page" : undefined}>About</a></li>
+        </ul>
+      </nav>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} Henry Nickless — Aerospace Engineering, CU Boulder</span>
+        <span>
+          <a href="mailto:Henry.Nickless@Colorado.edu">Henry.Nickless@Colorado.edu</a>
+          &nbsp;/&nbsp;
+          <a href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

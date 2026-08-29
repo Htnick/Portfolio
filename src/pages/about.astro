@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="About | Henry Nickless">
+  <section class="about">
+    <h1>About Me</h1>
+
+    <p>
+      Since my first engineering class in high school, I've been curious
+      about the delicacy and precision that go into the engineering process.
+      Taking apart old electronics wasn't enough to stifle that curiosity —
+      it's just pulled me further into the engineering rabbit hole ever
+      since.
+    </p>
+
+    <p>
+      I'm studying to become an aerospace engineer at the University of
+      Colorado Boulder (Class of 2028), minoring in Astrophysical and
+      Planetary Sciences. When I'm not studying, I'm usually playing
+      volleyball or working on engineering projects — split between
+      astrophotography builds and CU's Sounding Rocket Lab. I frequently
+      work with other people to push ideas forward and like collaborating
+      through the problems that come up along the way. Most people know me
+      as a hard worker who adjusts easily to new situations.
+    </p>
+
+    <p>
+      At SRL, I work on liquid bipropellant rocket engines. On the Taipan
+      engine, I verify performance calculations for a 650lbf RP-1/LOX
+      engine and help redesign the injector plate under a fixed 700 psi
+      chamber pressure constraint — a lot of iterative flow and combustion
+      math, plus parametric trade studies using NASA's Chemical Equilibrium
+      Analysis in Python. I also helped migrate our test stand software
+      from Rust to C++ and got it running smoothly through a successful
+      hot fire.
+    </p>
+
+    <p>
+      More recently, I've been working with a team of engineers to develop
+      a regeneratively cooled liquid rocket engine capable of 2,000 lbf of
+      thrust. I built a performance toolset in Python using the RocketCEA
+      library to reconstruct NASA CEA data, and ran trade studies to find
+      the optimal engine geometry — balancing theoretical performance
+      against the physical constraints of our test stand. I'm currently
+      co-developing the engine's unlike-doublet impinging injector plate
+      using additive manufacturing, with an ASI and pressure sensors
+      integrated directly into the design, topology-optimized to stay
+      lightweight and 3D-printable.
+    </p>
+
+    <p>
+      Before rockets, there was a telescope. I designed and 3D-printed a
+      Newtonian telescope setup — 7+ custom components, an electronic
+      dew-prevention system for the mirrors, and CNC-milled focus adapters
+      strong enough to carry a 5+ lb camera — all for under $30 in
+      materials.
+    </p>
+
+    <p>
+      I also spent a semester on a six-person team building and
+      flight-testing a glider, where I engineered an elevator mechanism
+      with a 20° trim range at under a gram of mass.
+    </p>
+
+    <p>
+      <strong>Tools I use often:</strong> Fusion 360, SolidWorks, Python,
+      MATLAB, C++, R, 3D printing/CNC.
+    </p>
+
+    <p>
+      I'm looking forward to developing my skills further and meeting
+      like-minded people along the way. When I'm not in the lab, I'm
+      usually outside with a camera pointed at the sky — you can find some
+      of that at
+      <a href="https://instagram.com/astro.htn" target="_blank" rel="noopener noreferrer">@astro.htn</a>.
+    </p>
+  </section>
+</Layout>
+
+<style>
+  .about {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    line-height: 1.7;
+  }
+
+  .about h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .about p {
+    margin-bottom: 1.25rem;
+  }
+
+  .about a {
+    color: inherit;
+    text-decoration: underline;
+  }
+</style>

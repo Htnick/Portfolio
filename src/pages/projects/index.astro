@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection("projects");
+
+const completed = allProjects
+  .filter((p) => p.data.status === "completed")
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const inProgress = allProjects
+  .filter((p) => p.data.status === "in-progress")
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+
+<Layout title="Projects | Henry Nickless">
+  <section class="hero">
+    <span class="eyebrow">// Index</span>
+    <h1>Projects</h1>
+    <p class="lede">
+      Rocket engines, telescopes, and the occasional glider — a running log
+      of what I've been building.
+    </p>
+  </section>
+
+  <div class="cut-line"><span>Completed</span></div>
+
+  <div class="project-grid">
+    {completed.map((project, i) => (
+      <a class="project-card" href={`/projects/${project.id}`}>
+        <span class="sheet-no">SHT {String(i + 1).padStart(2, "0")} / COMPLETE</span>
+        <h3>{project.data.title}</h3>
+        <p>{project.data.description}</p>
+        <div class="tags">
+          {project.data.tags?.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="cut-line"><span>In Progress</span></div>
+
+  <div class="project-grid">
+    {inProgress.map((project, i) => (
+      <a class="project-card" href={`/projects/${project.id}`}>
+        <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
+        <h3>{project.data.title}</h3>
+        <p>{project.data.description}</p>
+        <div class="tags">
+          {project.data.tags?.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>
