@@ -47,6 +47,14 @@ const currentPath = Astro.url.pathname;
     About
   </a>
 </li>
+<li>
+  <a 
+    href={`${import.meta.env.BASE_URL}astrophotography`} 
+    aria-current={currentPath.includes("/astrophotography") ? "page" : undefined}
+  >
+    Astrophotography
+  </a>
+</li>
         </ul>
       </nav>
 

@@ -39,7 +39,7 @@ const featured = allProjects
         </div>
       </div>
 
-      <a class="hero-photo-link" href="#astrophotography">
+      <a class="hero-photo-link" href={`${import.meta.env.BASE_URL}astrophotography`}>
         <img
           src={`${import.meta.env.BASE_URL}images/veil-nebula.jpg`}
           alt="The Veil Nebula, astrophotography by Henry Nickless"
@@ -47,18 +47,6 @@ const featured = allProjects
         />
         <span class="hero-photo-caption">See how I took this photo</span>
       </a>
-    </div>
-  </section>
-
-  <section id="astrophotography" class="astro-note">
-    <div class="cut-line"><span>Behind the Photo</span></div>
-    <div class="astro-note-body">
-      <p class="astro-placeholder">
-        Henry — this is a placeholder. Swap in a few sentences about how you actually
-        shoot and process your astrophotography: your gear, your exposure/stacking
-        approach, your editing workflow, and why this particular shot. Delete this
-        note once you've written your own.
-      </p>
     </div>
   </section>
 
@@ -118,6 +106,7 @@ const featured = allProjects
   .hero-photo-link {
     position: relative;
     display: block;
+    max-width: 340px;
     aspect-ratio: 6 / 5;
     overflow: hidden;
     border: 1px solid var(--line-500);
@@ -150,21 +139,6 @@ const featured = allProjects
     content: "→";
     margin-left: 0.4em;
     color: var(--redline);
-  }
-
-  .astro-note-body {
-    margin-top: 1.25rem;
-  }
-  .astro-placeholder {
-    border: 1px dashed var(--line-500);
-    background: var(--ink-800);
-    padding: 1.1rem 1.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    line-height: 1.6;
-    color: var(--paper-dim);
-    font-style: italic;
-    max-width: 62ch;
   }
 
   .skills-strip {

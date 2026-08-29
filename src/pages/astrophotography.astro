@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import AstroImage from "../components/AstroImage.astro";
+
+// Number of open gallery slots below the featured shot — add more by
+// bumping this number, or delete a <ImagePlaceholder /> below once you
+// swap in a real photo (see PHOTOS_NEEDED.md for the how-to).
+const gallerySlots = 6;
+---
+
+<Layout title="Astrophotography | Henry Nickless">
+  <a href={import.meta.env.BASE_URL} class="mono" style="display: inline-block; margin-bottom: 1.5rem; text-decoration: none; color: var(--paper-dim);">← Back home</a>
+
+  <section class="hero" style="padding-top: 0;">
+    <span class="eyebrow">// Astrophotography</span>
+    <h1>How I Take These Photos</h1>
+
+    <p class="editable-note" style="margin-top: 1.25rem;">
+      Henry — this is a placeholder. Replace it with a few sentences (or a
+      few paragraphs) about how you actually shoot and process your
+      astrophotography: your gear (scope, camera, mount), your capture
+      approach (exposure length, filters, number of subs), your stacking
+      and editing workflow, and why this shot in particular. Delete this
+      note once you've written your own.
+    </p>
+  </section>
+
+  <AstroImage
+    src={`${import.meta.env.BASE_URL}images/veil-nebula.jpg`}
+    alt="The Veil Nebula, astrophotography by Henry Nickless"
+    figNo="01"
+    caption="THE VEIL NEBULA — ADD CAPTURE DETAILS (SCOPE, CAMERA, EXPOSURE)"
+  />
+
+  <div class="cut-line"><span>Gallery</span></div>
+
+  <div class="astro-gallery">
+    {Array.from({ length: gallerySlots }).map((_, i) => (
+      <ImagePlaceholder
+        label="Astrophotography shot"
+        spec="1600×1000"
+        figNo={String(i + 2).padStart(2, "0")}
+      />
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .astro-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.75rem;
+    margin: 1.75rem 0 1rem;
+  }
+</style>

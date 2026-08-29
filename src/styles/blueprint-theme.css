@@ -268,9 +268,9 @@ a:focus-visible, button:focus-visible {
    width on wide viewports. */
 .hero-layout {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.6fr 0.6fr;
   gap: 2.5rem;
-  align-items: center;
+  align-items: start;
 }
 
 @media (max-width: 860px) {
@@ -521,6 +521,22 @@ a:focus-visible, button:focus-visible {
   font-size: 0.62rem;
   color: var(--redline);
   letter-spacing: 0.06em;
+}
+
+/* A "fill this in yourself" text block — dashed box, mono, italic. Used
+   anywhere a page needs Henry's own words instead of generated copy
+   (e.g. the astrophotography write-up). Delete the block once real
+   copy replaces it. */
+.editable-note {
+  border: 1px dashed var(--line-500);
+  background: var(--ink-800);
+  padding: 1.1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--paper-dim);
+  font-style: italic;
+  max-width: 62ch;
 }
 
 /* ==========================================================================

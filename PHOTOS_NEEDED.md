@@ -45,6 +45,14 @@ the shot list to actually fill them in, roughly in priority order.
 8. Workshop shot — mid-build, CAD on a monitor, tools out
 9. Telescope in the field
 
+## Astrophotography page (`src/pages/astrophotography.astro`)
+
+10. Six open gallery slots (FIG. 02–07), landscape ~1600×1000, for more of
+    your shots — nebulae, star clusters, whatever you've got. The Veil
+    Nebula from the homepage is already in as the featured FIG. 01; these
+    just fill out the page under it. Add or remove slots by editing the
+    `gallerySlots` number at the top of the file.
+
 ## How to add one
 
 1. Drop the file in `public/images/` (e.g. `public/images/taipan-hero.jpg`).
