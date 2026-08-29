@@ -4,7 +4,7 @@ description: "Creating code to run a data aquisition system alongside a liquid r
 date: "2025-08-01"
 status: "completed"
 tags: ["propulsion", "liquid rockets", "Python", "CEA"]
-image: ""
+image: "test-stand-pid.jpg"
 draft: false
 ---
 

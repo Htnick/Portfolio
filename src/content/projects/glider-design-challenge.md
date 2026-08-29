@@ -4,7 +4,7 @@ description: "MATLAB performance simulation and Excel-based manufacturability tr
 date: "2026-01-01"
 status: "completed"
 tags: ["aircraft design", "MATLAB", "Excel", "flight testing"]
-image: ""
+image: "glider-design-hero.jpg"
 draft: false
 ---
 

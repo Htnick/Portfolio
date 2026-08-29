@@ -6,9 +6,9 @@ the shot list to actually fill them in, roughly in priority order.
 
 ## Must-have
 
-1. **Headshot** — About page. Portrait orientation, min. 800×1000px, decent
-   lighting, plain-ish background. This is the single highest-impact photo
-   on the site.
+1. ~~**Headshot**~~ — skipped by request. Henry doesn't want a headshot on
+   the site, so the About page placeholder stays as-is on purpose. Leave it
+   alone unless he changes his mind.
 2. ~~**Taipan Liquid Rocket Engine**~~ — done. Using two CAD renders of the
    injector plate (`taipan-injector-plate-01.jpg` as the hero/thumbnail,
    `taipan-injector-plate-02.jpg` inline in the "Injector plate redesign"
@@ -30,10 +30,14 @@ the shot list to actually fill them in, roughly in priority order.
    `telescope-fan-housing.jpg` in "Thermal management". A placeholder for
    the first rendition's component set (`v1-components.jpg`, FIG. 02) is
    still open if you ever dig up an old photo of that build.
-5. **Glider Design Challenge** — the built glider, in flight or on the
-   ground with the team.
-6. **DAQ for Liquid Test Stand** — the DAQ hardware/electronics, or a
-   monitor showing a live data readout during a test.
+5. ~~**Glider Design Challenge**~~ — done. Using `glider-design-hero.jpg`,
+   a workshop shot of the built glider — cropped to leave out everyone's
+   face by request. Swap in a flight-test photo later if you have one.
+6. ~~**DAQ for Liquid Test Stand**~~ — done, sort of. Using
+   `test-stand-pid.jpg`, the test stand's valve/P&ID reference diagram,
+   as the hero — it's a schematic, not a hardware photo, but it's a solid
+   stand-in until you have a shot of the actual DAQ hardware or a live
+   data readout.
 
 ## About-page gallery ("In The Field" row)
 
