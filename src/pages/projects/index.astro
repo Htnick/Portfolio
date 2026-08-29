@@ -27,7 +27,7 @@ const inProgress = allProjects
 
   <div class="project-grid">
     {completed.map((project, i) => (
-      <a class="project-card" href={`/projects/${project.id}`}>
+      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
         <span class="sheet-no">SHT {String(i + 1).padStart(2, "0")} / COMPLETE</span>
         <h3>{project.data.title}</h3>
         <p>{project.data.description}</p>
@@ -44,7 +44,7 @@ const inProgress = allProjects
 
   <div class="project-grid">
     {inProgress.map((project, i) => (
-      <a class="project-card" href={`/projects/${project.id}`}>
+      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
         <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
         <h3>{project.data.title}</h3>
         <p>{project.data.description}</p>

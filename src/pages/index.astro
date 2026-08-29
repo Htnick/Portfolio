@@ -25,8 +25,8 @@ const featured = allProjects
       Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
     </p>
     <div style="display: flex; gap: 1rem; margin-top: 1.75rem; flex-wrap: wrap;">
-      <a class="btn" href="/projects">View Projects</a>
-      <a class="btn" href="/about">About Me</a>
+      <a class="btn" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
+      <a class="btn" href={`${import.meta.env.BASE_URL}about`}>About Me</a>
     </div>
 
     <div class="title-block">
@@ -41,7 +41,7 @@ const featured = allProjects
 
   <div class="project-grid">
     {featured.map((project, i) => (
-      <a class="project-card" href={`/projects/${project.id}`}>
+      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
         <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline);" : ""}>
           SHT {String(i + 1).padStart(2, "0")} / {project.data.status === "completed" ? "COMPLETE" : "IN PROGRESS"}
         </span>
@@ -57,7 +57,7 @@ const featured = allProjects
   </div>
 
   <p style="text-align: right; margin-top: 1.5rem;">
-    <a class="mono" href="/projects" style="text-decoration: none; color: var(--paper-dim); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;">
+    <a class="mono" href={`${import.meta.env.BASE_URL}projects`} style="text-decoration: none; color: var(--paper-dim); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;">
       View all projects →
     </a>
   </p>
