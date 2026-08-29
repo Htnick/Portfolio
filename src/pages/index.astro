@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ImagePlaceholder from "../components/ImagePlaceholder.astro";
-import BlueprintGraphic from "../components/BlueprintGraphic.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
@@ -37,32 +36,31 @@ const featured = allProjects
           <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
           <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
           <div><span class="label">Grad</span><span class="value">May 2028</span></div>
-          <div><span class="label">Focus</span><span class="value">Propulsion</span></div>
         </div>
       </div>
 
-      <BlueprintGraphic />
+      <a class="hero-photo-link" href="#astrophotography">
+        <img
+          src={`${import.meta.env.BASE_URL}images/veil-nebula.jpg`}
+          alt="The Veil Nebula, astrophotography by Henry Nickless"
+          loading="eager"
+        />
+        <span class="hero-photo-caption">See how I took this photo</span>
+      </a>
     </div>
   </section>
 
-  <div class="stat-band">
-    <div class="stat">
-      <span class="stat-number">650</span>
-      <span class="stat-label">LBF — Taipan Thrust</span>
+  <section id="astrophotography" class="astro-note">
+    <div class="cut-line"><span>Behind the Photo</span></div>
+    <div class="astro-note-body">
+      <p class="astro-placeholder">
+        Henry — this is a placeholder. Swap in a few sentences about how you actually
+        shoot and process your astrophotography: your gear, your exposure/stacking
+        approach, your editing workflow, and why this particular shot. Delete this
+        note once you've written your own.
+      </p>
     </div>
-    <div class="stat">
-      <span class="stat-number">2,000</span>
-      <span class="stat-label">LBF — Regen Target</span>
-    </div>
-    <div class="stat">
-      <span class="stat-number">700</span>
-      <span class="stat-label">PSI Chamber Pressure</span>
-    </div>
-    <div class="stat">
-      <span class="stat-number">2028</span>
-      <span class="stat-label">Graduation</span>
-    </div>
-  </div>
+  </section>
 
   <div class="cut-line"><span>Selected Work</span></div>
 
@@ -117,6 +115,58 @@ const featured = allProjects
 </Layout>
 
 <style>
+  .hero-photo-link {
+    position: relative;
+    display: block;
+    aspect-ratio: 6 / 5;
+    overflow: hidden;
+    border: 1px solid var(--line-500);
+    box-shadow: 0 1px 2px rgba(34, 27, 18, 0.05);
+  }
+  .hero-photo-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .hero-photo-link:hover img {
+    transform: scale(1.04);
+  }
+  .hero-photo-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.1rem 1.1rem 0.9rem;
+    background: linear-gradient(to top, rgba(10, 12, 16, 0.88), rgba(10, 12, 16, 0));
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-photo-caption::after {
+    content: "→";
+    margin-left: 0.4em;
+    color: var(--redline);
+  }
+
+  .astro-note-body {
+    margin-top: 1.25rem;
+  }
+  .astro-placeholder {
+    border: 1px dashed var(--line-500);
+    background: var(--ink-800);
+    padding: 1.1rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--paper-dim);
+    font-style: italic;
+    max-width: 62ch;
+  }
+
   .skills-strip {
     display: flex;
     flex-wrap: wrap;
