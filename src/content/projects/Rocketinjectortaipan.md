@@ -4,7 +4,7 @@ description: "Injector redesign and propellant transition from ethanol/LN2 to RP
 date: "2025-08-01"
 status: "completed"
 tags: ["propulsion", "liquid rockets", "Python", "CEA"]
-image: ""
+image: "taipan-injector-plate-01.jpg"
 draft: false
 ---
 
@@ -12,14 +12,17 @@ draft: false
 
 Taipan is a 650lbf liquid bipropellant rocket engine developed by CU's Sounding Rocket Lab (CU SRL). I worked on the propulsion team verifying performance calculations, redesigning the injector plate, and building the Python toolset that supported the engine's transition from ethanol/LN₂ to RP-1/LOX.
 
-<!--
-  Drop a hero image or engine photo here, e.g.:
-  <AstroImage src="/images/taipan/engine-mounted.jpg" alt="Taipan engine mounted on test stand" figNo="01" caption="TAIPAN 650LBF ENGINE — TEST STAND MOUNT" />
--->
-
 ## Injector plate redesign
 
 The injector plate had to be redesigned around a fixed chamber pressure of 700 psi without changing the overall engine geometry — meaning every change to flow area, orifice count, or impingement pattern had to work within the same envelope as the original design.
+
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/taipan-injector-plate-02.jpg" alt="CAD render of the Taipan injector plate, angled detail view showing the impinging orifice pattern" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE — IMPINGING ORIFICE PATTERN, CAD RENDER</p>
 
 - Performed iterative flow and combustion calculations to size orifice diameters and impingement angles for consistent atomization across the new propellant combination.
 - Verified performance calculations against analytical models to confirm the redesigned plate would deliver the expected thrust output.

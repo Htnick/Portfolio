@@ -9,10 +9,11 @@ the shot list to actually fill them in, roughly in priority order.
 1. **Headshot** — About page. Portrait orientation, min. 800×1000px, decent
    lighting, plain-ish background. This is the single highest-impact photo
    on the site.
-2. **Taipan Liquid Rocket Engine** — hero photo for that project (used as
-   both the card thumbnail and the project-page hero). Engine on the test
-   stand, or a close-up of the injector plate. You did a hot fire on this
-   one, so a real hardware shot (or a frame from hot-fire footage) beats a
+2. ~~**Taipan Liquid Rocket Engine**~~ — done. Using two CAD renders of the
+   injector plate (`taipan-injector-plate-01.jpg` as the hero/thumbnail,
+   `taipan-injector-plate-02.jpg` inline in the "Injector plate redesign"
+   section). Swap in a real hardware or hot-fire photo later if you want —
+   you actually fired this engine, so a real shot would hit harder than a
    render.
 3. **Regeneratively Cooled Liquid Rocket Engine** — since this one's still
    in progress, a Fusion 360 assembly render or injector CAD screenshot is
