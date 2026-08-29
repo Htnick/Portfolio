@@ -24,8 +24,12 @@ the shot list to actually fill them in, roughly in priority order.
 
 ## Nice-to-have — fills out the rest of the project grid
 
-4. **Newtonian Telescope** — the telescope itself, ideally out in the field
-   at night, or the dew-prevention/mounting hardware close up.
+4. ~~**Newtonian Telescope**~~ — done. `telescope-dew-shield.jpg` (the
+   full 8-inch scope) as the hero, plus two detail shots dropped inline:
+   `telescope-focus-adapter.jpg` in "Focuser precision" and
+   `telescope-fan-housing.jpg` in "Thermal management". A placeholder for
+   the first rendition's component set (`v1-components.jpg`, FIG. 02) is
+   still open if you ever dig up an old photo of that build.
 5. **Glider Design Challenge** — the built glider, in flight or on the
    ground with the team.
 6. **DAQ for Liquid Test Stand** — the DAQ hardware/electronics, or a

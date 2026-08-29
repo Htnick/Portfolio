@@ -4,7 +4,7 @@ description: "Custom 3D-printed and CNC-milled components for a Newtonian telesc
 date: "2024-12-01"
 status: "in-progress"
 tags: ["astrophotography", "3D printing", "CAD", "electronics"]
-image: ""
+image: "telescope-dew-shield.jpg"
 draft: false
 ---
 
@@ -19,7 +19,8 @@ The first full build had a hard constraint set: everything had to improve therma
 One of the most challenging and also most rewarding parts of this process was the thermal managment. To keep dew from forming on the optics of the telescope, I wanted to add a fan to move air through the telescope, keeping a low humidity. The issue with using a fan is that you need to make sure that the fan does not vibrate the telescope. At this scale, even micro vibrations can disturb the scope enough to fall out of focus. I ended up settling on a pc fan to move the air through the scope. I 3d-printed a mounting bracket, and reused a old device to have a consistent voltage that could be provided via usb-c. 
 
 <!--
-  <AstroImage src="/images/telescope/v1-components.jpg" alt="First rendition 3D-printed components" figNo="01" caption="RENDITION 1 — 3D-PRINTED COMPONENT SET, HEAT-SET INSERTS" />
+  Still needed — see PHOTOS_NEEDED.md:
+  <AstroImage src="/images/telescope/v1-components.jpg" alt="First rendition 3D-printed components" figNo="02" caption="RENDITION 1 — 3D-PRINTED COMPONENT SET, HEAT-SET INSERTS" />
 -->
 
 ## Second rendition: the 8-inch build
@@ -34,7 +35,13 @@ The first problem I wanted to tackle was the focuser. This telescope has a 200mm
 
 My solution was to swap in one of my own high-resolution focusers instead of the one that came with the scope. That meant 3D-printing a model of the mount I wanted, then having it produced in aluminum by a third party so it could handle the loads in the telescope's focal train.
 
-<!-- <AstroImage src="/images/telescope/v2-focuser.jpg" alt="Custom aluminum focuser mount" figNo="03" caption="8-INCH RENDITION — CUSTOM ALUMINUM FOCUSER MOUNT" /> -->
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/telescope-focus-adapter.jpg" alt="Custom aluminum focuser adapter, machined to fit the 8-inch scope's focal train" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>8-INCH RENDITION — CUSTOM ALUMINUM FOCUSER ADAPTER</p>
 
 ### Internal reflection and flocking
 
@@ -48,7 +55,13 @@ Heading into the summer months, the telescope would sit in the heat for hours be
 
 The fan also needed a way to keep dust and debris from reaching the optics, so I designed a mask to sit over the intake. The first version didn't move enough air; the second one got the balance right.
 
-<!-- <AstroImage src="/images/telescope/v2-thermal-system.jpg" alt="3D-printed fan housing and intake mask" figNo="04" caption="8-INCH RENDITION — FAN HOUSING AND INTAKE MASK, V2" /> -->
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/telescope-fan-housing.jpg" alt="3D-printed fan housing mounted on the rear cell of the 8-inch scope, with the intake mask visible on top" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 04</span>8-INCH RENDITION — FAN HOUSING AND INTAKE MASK, V2</p>
 
 ### Root cause: sensor-to-corrector spacing
 
