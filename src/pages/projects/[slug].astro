@@ -34,7 +34,9 @@ const { Content } = await render(entry);
     </div>
 
     {entry.data.image ? (
-      <AstroImage src={`${import.meta.env.BASE_URL}images/${entry.data.image}`} alt={entry.data.title} figNo="01" caption={entry.data.title.toUpperCase()} />
+      <div class="project-hero-photo">
+        <AstroImage src={`${import.meta.env.BASE_URL}images/${entry.data.image}`} alt={entry.data.title} figNo="01" caption={entry.data.title.toUpperCase()} />
+      </div>
     ) : (
       <div style="margin-bottom: 2rem;">
         <ImagePlaceholder label={`Hero photo — ${entry.data.title}`} aspect="wide" spec="1800×900, landscape" figNo="01" />
@@ -48,6 +50,20 @@ const { Content } = await render(entry);
 </Layout>
 
 <style>
+  /* Hero photo (FIG. 01) on a project detail page — kept smaller than
+     full content width. Images further down in the Overview/body content
+     (FIG. 02+) are untouched and keep their own full-width sizing. */
+  .project-hero-photo {
+    max-width: 420px;
+    margin: 0 0 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .project-hero-photo {
+      max-width: 100%;
+    }
+  }
+
   .project-content :global(h2) {
     margin-top: 2.5rem;
     padding-bottom: 0.5rem;

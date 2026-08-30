@@ -2,7 +2,7 @@
 title: "Newtonian Telescope for Astrophotography"
 description: "Custom 3D-printed and CNC-milled components for a Newtonian telescope, across two renditions — most recently an 8-inch build."
 date: "2024-12-01"
-status: "in-progress"
+status: "completed"
 tags: ["astrophotography", "3D printing", "CAD", "electronics"]
 image: "telescope-dew-shield.jpg"
 draft: false
