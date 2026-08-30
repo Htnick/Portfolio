@@ -1,6 +1,6 @@
 ---
 title: "Taipan Liquid Rocket Engine"
-description: "Injector redesign and propellant transition from ethanol/LN2 to RP-1/LOX for a 650lbf liquid bipropellant rocket engine."
+description: "Injector redesign and propellant transition from ethanol/N2O to RP-1/LOX for a 650lbf liquid bipropellant rocket engine."
 date: "2025-08-01"
 status: "completed"
 tags: ["propulsion", "liquid rockets", "Python", "CEA"]
@@ -28,9 +28,9 @@ The injector plate had to be redesigned around a fixed chamber pressure of 700 p
 - Verified performance calculations against analytical models to confirm the redesigned plate would deliver the expected thrust output.
 - Applied NASA's Chemical Equilibrium Analysis (CEA) in Python to run parametric trade studies across mixture ratio, chamber pressure, and expansion ratio — mapping how sensitive performance was to each variable before committing to a final geometry.
 
-## Propellant transition: ethanol/LN₂ → RP-1/LOX (Keralox)
+## Propellant transition: ethanol/N₂O → RP-1/LOX (Keralox)
 
-The engine was originally designed around an ethanol/LN₂ propellant combination. Moving to RP-1/LOX (kerolox) changed the combustion chemistry, density, and injection behavior enough that the injector and performance models needed to be re-validated rather than just re-scaled.
+The engine was originally designed around an ethanol/N₂O propellant combination. Moving to RP-1/LOX (kerolox) changed the combustion chemistry, density, and injection behavior enough that the injector and performance models needed to be re-validated rather than just re-scaled.
 
 Key differences that drove the redesign:
 
