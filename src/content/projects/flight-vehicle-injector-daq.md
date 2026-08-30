@@ -4,7 +4,7 @@ description: "An injector plate design for an actual flight vehicle, integrated 
 date: "2026-08-01"
 status: "in-progress"
 tags: ["propulsion", "avionics", "DAQ"]
-draft: false
+draft: true
 ---
 
 ## Overview

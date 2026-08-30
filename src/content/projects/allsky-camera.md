@@ -30,12 +30,6 @@ cold surface to condense on. That airflow does double duty — it also
 keeps the housing itself cool enough that it could be printed in plain
 PLA without worrying about the plastic softening or warping in the sun.
 
-<p class="editable-note">
-Henry — fill in the camera/sensor board itself (Raspberry Pi HQ camera?
-something else?) and what capture software you're running, plus how it's
-powered and networked outdoors.
-</p>
-
 ## Outcome
 
 The camera runs a monochrome sensor rather than color, which pulls in
@@ -46,9 +40,3 @@ background. That tradeoff cuts both ways: with no light-pollution filter
 in front of the sensor, the camera is picking up the full spectrum of
 skyglow along with the stars, so how much a given frame shows is as much
 a function of local light pollution that night as it is the sky itself.
-
-<p class="editable-note">
-Henry — drop in the images you mentioned here, plus a sentence or two on
-what they show (a clear-night frame vs. a light-polluted one is a great
-pairing if you have it).
-</p>

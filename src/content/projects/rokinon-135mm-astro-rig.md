@@ -99,7 +99,10 @@ the reach of a full telescope — see the
 [Astrophotography](/Portfolio/astrophotography) page for the gear list,
 imaging workflow, and gallery this rig feeds into.
 
-<p class="editable-note">
-Henry — drop in a sample frame or two shot with this rig once you have
-them; they can also go straight into the Astrophotography gallery.
-</p>
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/rokinon-california-nebula.jpg" alt="The California Nebula, shot with the Rokinon 135mm rig" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>THE CALIFORNIA NEBULA, SHOT WITH THIS RIG</p>
