@@ -91,10 +91,19 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
 
     <div class="cut-line"><span>In The Field</span></div>
 
-    <div class="gallery-grid">
-      <ImagePlaceholder label="CU SRL test stand" spec="1200×900" figNo="02" />
-      <ImagePlaceholder label="Workshop — CAD & build" spec="1200×900" figNo="03" />
-      <ImagePlaceholder label="Telescope, in the field" spec="1200×900" figNo="04" />
+    <div class="field-gallery">
+      <figure>
+        <img src={`${import.meta.env.BASE_URL}images/about/telescope-fieldwork.jpg`} alt="Henry Nickless setting up his Newtonian telescope at night" loading="lazy" />
+        <figcaption class="mono"><span class="fg-figno">FIG. 02</span>Telescope, in the field</figcaption>
+      </figure>
+      <figure>
+        <img src={`${import.meta.env.BASE_URL}images/about/glider-workshop.jpg`} alt="Henry Nickless holding the six-person team's glider in the workshop" loading="lazy" />
+        <figcaption class="mono"><span class="fg-figno">FIG. 03</span>Glider build, workshop</figcaption>
+      </figure>
+      <figure>
+        <img src={`${import.meta.env.BASE_URL}images/about/rocket-build.jpg`} alt="Henry Nickless fabricating a rocket engine component in the driveway" loading="lazy" />
+        <figcaption class="mono"><span class="fg-figno">FIG. 04</span>Rocket build, on the bench</figcaption>
+      </figure>
     </div>
 
     <p>
@@ -154,5 +163,39 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
     border: 1px solid var(--line-500);
     background: var(--ink-800);
     padding: 0.45rem 0.9rem;
+  }
+
+  .field-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .field-gallery figure {
+    margin: 0;
+  }
+
+  .field-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 0.4rem;
+    box-sizing: border-box;
+  }
+
+  .field-gallery figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .field-gallery .fg-figno {
+    color: var(--redline);
+    margin-right: 0.5rem;
+    letter-spacing: 0.06em;
   }
 </style>

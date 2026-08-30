@@ -41,9 +41,12 @@ the shot list to actually fill them in, roughly in priority order.
 
 ## About-page gallery ("In The Field" row)
 
-7. CU SRL test stand / lab environment
-8. Workshop shot — mid-build, CAD on a monitor, tools out
-9. Telescope in the field
+7. Done — real photos in place: a telescope-in-the-field night shot
+   (`telescope-fieldwork.jpg`), Henry holding the glider in the workshop
+   (`glider-workshop.jpg`), and a driveway rocket-build shot
+   (`rocket-build.jpg`). These show Henry's face — he explicitly asked for
+   them here, uncropped, so this is a deliberate exception to the
+   no-headshot rule elsewhere on the site.
 
 ## Astrophotography page (`src/pages/astrophotography.astro`)
 
