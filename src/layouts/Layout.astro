@@ -3,9 +3,13 @@ import "../styles/blueprint-theme.css";
 
 interface Props {
   title: string;
+  // "blueprint" (default) is the drafting-sheet look used everywhere.
+  // "gallery" swaps in a darker, minimalist palette for the
+  // astrophotography page — see .theme-gallery in blueprint-theme.css.
+  variant?: "blueprint" | "gallery";
 }
 
-const { title } = Astro.props;
+const { title, variant = "blueprint" } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -18,7 +22,7 @@ const currentPath = Astro.url.pathname;
     <meta name="theme-color" content="#ff6a1a" />
     <title>{title}</title>
   </head>
-  <body>
+  <body class={variant === "gallery" ? "theme-gallery" : undefined}>
     <div class="sheet sheet-frame">
       <nav class="site-nav">
         <a class="brand" href={import.meta.env.BASE_URL}>Henry Nickless</a>

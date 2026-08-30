@@ -83,24 +83,28 @@ const featured = allProjects
     </a>
   </p>
 
-  <div class="cut-line"><span>Toolset</span></div>
+  <div class="section-panel">
+    <div class="cut-line"><span>Toolset</span></div>
 
-  <div class="skills-strip">
-    {["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC", "NASA CEA / RocketCEA"].map((skill) => (
-      <span class="skill-chip">{skill}</span>
-    ))}
+    <div class="skills-strip">
+      {["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC", "NASA CEA / RocketCEA"].map((skill) => (
+        <span class="skill-chip">{skill}</span>
+      ))}
+    </div>
   </div>
 
-  <div class="cut-line"><span>Get In Touch</span></div>
+  <div class="section-panel section-panel--cool">
+    <div class="cut-line"><span>Get In Touch</span></div>
 
-  <section class="hero" style="padding-top: 0;">
-    <span class="eyebrow">// Say hello</span>
-    <h2>Always happy to talk propulsion, optics, or anything in between.</h2>
-    <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
-      <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
-      <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
-  </section>
+    <section class="hero" style="padding-top: 0;">
+      <span class="eyebrow">// Say hello</span>
+      <h2>Always happy to talk propulsion, optics, or anything in between.</h2>
+      <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+        <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </section>
+  </div>
 </Layout>
 
 <style>

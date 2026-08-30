@@ -6,6 +6,7 @@ status: "in-progress"
 tags: ["propulsion", "liquid rockets", "injector design", "topology optimization", "additive manufacturing"]
 image: "regen-injector-topology.jpg"
 draft: false
+accent: "#e0942c"
 ---
 
 ## Overview

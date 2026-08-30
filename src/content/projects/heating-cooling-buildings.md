@@ -6,6 +6,7 @@ status: "completed"
 tags: ["differential equations", "MATLAB", "numerical methods", "Runge-Kutta"]
 image: "heating-cooling-hero.jpg"
 draft: false
+accent: "#3f9142"
 ---
 
 ## Overview

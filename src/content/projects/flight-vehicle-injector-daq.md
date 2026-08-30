@@ -5,6 +5,7 @@ date: "2026-08-01"
 status: "in-progress"
 tags: ["propulsion", "avionics", "DAQ"]
 draft: true
+accent: "#b0554a"
 ---
 
 ## Overview

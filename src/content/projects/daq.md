@@ -6,6 +6,7 @@ status: "in-progress"
 tags: ["propulsion", "liquid rockets", "Python", "CEA"]
 image: "test-stand-photo.jpg"
 draft: false
+accent: "#4a6fa5"
 ---
 
 ## Overview

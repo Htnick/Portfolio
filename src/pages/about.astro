@@ -81,12 +81,14 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
       with a 20° trim range at under a gram of mass.
     </p>
 
-    <div class="cut-line"><span>Toolset</span></div>
+    <div class="about-panel">
+      <div class="cut-line"><span>Toolset</span></div>
 
-    <div class="skills-strip">
-      {tools.map((tool) => (
-        <span class="skill-chip">{tool}</span>
-      ))}
+      <div class="skills-strip">
+        {tools.map((tool) => (
+          <span class="skill-chip">{tool}</span>
+        ))}
+      </div>
     </div>
 
     <div class="cut-line"><span>In The Field</span></div>
@@ -146,6 +148,14 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
   .about a {
     color: inherit;
     text-decoration: underline;
+  }
+
+  .about-panel {
+    background: var(--panel-tint);
+    border-top: 1px solid var(--line-500);
+    border-bottom: 1px solid var(--line-500);
+    margin: 2.5rem -1.5rem;
+    padding: 1.75rem 1.5rem 0.5rem;
   }
 
   .about .skills-strip {

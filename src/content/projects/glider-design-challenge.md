@@ -6,6 +6,7 @@ status: "completed"
 tags: ["aircraft design", "MATLAB", "Excel", "flight testing"]
 image: "glider-design-hero.jpg"
 draft: false
+accent: "#3ba7c4"
 ---
 
 ## Overview

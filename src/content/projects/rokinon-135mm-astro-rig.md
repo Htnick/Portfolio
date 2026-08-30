@@ -6,6 +6,7 @@ status: "completed"
 tags: ["astrophotography", "3D printing", "CAD", "optics"]
 image: "rokinon-ring-system-top.jpg"
 draft: false
+accent: "#3b6fd1"
 ---
 
 ## Overview
@@ -35,11 +36,12 @@ The lens's biggest limitation wasn't optical — on paper the Rokinon
 mechanical. There was no way to attach a dedicated astro camera to it and
 have the whole assembly sit level and rigid on a tracking mount; the
 stock lens mount was never built to carry that load at a fixed
-orientation for hours at a time. The fix is a chain of 3D-printed rings —
-two lens-side rings, two mid rings, two camera-side rings, and a camera
-hold bracket — machined in CAD to follow the exact contours of the lens
-barrel and clamp it at a consistent height all the way through to the
-camera. Holding that height constant matters more than it sounds: any
+orientation for hours at a time. The fix is three 3D-printed rings — a
+lens ring, a mid ring, and a camera ring, each printed in two halves for
+easier printing and assembly — plus a camera hold bracket, all modeled
+in CAD to follow the exact contours of the lens barrel and clamp it at a
+consistent height all the way through to the camera. Holding that
+height constant matters more than it sounds: any
 flexure in the stack introduces tilt in the imaging plane, which shows up
 as elongated stars in one corner of the frame and a soft, out-of-focus
 corner in the opposite one. A hex-profile ring at the rear carries the
@@ -58,8 +60,11 @@ plenty. But the Rokinon 135mm f/2 has a critical focus zone only about
 that reduction for the image to drift in and out of that zone before the
 teeth fully re-engage.
 
-V2 replaced the gears with a GT2 timing-belt drive: a 20-tooth, 6mm-bore
-pulley on the focus motor, a 350mm belt, and a pulley ring of roughly
+V2 replaced the gears with a GT2 timing-belt drive: a
+<a href="https://www.amazon.com/WINSINN-Aluminum-Synchronous-Timing-Printer/dp/B07CXR7SFL/" target="_blank" rel="noopener noreferrer">20-tooth, 6mm-bore pulley</a>
+on the focus motor, a
+<a href="https://www.amazon.com/uxcell-Timing-Closed-350-2GT-6-Printer/dp/B0CMHXXVM1/" target="_blank" rel="noopener noreferrer">350mm belt</a>,
+and a pulley ring of roughly
 146–147 teeth wrapped around the lens's focus collar — about a 7.3:1
 mechanical reduction, close to four times the reduction of the original
 gear pair. A belt drive also runs with none of a gear pair's backlash,

@@ -5,6 +5,7 @@ date: "2025-01-01"
 status: "completed"
 tags: ["orbital mechanics", "MATLAB", "orbit determination", "numerical methods"]
 draft: false
+accent: "#5b5ce0"
 ---
 
 ## Overview

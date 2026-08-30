@@ -29,6 +29,12 @@
   --redline: #ff6a1a;
   --redline-dim: rgba(255, 106, 26, 0.1);
   --redline-deep: #d8500a;
+  /* Two section-block tints — warm and cool — used to visually separate
+     page sections beyond the thin dashed cut-line, so pages read as
+     distinct blocks rather than one continuous scroll. Kept muted so
+     they still sit comfortably with the white/cream/orange palette. */
+  --panel-tint: #f2e8d2;
+  --panel-tint-cool: #e6edf4;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
@@ -735,6 +741,96 @@ th {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+/* ==========================================================================
+   SECTION PANELS — full-bleed tinted bands used to visually separate
+   major page sections (Toolset, Get In Touch, etc.) beyond the thin
+   dashed cut-line, so long pages read as distinct blocks rather than one
+   continuous scroll. Bleeds edge-to-edge by canceling out the .sheet's
+   own padding, then re-applies it so inner content still lines up with
+   the rest of the page's text column.
+   ========================================================================== */
+
+.section-panel {
+  background: var(--panel-tint);
+  border-top: 1px solid var(--line-500);
+  border-bottom: 1px solid var(--line-500);
+  margin: 3rem calc(-1 * var(--sheet-margin));
+  padding: 2.5rem var(--sheet-margin);
+}
+
+/* Cool-toned alternate, for the section right after a warm one — keeps
+   a long page from reading as a single repeated tint. */
+.section-panel--cool {
+  background: var(--panel-tint-cool);
+}
+
+.section-panel + .section-panel {
+  margin-top: -3rem;
+  border-top: none;
+}
+
+.section-panel .cut-line:first-child {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   GALLERY THEME — a darker, minimalist alternative palette for the
+   astrophotography page. Applied via a class on <body> (see Layout.astro),
+   it overrides the same custom properties every component already reads
+   from (--ink-900, --ink-800, --line-500, --paper, --paper-dim, --redline),
+   so cards, figures, buttons, and links re-theme automatically without
+   per-component overrides. What's left below just strips the blueprint-
+   specific chrome (grid, corner marks, dashed dividers, framed photos)
+   that doesn't fit a gallery mood.
+   ========================================================================== */
+
+body.theme-gallery {
+  --ink-900: #0b0c0f;
+  --ink-800: #17191d;
+  --line-500: #34383f;
+  --line-500-soft: rgba(255, 255, 255, 0.035);
+  --paper: #edeef1;
+  --paper-dim: #949aa3;
+  --redline: #ff7a33;
+  --redline-dim: rgba(255, 122, 51, 0.15);
+  --redline-deep: #e8631c;
+  --panel-tint: #121316;
+  background-image: none;
+}
+
+body.theme-gallery::before {
+  background: radial-gradient(ellipse 1200px 640px at 50% -12%, rgba(255, 255, 255, 0.035), transparent 65%);
+}
+
+/* Blueprint corner registration marks read as drafting-sheet chrome —
+   drop them for the gallery mood. */
+body.theme-gallery .sheet::before,
+body.theme-gallery .sheet::after,
+body.theme-gallery .sheet-frame::before,
+body.theme-gallery .sheet-frame::after {
+  opacity: 0;
+}
+
+/* Dashed dividers are another blueprint signature — solid and quieter here. */
+body.theme-gallery .cut-line::before,
+body.theme-gallery .cut-line::after {
+  border-top-style: solid;
+  opacity: 0.7;
+}
+
+/* Photos get an edge-to-edge gallery treatment instead of sitting in a
+   bordered/padded drafting frame. */
+body.theme-gallery .astro-figure__frame {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+body.theme-gallery .astro-gallery-item {
+  border: none;
+  background: transparent;
 }
 
 /* ==========================================================================

@@ -6,6 +6,7 @@ status: "completed"
 tags: ["astrophotography", "electronics", "3D printing"]
 image: "allsky-camera-hero.jpg"
 draft: false
+accent: "#2f8f6b"
 ---
 
 ## Overview
@@ -40,3 +41,11 @@ background. That tradeoff cuts both ways: with no light-pollution filter
 in front of the sensor, the camera is picking up the full spectrum of
 skyglow along with the stars, so how much a given frame shows is as much
 a function of local light pollution that night as it is the sky itself.
+
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/allsky-outcome-frame.jpg" alt="A single raw allsky frame, showing the Milky Way and a light-pollution glow along one horizon" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>A SINGLE RAW ALLSKY FRAME — MILKY WAY VISIBLE OVERHEAD, SKYGLOW ALONG THE HORIZON</p>

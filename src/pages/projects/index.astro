@@ -48,27 +48,29 @@ const inProgress = allProjects
     ))}
   </div>
 
-  <div class="cut-line"><span>In Progress</span></div>
+  <div class="section-panel section-panel--cool">
+    <div class="cut-line"><span>In Progress</span></div>
 
-  <div class="project-grid">
-    {inProgress.map((project, i) => (
-      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
-        <div class="thumb-frame">
-          {project.data.image ? (
-            <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
-          ) : (
-            <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
-          )}
-        </div>
-        <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
-        <h3>{project.data.title}</h3>
-        <p>{project.data.description}</p>
-        <div class="tags">
-          {project.data.tags?.map((tag: string) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      </a>
-    ))}
+    <div class="project-grid">
+      {inProgress.map((project, i) => (
+        <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
+          <div class="thumb-frame">
+            {project.data.image ? (
+              <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
+            ) : (
+              <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
+            )}
+          </div>
+          <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
+          <h3>{project.data.title}</h3>
+          <p>{project.data.description}</p>
+          <div class="tags">
+            {project.data.tags?.map((tag: string) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
   </div>
 </Layout>

@@ -6,6 +6,7 @@ status: "completed"
 tags: ["astrophotography", "3D printing", "CAD", "electronics"]
 image: "telescope-dew-shield.jpg"
 draft: false
+accent: "#9457c9"
 ---
 
 ## Overview

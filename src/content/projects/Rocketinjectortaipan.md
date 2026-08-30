@@ -6,6 +6,7 @@ status: "completed"
 tags: ["propulsion", "liquid rockets", "Python", "CEA"]
 image: "taipan-injector-plate-01.jpg"
 draft: false
+accent: "#d6524a"
 ---
 
 ## Overview
