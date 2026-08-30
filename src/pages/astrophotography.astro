@@ -34,25 +34,25 @@ const optics = [
   {
     name: "William Optics RedCat 51",
     role: "Refractor",
-    note: "Compact f/4.9 petzval apo — small and light enough to travel with, used for wide-field targets that don't need the reach of a full telescope.",
+    note: "Compact f/4.9 petzval apo, small and light enough to travel with, used for wide-field targets that don't need the reach of a full telescope.",
     url: "https://williamoptics.com/products/redcat-51-ii",
   },
   {
     name: "Apertura CarbonStar 200",
     role: "Newtonian",
-    note: "8\" f/4 imaging Newtonian, carbon-fiber tube — the OTA behind the second rendition in the Newtonian telescope project.",
+    note: "8\" f/4 imaging Newtonian, carbon-fiber tube: the OTA behind the second rendition in the Newtonian telescope project.",
     url: "https://www.highpointscientific.com/apertura-carbonstar-200-imaging-newtonian",
   },
   {
     name: "Celestron EdgeHD 8",
     role: "SCT",
-    note: "8\" aplanatic Schmidt-Cassegrain — a flat, coma-free field at longer focal length for targets that need more reach than the Newtonian or the 135mm.",
+    note: "8\" aplanatic Schmidt-Cassegrain, a flat, coma-free field at longer focal length for targets that need more reach than the Newtonian or the 135mm.",
     url: "https://agenaastro.com/celestron-edgehd-800-cge-ota-91030-xlt.html",
   },
   {
     name: "Samyang/Rokinon 135mm f/2",
     role: "Telephoto lens",
-    note: "Fast, all-manual telephoto lens for wide-field targets — see the Rokinon rig project for the custom mounting and focusing hardware built around it.",
+    note: "Fast, all-manual telephoto lens for wide-field targets. See the Rokinon rig project for the custom mounting and focusing hardware built around it.",
     url: "https://rokinon.com/products/135mm-f2-0-full-frame-telephoto",
   },
 ];
@@ -61,19 +61,19 @@ const gear = [
   {
     name: "ZWO AM3",
     role: "Mount",
-    note: "Strain-wave harmonic-drive equatorial mount — carries the imaging train with essentially none of the backlash or periodic error of a traditional worm-gear mount.",
+    note: "Strain-wave harmonic-drive equatorial mount, carrying the imaging train with essentially none of the backlash or periodic error of a traditional worm-gear mount.",
     url: "https://agenaastro.com/shop-by-brand/zwo-am3-strain-wave-drive-equatorial-mount-head.html",
   },
   {
     name: "ZWO TC40",
     role: "Tripod",
-    note: "Carbon-fiber tripod built for the AM3's harmonic-drive mount family — rigid enough to keep vibration out of long guided exposures.",
+    note: "Carbon-fiber tripod built for the AM3's harmonic-drive mount family, rigid enough to keep vibration out of long guided exposures.",
     url: "https://agenaastro.com/zwo-tc40-carbon-fiber-tripod.html",
   },
   {
     name: "ZWO PE200",
     role: "Pier extension",
-    note: "200mm of extra height between tripod and mount head — clears tripod-leg interference at higher declinations.",
+    note: "200mm of extra height between tripod and mount head, clearing tripod-leg interference at higher declinations.",
     url: "https://agenaastro.com/zwo-200mm-7-9-pier-extension-for-am3-am5-mount-pe200.html",
   },
   {
@@ -85,17 +85,17 @@ const gear = [
   {
     name: "SVBONY SV241",
     role: "Power distribution",
-    note: "Splits a single 12V feed out to the mount, camera, dew heaters, and focuser. This is the base SV241 — manual switching, no ASCOM/computer control.",
+    note: "Splits a single 12V feed out to the mount, camera, dew heaters, and focuser. This is the base SV241: manual switching, no ASCOM/computer control.",
     url: "https://www.svbony.com/products/sv241-astronomical-powerbox",
   },
   {
-    name: "WandererCover V4-EC — 225mm",
+    name: "WandererCover V4-EC, 225mm",
     role: "Motorized flat panel",
-    note: "Motorized flip-flat cover with a built-in flat panel for the wide-field train — closes automatically, then evens out vignetting and dust motes across the larger aperture.",
+    note: "Motorized flip-flat cover with a built-in flat panel for the wide-field train, closing automatically, then evening out vignetting and dust motes across the larger aperture.",
     url: "https://www.wandererastro.com/sys-pd/14.html",
   },
   {
-    name: "WandererCover V4-EC — 100mm",
+    name: "WandererCover V4-EC, 100mm",
     role: "Motorized flat panel",
     note: "Same motorized flip-flat design, sized for the narrower guide/OAG optical path.",
     url: "https://agenaastro.com/wandererastro-wanderer-cover-v4-ec-100mm.html",
@@ -103,7 +103,7 @@ const gear = [
   {
     name: "ZWO OAG",
     role: "Off-axis guider",
-    note: "Picks guide-star light from just outside the imaging sensor's field through a small prism, so guiding sees the same optical path — and the same flexure — as the imaging camera.",
+    note: "Picks guide-star light from just outside the imaging sensor's field through a small prism, so guiding sees the same optical path, and the same flexure, as the imaging camera.",
     url: "https://agenaastro.com/zwo-oag-off-axis-guider.html",
   },
   {
@@ -131,7 +131,7 @@ const gear = [
       unattended imaging sequence, the tilt-correction problem that fast
       optics create, and how a stack of raw frames becomes a final image.
     </p>
-    <a href="#gallery" class="btn" style="margin-top: 1.25rem;">Jump to gallery ↓</a>
+    <a href="#gallery" class="btn btn-lg" style="margin-top: 1.5rem;">Jump to gallery ↓</a>
   </section>
 
   <AstroImage
@@ -194,11 +194,11 @@ const gear = [
 
   <p>
     The rig lives outside for the night. It gets wheeled out and set up
-    on the pier before dark, then stays out — polar aligned, cabled up,
-    and running — until first light, rather than being shuttled back
+    on the pier before dark, then stays out (polar aligned, cabled up,
+    and running) until first light, rather than being shuttled back
     in between targets. Once it's set up, control passes entirely to a
     remote desktop session run from inside the house against the mini PC
-    riding on the mount — focusing, plate solving, sequencing, and
+    riding on the mount: focusing, plate solving, sequencing, and
     shutting down at the end of the night all happen over that link. The
     only reason to go back outside is to physically move the gear, at
     setup and again at pack-up the next morning.
@@ -208,7 +208,7 @@ const gear = [
 
   <p>
     Targets get chosen before the mount ever goes outside. Stellarium
-    handles the logistics — what's up, when it transits, and how it
+    handles the logistics: what's up, when it transits, and how it
     clears the local horizon and any obstructions on a given night.
     AstroBin is the discovery tool: browsing what other imagers have
     captured with similar gear and field of view turns up targets worth
@@ -224,12 +224,12 @@ const gear = [
   </p>
 
   <ol class="seq-list">
-    <li><strong>Polar alignment</strong> — dialing in the mount's polar axis first, since tracking, guiding, and plate solving all inherit this error.</li>
-    <li><strong>Autofocus</strong> — the imaging train autofocuses on a nearby star before the sequence starts, and again through the night as temperature drifts.</li>
-    <li><strong>Guide camera focus</strong> — set manually once per setup; the guide train just needs to lock onto guide stars, not hold focus as tightly as the imaging camera.</li>
-    <li><strong>Target selection, slew &amp; plate solve</strong> — the mount slews to the chosen target and a plate solve confirms (and corrects) the actual pointing against the planned coordinates before any exposures start.</li>
-    <li><strong>Exposure</strong> — the sequence exposes through a given filter for the planned sub length and count.</li>
-    <li><strong>Calibration frames</strong> — bias/dark frames come from a reusable library, re-shot roughly once a year as the sensor's noise characteristics drift; flats are captured fresh every session, automatically, through NINA driving the flat panel, so vignetting and dust-mote correction always matches that night's exact optical setup.</li>
+    <li><strong>Polar alignment</strong>: dialing in the mount's polar axis first, since tracking, guiding, and plate solving all inherit this error.</li>
+    <li><strong>Autofocus</strong>: the imaging train autofocuses on a nearby star before the sequence starts, and again through the night as temperature drifts.</li>
+    <li><strong>Guide camera focus</strong>: set manually once per setup; the guide train just needs to lock onto guide stars, not hold focus as tightly as the imaging camera.</li>
+    <li><strong>Target selection, slew &amp; plate solve</strong>: the mount slews to the chosen target and a plate solve confirms (and corrects) the actual pointing against the planned coordinates before any exposures start.</li>
+    <li><strong>Exposure</strong>: the sequence exposes through a given filter for the planned sub length and count.</li>
+    <li><strong>Calibration frames</strong>: bias/dark frames come from a reusable library, re-shot roughly once a year as the sensor's noise characteristics drift; flats are captured fresh every session, automatically, through NINA driving the flat panel, so vignetting and dust-mote correction always matches that night's exact optical setup.</li>
   </ol>
 
   <div class="cut-line"><span>Sensor Tilt</span></div>
@@ -237,15 +237,15 @@ const gear = [
   <p>
     Every optical system has one flat plane where the image actually
     comes to focus. If the sensor isn't perfectly perpendicular to the
-    incoming light cone — even by a fraction of a degree — one side of
+    incoming light cone, even by a fraction of a degree, one side of
     the frame sits slightly closer to that plane than the other, and
     stars stretch into small ellipses toward whichever corner is
     furthest from true focus. On a fast, wide-aperture system the depth
     of focus is shallow enough that a tilt error worth caring about is
-    measured in thousandths of a millimeter at the sensor's edge — not
+    measured in thousandths of a millimeter at the sensor's edge, not
     something that's reliably adjustable by hand, especially not
-    repeatably across setups. An automated tilt adjuster — fine
-    adjustment screws driven under motor control instead of by hand —
+    repeatably across setups. An automated tilt adjuster (fine
+    adjustment screws driven under motor control instead of by hand)
     corrects that error in small, repeatable steps and lets the result
     get verified against real star data instead of guesswork, and
     re-checked whenever the imaging train gets reconfigured.
@@ -273,7 +273,7 @@ const gear = [
           <text x="90" y="130" class="tilt-cap" text-anchor="middle">CORRECTED</text>
         </g>
       </svg>
-      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 02</span>STAR SHAPE ACROSS THE FRAME — TILTED VS. CORRECTED</figcaption>
+      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 02</span>STAR SHAPE ACROSS THE FRAME: TILTED VS. CORRECTED</figcaption>
     </figure>
 
     <figure class="tilt-figure">
@@ -312,31 +312,31 @@ const gear = [
     A finished image starts as anywhere from dozens to a few hundred
     individual sub-exposures, each one mostly noise with a faint, real
     signal buried in it. PixInsight combines them through pixel-by-pixel
-    integration — matrix math across the whole stack — averaging with
+    integration (matrix math across the whole stack), averaging with
     rejection algorithms that throw out satellite trails, cosmic-ray
     hits, and other single-frame artifacts rather than simply layering
     everything together. Signal-to-noise builds with the square root of
     the sub count, so doubling the number of subs only buys about a 40%
-    improvement in signal-to-noise — the real tradeoff behind every
+    improvement in signal-to-noise: the real tradeoff behind every
     session, since more subs always help but with steadily diminishing
     returns against the hours it costs to get them. Before the stack is
-    combined, every frame gets normalized — scaled and offset so that
+    combined, every frame gets normalized, scaled and offset so that
     frame-to-frame differences in sky brightness, transparency, or moon
     position don't bias the result.
   </p>
 
   <p>
     Everything up to that point is math. What comes after is where the
-    process gets genuinely subjective — this is the part that's art, not
+    process gets genuinely subjective; this is the part that's art, not
     measurement. Images here are captured in real, natural color, not
     narrowband-mapped or artificially recolored, and stretched through a
     histogram transform to bring out detail that's present in the linear
-    data but invisible on a straight display — that step remaps what's
+    data but invisible on a straight display. That step remaps what's
     already in the frame onto a range a screen can actually show; it
     doesn't invent anything that isn't there. From there, a set of
     AI-assisted tools handles gradient removal (correcting for skyglow
     and light pollution that vary across the frame), deconvolution, and
-    noise reduction — cleaning up what the optics and the sky introduced
+    noise reduction, cleaning up what the optics and the sky introduced
     without changing what the target actually looks like. Plate solving
     plus SPCC (Spectrophotometric Color Calibration) pins the color
     balance to real stellar spectra in the field instead of an eyeballed
@@ -344,7 +344,7 @@ const gear = [
   </p>
 
   <p>
-    The last pass happens in Photoshop — pulling out finer local detail
+    The last pass happens in Photoshop, pulling out finer local detail
     and nudging color ever so slightly, not to invent anything, but to
     draw the eye toward the parts of the image that matter.
   </p>
@@ -354,7 +354,7 @@ const gear = [
   {galleryItems.length > 0 ? (
     <>
       <p class="mono" style="color: var(--paper-dim); font-size: 0.8rem; margin: -0.5rem 0 1.5rem;">
-        {galleryItems.length} photos — click one to view it larger or download it.
+        {galleryItems.length} photos. Click one to view it larger or download it.
       </p>
       <div class="astro-gallery">
         {galleryItems.map((item, i) => (
@@ -381,7 +381,7 @@ const gear = [
     </>
   ) : (
     <p class="editable-note">
-      No photos in the gallery yet — drop JPGs into
+      No photos in the gallery yet. Drop JPGs into
       public/images/astrophotography/ and rebuild.
     </p>
   )}
@@ -621,7 +621,7 @@ const gear = [
     const item = items[current];
     lightboxImg.src = item.url;
     lightboxImg.alt = item.label;
-    countEl.textContent = `${item.label} — ${current + 1} / ${items.length}`;
+    countEl.textContent = `${item.label} (${current + 1} / ${items.length})`;
     downloadEl.href = item.url;
     downloadEl.setAttribute("download", item.url.split("/").pop() || "photo.jpg");
   }

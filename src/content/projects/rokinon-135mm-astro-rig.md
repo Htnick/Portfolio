@@ -11,8 +11,8 @@ accent: "#3b6fd1"
 
 ## Overview
 
-The Rokinon (Samyang) 135mm f/2 is an all-manual lens — no electronic
-aperture or focus-by-wire — which is exactly why it's popular for
+The Rokinon (Samyang) 135mm f/2 is an all-manual lens (no electronic
+aperture or focus-by-wire), which is exactly why it's popular for
 wide-field astrophotography, but also why it needs extra hardware around
 it to be usable on a tracking mount: a rigid way to bridge the lens to a
 dedicated astro camera and mount, and a way to nail focus precisely on
@@ -31,14 +31,14 @@ focuser that rides on top.
 
 ## Ring mounting system
 
-The lens's biggest limitation wasn't optical — on paper the Rokinon
-135mm f/2 is close to ideal for wide-field astrophotography — it was
+The lens's biggest limitation wasn't optical. On paper the Rokinon
+135mm f/2 is close to ideal for wide-field astrophotography; it was
 mechanical. There was no way to attach a dedicated astro camera to it and
 have the whole assembly sit level and rigid on a tracking mount; the
 stock lens mount was never built to carry that load at a fixed
-orientation for hours at a time. The fix is three 3D-printed rings — a
+orientation for hours at a time. The fix is three 3D-printed rings (a
 lens ring, a mid ring, and a camera ring, each printed in two halves for
-easier printing and assembly — plus a camera hold bracket, all modeled
+easier printing and assembly) plus a camera hold bracket, all modeled
 in CAD to follow the exact contours of the lens barrel and clamp it at a
 consistent height all the way through to the camera. Holding that
 height constant matters more than it sounds: any
@@ -51,7 +51,7 @@ mounting interface to the tracker's dovetail.
 
 Focus went through two full design iterations, both driven by the same
 ZWO EAF electronic autofocuser. The first version was a double-helical
-gear pair — a 37-tooth and a 68-tooth gear, for roughly a 1.84:1
+gear pair (a 37-tooth and a 68-tooth gear) for roughly a 1.84:1
 mechanical reduction, with the double-helical tooth profile chosen
 specifically to cancel axial thrust and cut backlash compared to a
 straight spur gear. Against most lenses that reduction would have been
@@ -65,7 +65,7 @@ V2 replaced the gears with a GT2 timing-belt drive: a
 on the focus motor, a
 <a href="https://www.amazon.com/uxcell-Timing-Closed-350-2GT-6-Printer/dp/B0CMHXXVM1/" target="_blank" rel="noopener noreferrer">350mm belt</a>,
 and a pulley ring of roughly
-146–147 teeth wrapped around the lens's focus collar — about a 7.3:1
+146–147 teeth wrapped around the lens's focus collar, about a 7.3:1
 mechanical reduction, close to four times the reduction of the original
 gear pair. A belt drive also runs with none of a gear pair's backlash,
 since the belt stays under tension across the whole loop instead of
@@ -74,7 +74,7 @@ ZWO EAF itself steps a 7.5° stepper motor through an internal 1:128
 gearbox; stacked with the roughly 4x larger external reduction of the
 belt drive, each motor step turns the lens's focus collar in an
 increment about four times finer than the V1 gear pair produced for the
-same step — enough to reliably land inside, rather than hunt around, the
+same step, enough to reliably land inside, rather than hunt around, the
 lens's 14-micron critical focus zone.
 
 ## Downloads
@@ -100,7 +100,7 @@ Switching to the belt-drive focuser solved the actual problem: focus now
 lands inside the lens's critical zone reliably, instead of the V1 gear
 pair hunting in and out of it. The rig is now the go-to setup for
 wide-field, fast-glass targets that suit a 135mm lens's frame better than
-the reach of a full telescope — see the
+the reach of a full telescope. See the
 [Astrophotography](/Portfolio/astrophotography) page for the gear list,
 imaging workflow, and gallery this rig feeds into.
 

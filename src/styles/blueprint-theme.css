@@ -36,6 +36,12 @@
   --panel-tint: #f2e8d2;
   --panel-tint-cool: #e6edf4;
 
+  /* Site nav stays dark on every page, regardless of the page's own
+     theme, so the header reads as a consistent brand bar. */
+  --nav-bg: #14151a;
+  --nav-border: #2c2e35;
+  --nav-text: #c6cad1;
+
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
@@ -163,7 +169,12 @@ a:focus-visible, button:focus-visible {
 .sheet-frame::after { bottom: 14px; right: 14px; border-width: 0 1.5px 1.5px 0; }
 
 /* ==========================================================================
-   NAV — styled as a drawing-sheet header bar
+   NAV — a proper site header: full-bleed, dark, with each link styled as
+   a button rather than plain text. Bleeds past the .sheet's own padding
+   on all three top-facing sides (like .section-panel) so it reads as an
+   official header bar rather than another piece of page content. Kept
+   dark regardless of page theme (blueprint or gallery) for a consistent
+   brand mark site-wide.
    ========================================================================== */
 
 .site-nav {
@@ -171,40 +182,69 @@ a:focus-visible, button:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1rem 0 1.25rem;
-  border-bottom: 1px solid var(--line-500);
-  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  padding: 1rem var(--sheet-margin);
+  margin: calc(-1 * var(--sheet-margin)) calc(-1 * var(--sheet-margin)) 2.5rem;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
   position: relative;
   z-index: 1;
 }
 
 .site-nav .brand {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--paper);
+  color: #fff;
   text-decoration: none;
+  font-weight: 600;
 }
 .site-nav .brand:hover { color: var(--redline); }
 
 .site-nav ul {
   list-style: none;
   display: flex;
-  gap: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin: 0;
   padding: 0;
 }
 
-.site-nav a {
+.site-nav a.nav-btn {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--paper-dim);
+  color: var(--nav-text);
+  border: 1px solid var(--nav-border);
+  padding: 0.5rem 0.9rem;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
-.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--redline); }
+.site-nav a.nav-btn:hover,
+.site-nav a.nav-btn[aria-current="page"] {
+  color: #fff;
+  background: var(--redline);
+  border-color: var(--redline);
+}
+
+.site-nav a.nav-icon-btn {
+  padding: 0.5rem 0.65rem;
+}
+
+@media (max-width: 640px) {
+  .site-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+  .site-nav ul {
+    width: 100%;
+  }
+}
 
 /* ==========================================================================
    TITLE BLOCK — the signature element. Modeled on the stamp in the
@@ -726,6 +766,13 @@ th {
   color: #fff;
 }
 
+/* Size modifier — a bigger, more prominent CTA (e.g. "Jump to gallery"). */
+.btn-lg {
+  font-size: 0.95rem;
+  padding: 1rem 1.75rem;
+  gap: 0.65rem;
+}
+
 /* ==========================================================================
    FOOTER
    ========================================================================== */
@@ -838,7 +885,6 @@ body.theme-gallery .astro-gallery-item {
    ========================================================================== */
 
 @media (max-width: 640px) {
-  .site-nav { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .title-block { grid-template-columns: repeat(2, auto); }
   .title-block div:nth-child(2) { border-right: none; }
   .title-block div:nth-child(3) { border-top: 1px solid var(--line-500); }

@@ -1,6 +1,6 @@
 ---
 title: "Newtonian Telescope for Astrophotography"
-description: "Custom 3D-printed and CNC-milled components for a Newtonian telescope, across two renditions — most recently an 8-inch build."
+description: "Custom 3D-printed and CNC-milled components for a Newtonian telescope, across two renditions, most recently an 8-inch build."
 date: "2024-12-01"
 status: "completed"
 tags: ["astrophotography", "3D printing", "CAD", "electronics"]
@@ -11,28 +11,28 @@ accent: "#9457c9"
 
 ## Overview
 
-I started using CAD in high school to make small accessories for astrophotography — nothing ambitious, just parts to make an existing setup work slightly better. It wasn't until this project that I took on something larger: a full custom component set for a Newtonian telescope, followed by a second rendition built around an 8-inch scope.
+I started using CAD in high school to make small accessories for astrophotography, nothing ambitious, just parts to make an existing setup work slightly better. It wasn't until this project that I took on something larger: a full custom component set for a Newtonian telescope, followed by a second rendition built around an 8-inch scope.
 
 ## First rendition: constraints and design
 
-The first full build had a hard constraint set: everything had to improve thermal stability and imaging performance **without changing the telescope's existing focal geometry**. That meant every new component had to fit into an optical system that was already fixed — I couldn't redesign around the problem, only within it.
+The first full build had a hard constraint set: everything had to improve thermal stability and imaging performance **without changing the telescope's existing focal geometry**. That meant every new component had to fit into an optical system that was already fixed: I couldn't redesign around the problem, only within it.
 
 One of the most challenging and also most rewarding parts of this process was the thermal managment. To keep dew from forming on the optics of the telescope, I wanted to add a fan to move air through the telescope, keeping a low humidity. The issue with using a fan is that you need to make sure that the fan does not vibrate the telescope. At this scale, even micro vibrations can disturb the scope enough to fall out of focus. I ended up settling on a pc fan to move the air through the scope. I 3d-printed a mounting bracket, and reused a old device to have a consistent voltage that could be provided via usb-c. 
 
 <!--
-  Still needed — see PHOTOS_NEEDED.md:
-  <AstroImage src="/images/telescope/v1-components.jpg" alt="First rendition 3D-printed components" figNo="02" caption="RENDITION 1 — 3D-PRINTED COMPONENT SET, HEAT-SET INSERTS" />
+  Still needed: see PHOTOS_NEEDED.md:
+  <AstroImage src="/images/telescope/v1-components.jpg" alt="First rendition 3D-printed components" figNo="02" caption="RENDITION 1: 3D-PRINTED COMPONENT SET, HEAT-SET INSERTS" />
 -->
 
 ## Second rendition: the 8-inch build
 
-The second rendition moved to an 8-inch telescope, and the images it produced exposed problems the first build never had to deal with — mostly related to the larger aperture's increased sensitivity to flexure, cooling, and collimation drift over longer exposures.
+The second rendition moved to an 8-inch telescope, and the images it produced exposed problems the first build never had to deal with, mostly related to the larger aperture's increased sensitivity to flexure, cooling, and collimation drift over longer exposures.
 
-This telescope was never meant to become its own project — I just ended up chasing it down a rabbit hole. There were plenty of issues with the scope to begin with, none of them dealbreakers, but none of them letting me get the most out of it either.
+This telescope was never meant to become its own project; I just ended up chasing it down a rabbit hole. There were plenty of issues with the scope to begin with, none of them dealbreakers, but none of them letting me get the most out of it either.
 
 ### Focuser precision
 
-The first problem I wanted to tackle was the focuser. This telescope has a 200mm aperture and an 800mm focal length, putting it at f/4 — a fast ratio that makes the image respond dramatically to even small errors in the imaging process. A precise focuser goes a long way toward minimizing that, since it determines how consistently you can actually hit focus.
+The first problem I wanted to tackle was the focuser. This telescope has a 200mm aperture and an 800mm focal length, putting it at f/4, a fast ratio that makes the image respond dramatically to even small errors in the imaging process. A precise focuser goes a long way toward minimizing that, since it determines how consistently you can actually hit focus.
 
 My solution was to swap in one of my own high-resolution focusers instead of the one that came with the scope. That meant 3D-printing a model of the mount I wanted, then having it produced in aluminum by a third party so it could handle the loads in the telescope's focal train.
 
@@ -42,13 +42,13 @@ My solution was to swap in one of my own high-resolution focusers instead of the
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/telescope-focus-adapter.jpg" alt="Custom aluminum focuser adapter, machined to fit the 8-inch scope's focal train" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>8-INCH RENDITION — CUSTOM ALUMINUM FOCUSER ADAPTER</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>8-INCH RENDITION: CUSTOM ALUMINUM FOCUSER ADAPTER</p>
 
 ### Internal reflection and flocking
 
 The next issue was a set of strange spikes peeling away from the center of each star in my images. My first guess was internal reflection, so I designed and 3D-printed a dew shield and flocked the inside of the telescope with a dark, stick-on fabric to cut down on stray light bouncing around inside the tube.
 
-That improved image contrast noticeably, but didn't eliminate the artifacts — which told me I was looking at the wrong cause.
+That improved image contrast noticeably, but didn't eliminate the artifacts, which told me I was looking at the wrong cause.
 
 ### Thermal management
 
@@ -62,8 +62,8 @@ The fan also needed a way to keep dust and debris from reaching the optics, so I
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/telescope-fan-housing.jpg" alt="3D-printed fan housing mounted on the rear cell of the 8-inch scope, with the intake mask visible on top" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 04</span>8-INCH RENDITION — FAN HOUSING AND INTAKE MASK, V2</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 04</span>8-INCH RENDITION: FAN HOUSING AND INTAKE MASK, V2</p>
 
 ### Root cause: sensor-to-corrector spacing
 
-In the end, the star artifacts weren't internal reflection at all — the actual issue was the spacing between the camera sensor and the coma corrector. Getting that distance right is what finally resolved the problem the flocking and dew shield had only partially masked.
+In the end, the star artifacts weren't internal reflection at all; the actual issue was the spacing between the camera sensor and the coma corrector. Getting that distance right is what finally resolved the problem the flocking and dew shield had only partially masked.

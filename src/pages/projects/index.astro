@@ -19,7 +19,7 @@ const inProgress = allProjects
     <span class="eyebrow">// Index</span>
     <h1>Projects</h1>
     <p class="lede">
-      Rocket engines, telescopes, and the occasional glider — a running log
+      Rocket engines, telescopes, and the occasional glider: a running log
       of what I've been building.
     </p>
   </section>
@@ -33,7 +33,7 @@ const inProgress = allProjects
           {project.data.image ? (
             <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
           ) : (
-            <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
+            <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
           )}
         </div>
         <span class="sheet-no">SHT {String(i + 1).padStart(2, "0")} / COMPLETE</span>
@@ -58,7 +58,7 @@ const inProgress = allProjects
             {project.data.image ? (
               <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
             ) : (
-              <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
+              <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
             )}
           </div>
           <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>

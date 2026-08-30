@@ -15,7 +15,7 @@ Taipan is a 650lbf liquid bipropellant rocket engine developed by CU's Sounding 
 
 ## Injector plate redesign
 
-The injector plate had to be redesigned around a fixed chamber pressure of 700 psi without changing the overall engine geometry — meaning every change to flow area, orifice count, or impingement pattern had to work within the same envelope as the original design.
+The injector plate had to be redesigned around a fixed chamber pressure of 700 psi without changing the overall engine geometry, meaning every change to flow area, orifice count, or impingement pattern had to work within the same envelope as the original design.
 
 <!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
      pages can, so this path is hardcoded to the current /Portfolio/ base.
@@ -23,11 +23,11 @@ The injector plate had to be redesigned around a fixed chamber pressure of 700 p
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/taipan-injector-plate-02.jpg" alt="CAD render of the Taipan injector plate, angled detail view showing the impinging orifice pattern" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE — IMPINGING ORIFICE PATTERN, CAD RENDER</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: IMPINGING ORIFICE PATTERN, CAD RENDER</p>
 
 - Performed iterative flow and combustion calculations to size orifice diameters and impingement angles for consistent atomization across the new propellant combination.
 - Verified performance calculations against analytical models to confirm the redesigned plate would deliver the expected thrust output.
-- Applied NASA's Chemical Equilibrium Analysis (CEA) in Python to run parametric trade studies across mixture ratio, chamber pressure, and expansion ratio — mapping how sensitive performance was to each variable before committing to a final geometry.
+- Applied NASA's Chemical Equilibrium Analysis (CEA) in Python to run parametric trade studies across mixture ratio, chamber pressure, and expansion ratio, mapping how sensitive performance was to each variable before committing to a final geometry.
 
 ## Propellant transition: ethanol/N₂O → RP-1/LOX (Keralox)
 
@@ -39,14 +39,14 @@ Key differences that drove the redesign:
 - **Combustion performance.** Re-ran CEA sweeps specific to RP-1/LOX to find the characteristic velocity (c*) and specific impulse the new propellant pair would actually deliver at 700 psi.
 - **Ignition and atomization behavior.** Kerolox combinations are less forgiving on atomization quality than ethanol/N₂O, which fed directly back into the impingement geometry chosen for the injector.
 
-Developed Python-based optimization workflows — using AI-assisted methods to speed up iteration — to converge on injector and performance parameters through the propellant transition.
+Developed Python-based optimization workflows, using AI-assisted methods to speed up iteration, to converge on injector and performance parameters through the propellant transition.
 
 ## Python toolset
 
 I built and maintained a set of Python scripts that CEA data and engine models flowed through, rather than doing a string of calculations in a spreadsheet each time. The values that are used for this example are for the newest engine in our fleet that I have been working on, but this script itself was built around taipan. 
 
-- **CEA wrapper scripts** — automated running NASA CEA across mixture ratio, chamber pressure, and expansion ratio sweeps, and collected the outputs into structured performance tables.
-- **Sizing calculator** — takes target thrust, chamber pressure, and propellant combination as inputs and returns key sizing outputs (mass flow rate, orifice sizing, expected c* and Isp) used to check the injector redesign against requirements.
+- **CEA wrapper scripts:** automated running NASA CEA across mixture ratio, chamber pressure, and expansion ratio sweeps, and collected the outputs into structured performance tables.
+- **Sizing calculator:** takes target thrust, chamber pressure, and propellant combination as inputs and returns key sizing outputs (mass flow rate, orifice sizing, expected c* and Isp) used to check the injector redesign against requirements.
 
 ```python
 # Simplified structure of the Taipan sizing calculator.

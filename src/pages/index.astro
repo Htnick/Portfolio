@@ -23,7 +23,7 @@ const featured = allProjects
         <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
         <h1>Henry Nickless</h1>
         <p class="lede">
-          I design and build liquid rocket engines and precision instruments —
+          I design and build liquid rocket engines and precision instruments,
           currently working on injector plates and regenerative cooling at CU's
           Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
         </p>
@@ -60,7 +60,7 @@ const featured = allProjects
           {project.data.image ? (
             <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
           ) : (
-            <ImagePlaceholder label={`Photo — ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
+            <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
           )}
         </div>
         <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline);" : ""}>

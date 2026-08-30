@@ -29,6 +29,7 @@ const currentPath = Astro.url.pathname;
         <ul>
           <li>
   <a 
+    class="nav-btn"
     href={import.meta.env.BASE_URL} 
     aria-current={currentPath === import.meta.env.BASE_URL ? "page" : undefined}
   >
@@ -37,6 +38,7 @@ const currentPath = Astro.url.pathname;
 </li>
 <li>
   <a 
+    class="nav-btn"
     href={`${import.meta.env.BASE_URL}projects`} 
     aria-current={currentPath.includes("/projects") ? "page" : undefined}
   >
@@ -45,6 +47,7 @@ const currentPath = Astro.url.pathname;
 </li>
 <li>
   <a 
+    class="nav-btn"
     href={`${import.meta.env.BASE_URL}about`} 
     aria-current={currentPath.includes("/about") ? "page" : undefined}
   >
@@ -53,10 +56,26 @@ const currentPath = Astro.url.pathname;
 </li>
 <li>
   <a 
+    class="nav-btn"
     href={`${import.meta.env.BASE_URL}astrophotography`} 
     aria-current={currentPath.includes("/astrophotography") ? "page" : undefined}
   >
     Astrophotography
+  </a>
+</li>
+<li>
+  <a
+    class="nav-btn nav-icon-btn"
+    href="https://instagram.com/astro.htn"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram: @astro.htn"
+  >
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.3" cy="6.7" r="0.65" fill="currentColor" stroke="none" />
+    </svg>
   </a>
 </li>
         </ul>
@@ -67,7 +86,7 @@ const currentPath = Astro.url.pathname;
       </main>
 
       <footer class="site-footer">
-        <span>© {new Date().getFullYear()} Henry Nickless — Aerospace Engineering, CU Boulder</span>
+        <span>© {new Date().getFullYear()} Henry Nickless, Aerospace Engineering, CU Boulder</span>
         <span>
           <a href="mailto:Henry.Nickless@Colorado.edu">Henry.Nickless@Colorado.edu</a>
           &nbsp;/&nbsp;

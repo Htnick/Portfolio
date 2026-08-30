@@ -74,8 +74,8 @@ NOZZLE_CONFIGS = {
 
 # Efficiency factors
 # Cf is split into two independent terms:
-#   eta_cf_friction — boundary layer, skin friction, flow non-uniformity (nozzle-type independent)
-#   eta_div         — divergence loss (geometry dependent, set per nozzle type above)
+#   eta_cf_friction : boundary layer, skin friction, flow non-uniformity (nozzle-type independent)
+#   eta_div         : divergence loss (geometry dependent, set per nozzle type above)
 #   ETA_CF = eta_cf_friction * eta_div  (computed per nozzle in the loop)
 ETA_CF_FRICTION = 0.970
 ETA_CSTAR       = 0.92    # combustion efficiency
@@ -84,14 +84,14 @@ ETA_CSTAR       = 0.92    # combustion efficiency
 MAX_EXIT_DIAMETER  = 6.0     # inches
 MAX_PC             = 500.0   # psia
 WALL_THICKNESS     = 0.120   # inches
-CONTRACTION_RATIO  = 5.0     # Ac/At  — also sets the eps > CR floor
+CONTRACTION_RATIO  = 5.0     # Ac/At; also sets the eps > CR floor
 MATERIAL_YIELD     = 35000   # psi  (304 SS annealed ~35 ksi)
 MIN_FOS            = 2.0     # minimum factor of safety, hoop stress
 MIN_DE_DC_RATIO    = 1.15    # geometric minimum (exit diam / chamber diam)
 L_STAR             = 45.0    # inches  (LOX/RP-1 residence time)
 
 # Flow separation Pe/Pa limits  (exit pressure / ambient pressure)
-SEP_SUMMERFIELD  = 0.35   # classical lower bound — separation likely
+SEP_SUMMERFIELD  = 0.35   # classical lower bound; separation likely
 SEP_SCHMUCKER    = 0.40   # intermediate Schmucker criterion
 SEP_CONSERVATIVE = 0.45   # conservative design limit  ← used for pass/fail
 
@@ -140,7 +140,7 @@ for nozzle_name in nozzle_names:
         pe          = PC / pc_over_pe
         pe_pa_ratio = pe / AMBIENT_PRESSURE
 
-        # ---- CEA performance — Cf via get_PambCf (self-consistent single call) ----
+        # ---- CEA performance: Cf via get_PambCf (self-consistent single call) ----
         # This avoids the frozen/equilibrium mismatch of deriving Cf from
         # separate get_Isp and get_Cstar calls.
         cf_ideal = cea.get_PambCf(
@@ -175,7 +175,7 @@ for nozzle_name in nozzle_names:
         mdot_ox    = mdot_total * (OF / (1 + OF))
         mdot_fuel  = mdot_total / (1 + OF)
 
-        # ---- Structural — hoop stress on chamber barrel ----
+        # ---- Structural: hoop stress on chamber barrel ----
         hoop_stress = PC * (dc_in / 2) / WALL_THICKNESS
         fos         = MATERIAL_YIELD / hoop_stress
 
@@ -279,7 +279,7 @@ print(f"  {len(df_fail):>3} configurations FAIL at least one constraint")
 
 # ==================== SUMMARY TABLE ====================
 print("\n" + "=" * 130)
-print("PASSING CONFIGURATIONS — RANKED BY ISP")
+print("PASSING CONFIGURATIONS, RANKED BY ISP")
 print(f"  Constraints: Pc ≤ {MAX_PC} | De ≤ {MAX_EXIT_DIAMETER}\" | FoS ≥ {MIN_FOS} | "
       f"Pe/Pa ≥ {SEP_CONSERVATIVE} | eps > CR={CONTRACTION_RATIO} | De/Dc ≥ {MIN_DE_DC_RATIO}")
 print("=" * 130)
@@ -301,7 +301,7 @@ else:
     print("-" * len(hdr))
 
 print("\n" + "=" * 130)
-print("FAILING CONFIGURATIONS — REASON SUMMARY")
+print("FAILING CONFIGURATIONS, REASON SUMMARY")
 print("=" * 130)
 if not df_fail.empty:
     for _, r in df_fail.sort_values(['nozzle', 'eps']).iterrows():
@@ -385,7 +385,7 @@ def draw_lines(ax, col, ylabel, title,
 # ==================== FIGURE ====================
 fig = plt.figure(figsize=(24, 17))
 fig.suptitle(
-    'LOX / RP-1  —  Nozzle Configuration Trade Study\n'
+    'LOX / RP-1 Nozzle Configuration Trade Study\n'
     f'Fixed Design Point:  Thrust = {THRUST:.0f} lbf  ·  '
     f'Pc = {PC:.0f} psia  ·  O/F = {OF:.1f}  ·  '
     f'Boulder, CO  ({AMBIENT_PRESSURE:.2f} psia)\n'
@@ -626,12 +626,12 @@ plt.close(fig)
 
 ## Preliminary CAD and engine sizing
 
-With chamber and throat dimensions established from the performance math, I built out preliminary CAD to establish rough engine sizing — chamber length, converging/diverging section geometry, and how the regenerative cooling jacket would wrap around the chamber wall.
+With chamber and throat dimensions established from the performance math, I built out preliminary CAD to establish rough engine sizing: chamber length, converging/diverging section geometry, and how the regenerative cooling jacket would wrap around the chamber wall.
 
 **Working with RPA contour data.** Nozzle and chamber contour data was generated in RPA (a rocket propulsion analysis tool) and exported as DXF files. I imported these DXF contours directly into CAD as reference geometry, which let me build the chamber and nozzle profile around a validated aerodynamic contour instead of approximating it by hand.
 
 <!--
-  Still needed — see PHOTOS_NEEDED.md:
+  Still needed, see PHOTOS_NEEDED.md:
   <AstroImage src="/images/regen/dxf-contour-import.png" alt="DXF contour imported into CAD" figNo="03" caption="RPA-GENERATED NOZZLE CONTOUR, IMPORTED AS DXF REFERENCE GEOMETRY" />
 -->
 
@@ -645,4 +645,4 @@ Performed preliminary heat transfer analysis for regenerative and film cooling s
 
 ## Status
 
-In progress — currently finalizing the injector plate design and refining the cooling channel geometry ahead of manufacturing.
+In progress: currently finalizing the injector plate design and refining the cooling channel geometry ahead of manufacturing.
