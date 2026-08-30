@@ -13,10 +13,11 @@ draft: false
 A fun side build: a fixed, always-on camera aimed straight up so sky
 conditions can be checked from inside the house before hauling the rest
 of the gear outside. The design leans on off-the-shelf parts wherever
-possible to keep the build simple, with the 3D-printed housing doing the
-structural and environmental work — a clear printed dome bolted over a
-wide-angle lens module, sealing the optics off from the weather while
-keeping the full sky in frame.
+possible to keep the build simple — the optical tube is an old guide
+scope already on hand, repurposed rather than bought new for the job —
+with the 3D-printed housing doing the structural and environmental work:
+a clear printed dome bolted over the front end, sealing the optics off
+from the weather while keeping the sky in frame.
 
 The hardest problem wasn't optical, it was thermal. A sealed housing
 sitting outside overnight is exactly the kind of enclosure that invites

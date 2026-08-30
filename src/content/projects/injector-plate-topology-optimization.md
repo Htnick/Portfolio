@@ -66,11 +66,11 @@ topological optimization to address manufacturability and mass:
 
 ## Calculations
 
-<p class="editable-note">
-Henry — you mentioned a Desmos file with the impingement/orifice
-calculations. Send it over and I'll either embed it or link straight to
-it here.
-</p>
+The impingement and orifice sizing math above is worked out in this
+[Desmos calculator](https://www.desmos.com/calculator/yzwcyebbm7) — it's
+a running sheet of the governing equations rather than a rendered plot,
+so it's most useful for checking or re-deriving the numbers behind the
+layout decisions above.
 
 ## Status
 
