@@ -1,6 +1,6 @@
 ---
 title: "Rokinon 135mm Astrophotography Rig"
-description: "A custom 3D-printed ring mounting system and geared focuser built around a Rokinon 135mm f/2 lens for wide-field astrophotography."
+description: "A custom 3D-printed ring mounting system and belt-driven focuser built around a Rokinon 135mm f/2 lens for wide-field astrophotography."
 date: "2026-02-01"
 status: "completed"
 tags: ["astrophotography", "3D printing", "CAD", "optics"]
@@ -14,10 +14,11 @@ The Rokinon (Samyang) 135mm f/2 is an all-manual lens — no electronic
 aperture or focus-by-wire — which is exactly why it's popular for
 wide-field astrophotography, but also why it needs extra hardware around
 it to be usable on a tracking mount: a rigid way to bridge the lens to a
-camera body and mount, and a way to nail focus precisely on stars, where
-the stock focus ring's throw and grip make fine adjustment difficult.
-Built a two-part solution: a chain of 3D-printed rings that clamp the
-lens and bridge it to the camera, and a geared focuser that rides on top.
+dedicated astro camera and mount, and a way to nail focus precisely on
+stars, where the stock focus ring's throw and grip make fine adjustment
+next to impossible. Built a two-part solution: a chain of 3D-printed
+rings that clamp the lens and bridge it to the camera, and a belt-driven
+focuser that rides on top.
 
 <!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
      pages can, so paths below are hardcoded to the current /Portfolio/
@@ -29,31 +30,47 @@ lens and bridge it to the camera, and a geared focuser that rides on top.
 
 ## Ring mounting system
 
-A chain of 3D-printed rings — two lens-side rings, two mid rings, two
-camera-side rings, and a camera hold bracket — clamp around the lens
-barrel with cap screws and bridge it to the camera at a fixed, rigid
-spacing, keeping the whole optical stack aligned through handling and
-transport. A hex-profile ring at the rear carries the mounting interface
-to the tracker/dovetail.
-
-<p class="editable-note">
-Henry — fill in what problem the stock lens mount had that this solved,
-how many iterations it took to get the fit right, and what mount/tracker
-and camera body it's paired with.
-</p>
+The lens's biggest limitation wasn't optical — on paper the Rokinon
+135mm f/2 is close to ideal for wide-field astrophotography — it was
+mechanical. There was no way to attach a dedicated astro camera to it and
+have the whole assembly sit level and rigid on a tracking mount; the
+stock lens mount was never built to carry that load at a fixed
+orientation for hours at a time. The fix is a chain of 3D-printed rings —
+two lens-side rings, two mid rings, two camera-side rings, and a camera
+hold bracket — machined in CAD to follow the exact contours of the lens
+barrel and clamp it at a consistent height all the way through to the
+camera. Holding that height constant matters more than it sounds: any
+flexure in the stack introduces tilt in the imaging plane, which shows up
+as elongated stars in one corner of the frame and a soft, out-of-focus
+corner in the opposite one. A hex-profile ring at the rear carries the
+mounting interface to the tracker's dovetail.
 
 ## Custom focuser
 
-Focus is handled by a 3D-printed gear ring that wraps the lens's stock
-focus collar, driven through a dedicated focuser mount bracket — geared
-control instead of relying on the lens's stock grip, which is hard to
-adjust precisely by hand once the lens is buried in rings and mounting
-hardware.
+Focus went through two full design iterations, both driven by the same
+ZWO EAF electronic autofocuser. The first version was a double-helical
+gear pair — a 37-tooth and a 68-tooth gear, for roughly a 1.84:1
+mechanical reduction, with the double-helical tooth profile chosen
+specifically to cancel axial thrust and cut backlash compared to a
+straight spur gear. Against most lenses that reduction would have been
+plenty. But the Rokinon 135mm f/2 has a critical focus zone only about
+14 microns wide, and even a well-cut gear pair carries enough backlash at
+that reduction for the image to drift in and out of that zone before the
+teeth fully re-engage.
 
-<p class="editable-note">
-Henry — fill in how you verified focus (Bahtinov mask, star-size metric,
-etc.) and anything you'd change about the gear ratio or mounting for a V3.
-</p>
+V2 replaced the gears with a GT2 timing-belt drive: a 20-tooth, 6mm-bore
+pulley on the focus motor, a 350mm belt, and a pulley ring of roughly
+146–147 teeth wrapped around the lens's focus collar — about a 7.3:1
+mechanical reduction, close to four times the reduction of the original
+gear pair. A belt drive also runs with none of a gear pair's backlash,
+since the belt stays under tension across the whole loop instead of
+relying on tooth-to-tooth contact that can separate under reversal. The
+ZWO EAF itself steps a 7.5° stepper motor through an internal 1:128
+gearbox; stacked with the roughly 4x larger external reduction of the
+belt drive, each motor step turns the lens's focus collar in an
+increment about four times finer than the V1 gear pair produced for the
+same step — enough to reliably land inside, rather than hunt around, the
+lens's 14-micron critical focus zone.
 
 ## Downloads
 
@@ -74,8 +91,15 @@ reuse:
 
 ## Outcome
 
+Switching to the belt-drive focuser solved the actual problem: focus now
+lands inside the lens's critical zone reliably, instead of the V1 gear
+pair hunting in and out of it. The rig is now the go-to setup for
+wide-field, fast-glass targets that suit a 135mm lens's frame better than
+the reach of a full telescope — see the
+[Astrophotography](/Portfolio/astrophotography) page for the gear list,
+imaging workflow, and gallery this rig feeds into.
+
 <p class="editable-note">
-Henry — wrap up with what the finished rig let you shoot, and drop in a
-sample image or two once you have them — they can also go straight into
-the Astrophotography gallery.
+Henry — drop in a sample frame or two shot with this rig once you have
+them; they can also go straight into the Astrophotography gallery.
 </p>

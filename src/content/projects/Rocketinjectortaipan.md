@@ -10,7 +10,7 @@ draft: false
 
 ## Overview
 
-Taipan is a 650lbf liquid bipropellant rocket engine developed by CU's Sounding Rocket Lab (CU SRL). I worked on the propulsion team verifying performance calculations, redesigning the injector plate, and building the Python toolset that supported the engine's transition from ethanol/LN₂ to RP-1/LOX.
+Taipan is a 650lbf liquid bipropellant rocket engine developed by CU's Sounding Rocket Lab (CU SRL). I worked on the propulsion team verifying performance calculations, redesigning the injector plate, and building the Python toolset that supported the engine's transition from ethanol/N₂O to RP-1/LOX.
 
 ## Injector plate redesign
 
@@ -34,9 +34,9 @@ The engine was originally designed around an ethanol/LN₂ propellant combinatio
 
 Key differences that drove the redesign:
 
-- **Density and flow rate.** RP-1 and LOX have different densities than ethanol/LN₂, which shifted the required orifice sizing to hit the same mass flow and mixture ratio targets.
+- **Density and flow rate.** RP-1 and LOX have different densities than ethanol/N₂O, which shifted the required orifice sizing to hit the same mass flow and mixture ratio targets.
 - **Combustion performance.** Re-ran CEA sweeps specific to RP-1/LOX to find the characteristic velocity (c*) and specific impulse the new propellant pair would actually deliver at 700 psi.
-- **Ignition and atomization behavior.** Kerolox combinations are less forgiving on atomization quality than ethanol/LN₂, which fed directly back into the impingement geometry chosen for the injector.
+- **Ignition and atomization behavior.** Kerolox combinations are less forgiving on atomization quality than ethanol/N₂O, which fed directly back into the impingement geometry chosen for the injector.
 
 Developed Python-based optimization workflows — using AI-assisted methods to speed up iteration — to converge on injector and performance parameters through the propellant transition.
 

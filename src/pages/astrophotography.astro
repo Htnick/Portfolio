@@ -27,33 +27,276 @@ const galleryItems = galleryFiles.map((file) => ({
   label: labelFor(file),
   filename: file,
 }));
+
+const BASE = import.meta.env.BASE_URL;
+
+const gear = [
+  {
+    name: "ZWO AM3",
+    role: "Mount",
+    note: "Strain-wave harmonic-drive equatorial mount — carries the imaging train with essentially none of the backlash or periodic error of a traditional worm-gear mount.",
+    url: "https://agenaastro.com/shop-by-brand/zwo-am3-strain-wave-drive-equatorial-mount-head.html",
+  },
+  {
+    name: "ZWO TC40",
+    role: "Tripod",
+    note: "Carbon-fiber tripod built for the AM3's harmonic-drive mount family — rigid enough to keep vibration out of long guided exposures.",
+    url: "https://agenaastro.com/zwo-tc40-carbon-fiber-tripod.html",
+  },
+  {
+    name: "ZWO PE200",
+    role: "Pier extension",
+    note: "200mm of extra height between tripod and mount head — clears tripod-leg interference at higher declinations.",
+    url: "https://agenaastro.com/zwo-200mm-7-9-pier-extension-for-am3-am5-mount-pe200.html",
+  },
+  {
+    name: "MeLE Quieter 4C",
+    role: "Control PC",
+    note: "Fanless mini PC that runs the full capture stack (NINA, guiding, drivers) on the mount without adding its own fan noise or vibration.",
+    url: "https://www.amazon.com/MeLE-Mini-Quieter-4C-Astrophotography/dp/B0CP3YL6J7",
+  },
+  {
+    name: "SVBONY SV241",
+    role: "Power distribution",
+    note: "Splits a single 12V feed out to the mount, camera, dew heaters, and focuser. This is the base SV241 — manual switching, no ASCOM/computer control.",
+    url: "https://www.svbony.com/products/sv241-astronomical-powerbox",
+  },
+  {
+    name: "Wanderer Astro — 225mm panel",
+    role: "Flat frame panel",
+    note: "Electroluminescent flat panel for the wide-field train — evens out vignetting and dust motes across the larger aperture.",
+    url: "https://agenaastro.com/wandererastro-wanderer-white-dwarf-flat-panel-250mm.html",
+  },
+  {
+    name: "Wanderer Astro — 90mm panel",
+    role: "Flat frame panel",
+    note: "Smaller flat panel sized for the narrower guide/OAG optical path.",
+    url: "https://agenaastro.com/wandererastro-wanderer-cover-v4-ec-100mm-with-ir-controller.html",
+  },
+  {
+    name: "ZWO OAG",
+    role: "Off-axis guider",
+    note: "Picks guide-star light from just outside the imaging sensor's field through a small prism, so guiding sees the same optical path — and the same flexure — as the imaging camera.",
+    url: "https://agenaastro.com/zwo-oag-off-axis-guider.html",
+  },
+  {
+    name: "ZWO ASI174MM Mini",
+    role: "Guide camera",
+    note: "Small, sensitive mono guide camera feeding the OAG.",
+    url: "https://agenaastro.com/zwo-asi174mm-mini-cmos-monochrome-astronomy-imaging-camera.html",
+  },
+];
 ---
 
 <Layout title="Astrophotography | Henry Nickless">
-  <a href={import.meta.env.BASE_URL} class="mono" style="display: inline-block; margin-bottom: 1.5rem; text-decoration: none; color: var(--paper-dim);">← Back home</a>
+  <a href={BASE} class="mono" style="display: inline-block; margin-bottom: 1.5rem; text-decoration: none; color: var(--paper-dim);">← Back home</a>
 
   <section class="hero" style="padding-top: 0;">
     <span class="eyebrow">// Astrophotography</span>
     <h1>How I Take These Photos</h1>
 
-    <p class="editable-note" style="margin-top: 1.25rem;">
-      Henry — this is a placeholder. Replace it with a few sentences (or a
-      few paragraphs) about how you actually shoot and process your
-      astrophotography: your gear (scope, camera, mount), your capture
-      approach (exposure length, filters, number of subs), your stacking
-      and editing workflow, and why this shot in particular. Delete this
-      note once you've written your own.
+    <p style="margin-top: 1.25rem;">
+      Every image on this page runs through the same pipeline: a rig that
+      sets up and operates itself for the night, a fixed sequence that
+      handles focus, pointing, and calibration without help, and a
+      processing pass that turns a stack of noisy sub-exposures into a
+      finished photo. The sections below walk through the gear, the
+      unattended imaging sequence, the tilt-correction problem that fast
+      optics create, and how a stack of raw frames becomes a final image.
     </p>
+    <a href="#gallery" class="mono" style="display: inline-block; margin-top: 0.75rem; text-decoration: none; color: var(--paper-dim);">Jump to gallery ↓</a>
   </section>
 
   <AstroImage
-    src={`${import.meta.env.BASE_URL}images/veil-nebula.jpg`}
+    src={`${BASE}images/veil-nebula.jpg`}
     alt="The Veil Nebula, astrophotography by Henry Nickless"
     figNo="01"
     caption="THE VEIL NEBULA — ADD CAPTURE DETAILS (SCOPE, CAMERA, EXPOSURE)"
   />
 
-  <div class="cut-line"><span>Gallery</span></div>
+  <div class="cut-line"><span>The Gear</span></div>
+
+  <p>
+    The two imaging setups behind these photos each have their own
+    writeup: the <a href={`${BASE}projects/rokinon-135mm-astro-rig`}>Rokinon 135mm f/2 rig</a> for
+    wide-field targets, and the <a href={`${BASE}projects/newtonian-telescope`}>Newtonian telescope</a> for
+    anything that needs more focal length. Everything below is the
+    rest of the kit that keeps either one running through a full night
+    unattended.
+  </p>
+
+  <div class="gear-grid">
+    {gear.map((g) => (
+      <div class="gear-card">
+        <span class="gear-role mono">{g.role}</span>
+        <h3 class="gear-name">{g.name}</h3>
+        <p class="gear-note">{g.note}</p>
+        <a href={g.url} target="_blank" rel="noopener noreferrer" class="mono gear-link">View product ↗</a>
+      </div>
+    ))}
+    <div class="gear-card">
+      <span class="gear-role mono">Dew control</span>
+      <h3 class="gear-name">Dew shields</h3>
+      <p class="gear-note">
+        Passive dew shields on both the main imaging optics and the
+        guide/OAG train, extending the effective tube length to keep the
+        front elements from radiating heat away to a clear night sky.
+      </p>
+    </div>
+  </div>
+
+  <p class="editable-note">
+    Henry — a few of these I couldn't pin to an exact SKU: the flat panel
+    links are my closest guesses (Wanderer Astro doesn't list a 225mm or
+    90mm size that I could find — I linked the 250mm and 100mm as
+    placeholders), the dew shields have no brand/model attached, and I
+    wasn't sure if the guide camera is the ASI174MM Mini or ASI178MM Mini
+    (linked 174MM above). Confirm and I'll swap in the exact links.
+  </p>
+
+  <div class="cut-line"><span>Data Acquisition &amp; Remote Control</span></div>
+
+  <p>
+    The rig lives outside; the operator doesn't. Before dark, the mount,
+    telescope, and full imaging train get wheeled out and set up on the
+    pier. Once it's polar aligned and cabled up, control passes entirely
+    to a remote desktop session run from inside the house against the
+    mini PC riding on the mount — focusing, plate solving, sequencing,
+    and shutting down at the end of the night all happen over that link.
+    The only reason to go back outside is to physically move the gear.
+  </p>
+
+  <div class="cut-line"><span>Target Planning</span></div>
+
+  <p>
+    Targets get chosen before the mount ever goes outside. Stellarium
+    handles the logistics — what's up, when it transits, and how it
+    clears the local horizon and any obstructions on a given night.
+    AstroBin is the discovery tool: browsing what other imagers have
+    captured with similar gear and field of view turns up targets worth
+    adding to the list that a star atlas alone wouldn't necessarily
+    suggest.
+  </p>
+
+  <div class="cut-line"><span>Imaging Sequence</span></div>
+
+  <p>
+    A full run follows the same sequence every time, almost entirely
+    unattended:
+  </p>
+
+  <ol class="seq-list">
+    <li><strong>Polar alignment</strong> — dialing in the mount's polar axis first, since tracking, guiding, and plate solving all inherit this error.</li>
+    <li><strong>Autofocus</strong> — the imaging train autofocuses on a nearby star before the sequence starts, and again through the night as temperature drifts.</li>
+    <li><strong>Guide camera focus</strong> — set manually once per setup; the guide train just needs to lock onto guide stars, not hold focus as tightly as the imaging camera.</li>
+    <li><strong>Target selection, slew &amp; plate solve</strong> — the mount slews to the chosen target and a plate solve confirms (and corrects) the actual pointing against the planned coordinates before any exposures start.</li>
+    <li><strong>Exposure</strong> — the sequence exposes through a given filter for the planned sub length and count.</li>
+    <li><strong>Calibration frames</strong> — bias/dark frames come from a reusable library, re-shot roughly once a year as the sensor's noise characteristics drift; flats are captured fresh every session, automatically, through NINA driving the flat panel, so vignetting and dust-mote correction always matches that night's exact optical setup.</li>
+  </ol>
+
+  <div class="cut-line"><span>Sensor Tilt</span></div>
+
+  <p>
+    Every optical system has one flat plane where the image actually
+    comes to focus. If the sensor isn't perfectly perpendicular to the
+    incoming light cone — even by a fraction of a degree — one side of
+    the frame sits slightly closer to that plane than the other, and
+    stars stretch into small ellipses toward whichever corner is
+    furthest from true focus. On a fast, wide-aperture system the depth
+    of focus is shallow enough that a tilt error worth caring about is
+    measured in thousandths of a millimeter at the sensor's edge — not
+    something that's reliably adjustable by hand, especially not
+    repeatably across setups. An automated tilt adjuster — fine
+    adjustment screws driven under motor control instead of by hand —
+    corrects that error in small, repeatable steps and lets the result
+    get verified against real star data instead of guesswork, and
+    re-checked whenever the imaging train gets reconfigured.
+  </p>
+
+  <div class="tilt-figure-row">
+    <figure class="tilt-figure">
+      <svg viewBox="0 0 460 165" role="img" aria-label="Diagram comparing star shapes across the sensor with tilt present versus corrected">
+        <g transform="translate(10,15)">
+          <rect x="0" y="0" width="180" height="110" fill="none" stroke="var(--line-500)" stroke-width="1.5" />
+          <circle cx="14" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="14" r="4.5" fill="none" stroke="var(--redline)" stroke-width="1.2" />
+          <ellipse cx="90" cy="55" rx="4" ry="3" fill="none" stroke="var(--redline)" stroke-width="1" transform="rotate(35 90 55)" />
+          <ellipse cx="14" cy="96" rx="5.5" ry="3.5" fill="none" stroke="var(--redline)" stroke-width="1.2" transform="rotate(35 14 96)" />
+          <ellipse cx="166" cy="96" rx="10" ry="4.5" fill="none" stroke="var(--redline)" stroke-width="1.5" transform="rotate(35 166 96)" />
+          <text x="90" y="130" class="tilt-cap" text-anchor="middle">TILTED</text>
+        </g>
+        <g transform="translate(265,15)">
+          <rect x="0" y="0" width="180" height="110" fill="none" stroke="var(--line-500)" stroke-width="1.5" />
+          <circle cx="14" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="90" cy="55" r="2.6" fill="var(--redline)" />
+          <circle cx="14" cy="96" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="96" r="2.6" fill="var(--redline)" />
+          <text x="90" y="130" class="tilt-cap" text-anchor="middle">CORRECTED</text>
+        </g>
+      </svg>
+      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 02</span>STAR SHAPE ACROSS THE FRAME — TILTED VS. CORRECTED</figcaption>
+    </figure>
+
+    <figure class="tilt-figure">
+      <svg viewBox="0 0 300 165" role="img" aria-label="Side-view schematic of a tilted sensor relative to the ideal focal plane">
+        <line x1="10" y1="85" x2="290" y2="85" stroke="var(--line-500)" stroke-width="1" stroke-dasharray="4 4" />
+        <line x1="220" y1="20" x2="220" y2="150" stroke="var(--line-500)" stroke-width="1" stroke-dasharray="3 3" />
+        <line x1="197" y1="18" x2="243" y2="152" stroke="var(--redline)" stroke-width="1.8" />
+        <circle cx="220" cy="85" r="3" fill="var(--redline)" />
+        <circle cx="243" cy="152" r="7" fill="none" stroke="var(--redline)" stroke-width="1.3" />
+        <text x="20" y="80" class="tilt-cap">OPTICAL AXIS</text>
+        <text x="112" y="30" class="tilt-cap">IDEAL PLANE</text>
+        <text x="200" y="35" class="tilt-cap" fill="var(--redline)">TILTED SENSOR</text>
+      </svg>
+      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 03</span>SENSOR TILT, SIDE VIEW (EXAGGERATED FOR CLARITY)</figcaption>
+    </figure>
+  </div>
+
+  <div class="cut-line"><span>Processing</span></div>
+
+  <p>
+    A finished image starts as anywhere from dozens to a few hundred
+    individual sub-exposures, each one mostly noise with a faint, real
+    signal buried in it. PixInsight combines them through pixel-by-pixel
+    integration — matrix math across the whole stack — averaging with
+    rejection algorithms that throw out satellite trails, cosmic-ray
+    hits, and other single-frame artifacts rather than simply layering
+    everything together. Signal-to-noise builds with the square root of
+    the sub count, so doubling the number of subs only buys about a 40%
+    improvement in signal-to-noise — the real tradeoff behind every
+    session, since more subs always help but with steadily diminishing
+    returns against the hours it costs to get them. Before the stack is
+    combined, every frame gets normalized — scaled and offset so that
+    frame-to-frame differences in sky brightness, transparency, or moon
+    position don't bias the result.
+  </p>
+
+  <p>
+    Everything up to that point is math. What comes after is where the
+    process gets genuinely subjective — this is the part that's art, not
+    measurement. Images here are captured in real, natural color, not
+    narrowband-mapped or artificially recolored, and stretched through a
+    histogram transform to bring out detail that's present in the linear
+    data but invisible on a straight display — that step remaps what's
+    already in the frame onto a range a screen can actually show; it
+    doesn't invent anything that isn't there. From there, a set of
+    AI-assisted tools handles gradient removal (correcting for skyglow
+    and light pollution that vary across the frame), deconvolution, and
+    noise reduction — cleaning up what the optics and the sky introduced
+    without changing what the target actually looks like. Plate solving
+    plus SPCC (Spectrophotometric Color Calibration) pins the color
+    balance to real stellar spectra in the field instead of an eyeballed
+    white balance, so the final color is a calibrated fit to actual data.
+  </p>
+
+  <p>
+    The last pass happens in Photoshop — pulling out finer local detail
+    and nudging color ever so slightly, not to invent anything, but to
+    draw the eye toward the parts of the image that matter.
+  </p>
+
+  <div class="cut-line" id="gallery"><span>Gallery</span></div>
 
   {galleryItems.length > 0 ? (
     <>
@@ -92,6 +335,107 @@ const galleryItems = galleryFiles.map((file) => ({
 </Layout>
 
 <style>
+  .gear-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .gear-card {
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .gear-role {
+    color: var(--redline);
+  }
+  .gear-name {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .gear-note {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--paper-dim);
+    flex-grow: 1;
+  }
+  .gear-link {
+    text-decoration: none;
+    color: var(--paper-dim);
+    margin-top: 0.4rem;
+  }
+  .gear-link:hover {
+    color: var(--redline);
+  }
+
+  .seq-list {
+    counter-reset: seq;
+    list-style: none;
+    padding-left: 0;
+    margin: 1.25rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .seq-list li {
+    counter-increment: seq;
+    position: relative;
+    padding-left: 2.6rem;
+    color: var(--paper);
+  }
+  .seq-list li::before {
+    content: counter(seq);
+    position: absolute;
+    left: 0;
+    top: -0.1rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 1px solid var(--redline);
+    color: var(--redline);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tilt-figure-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 1.75rem 0 2rem;
+  }
+  .tilt-figure {
+    flex: 1 1 320px;
+    margin: 0;
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 1rem;
+  }
+  .tilt-figure svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .tilt-cap {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.03em;
+    fill: var(--paper-dim);
+  }
+  .tilt-caption {
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+  }
+  .tilt-fignum {
+    color: var(--redline);
+    margin-right: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+
   .astro-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

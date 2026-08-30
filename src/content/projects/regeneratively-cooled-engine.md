@@ -1,6 +1,6 @@
 ---
 title: "Regeneratively Cooled Liquid Rocket Engine"
-description: "Combustion chamber sizing, preliminary CAD, and injector design for a 2,000 lbf regeneratively cooled liquid rocket engine."
+description: "Combustion chamber sizing, preliminary CAD, and cooling analysis for a 2,000 lbf regeneratively cooled liquid rocket engine."
 date: "2026-01-01"
 status: "in-progress"
 tags: ["propulsion", "liquid rockets", "regenerative cooling", "additive manufacturing", "Python"]
@@ -635,37 +635,9 @@ With chamber and throat dimensions established from the performance math, I buil
   <AstroImage src="/images/regen/dxf-contour-import.png" alt="DXF contour imported into CAD" figNo="03" caption="RPA-GENERATED NOZZLE CONTOUR, IMPORTED AS DXF REFERENCE GEOMETRY" />
 -->
 
-## Injector design
+## Injector plate
 
-The injector plate for this engine is an unlike-doublet impinging design, additively manufactured, with an integrated ASI (augmented spark igniter) and pressure sensor mounts.
-
-**Math first.** Before modeling anything, I worked through the impingement geometry math — orifice sizing, doublet impingement angle, and momentum ratio between the fuel and oxidizer streams — to get atomization and mixing characteristics that matched the mass flow rates coming out of the chamber sizing work.
-
-**Then CAD — a lot of it.** Getting from that math to an actual 3D model took many iterations. Early passes focused just on getting flow paths and manifolds to fit within the envelope; later passes folded in manufacturability and structural constraints as they came up.
-
-- Designed a stacked distribution ring and manifold on the oxidizer side to feed the doublet orifices evenly.
-- Used a gothic-arch geometry on the fuel side to maximize usable space for preheated kerosene routing into the regenerative cooling channels.
-
-<!--
-  Still needed — see PHOTOS_NEEDED.md:
-  <AstroImage src="/images/regen/injector-cad-iterations.png" alt="Injector CAD iteration history" figNo="04" caption="INJECTOR PLATE — CAD ITERATION HISTORY, V1 THROUGH CURRENT" />
--->
-
-### Topological optimization
-
-Once the injector's flow geometry was locked in, I ran it through topological optimization to address manufacturability and mass:
-
-- Optimized the plate's structure for 3D printability — removing material that wasn't load-bearing while keeping the part buildable without excessive support structure.
-- Balanced mass reduction against the structural loads driven by the combustion chamber environment (pressure, thermal gradients at the injector face).
-- Iterated between the optimized topology and the manufacturing constraints of the printer, since a mathematically optimal shape isn't useful if it can't actually be printed reliably.
-
-<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
-     pages can, so this path is hardcoded to the current /Portfolio/ base.
-     If the repo or base path ever changes, update paths like this one. -->
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-injector-topology.jpg" alt="Topology-optimized injector plate, CAD render showing the scalloped lightening cutouts and central orifice boss" style="display: block; width: 100%; height: auto;" />
-</figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE — TOPOLOGY-OPTIMIZED MASS DISTRIBUTION, CAD RENDER</p>
+The injector plate design and its topology optimization pass grew into enough of its own story that it now has its own writeup: see [Injector Plate Design & Topology Optimization](/Portfolio/projects/injector-plate-topology-optimization) for the impingement math, the NASA SP-8089 basis for the layout, and the optimization process itself.
 
 ## Cooling analysis
 
