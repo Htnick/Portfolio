@@ -47,11 +47,18 @@ the shot list to actually fill them in, roughly in priority order.
 
 ## Astrophotography page (`src/pages/astrophotography.astro`)
 
-10. Six open gallery slots (FIG. 02–07), landscape ~1600×1000, for more of
-    your shots — nebulae, star clusters, whatever you've got. The Veil
-    Nebula from the homepage is already in as the featured FIG. 01; these
-    just fill out the page under it. Add or remove slots by editing the
-    `gallerySlots` number at the top of the file.
+10. Done — the gallery is now auto-discovered from
+    `public/images/astrophotography/`. Every JPG/PNG dropped in that
+    folder shows up on the page automatically on the next build, sorted
+    alphabetically by filename — no code edits needed. Click a photo to
+    view it larger (with prev/next and a download link) in a lightbox.
+    Currently holds 40 photos pulled from the "FInals" folder on Henry's
+    Desktop, hand-picked from ~80 candidates (duplicates/work-in-progress
+    versions skipped). The Veil Nebula from the homepage stays separate,
+    featured as FIG. 01 above the gallery.
+    Still open: the 5 photos in `FInals/2026 astro/sun/` weren't picked
+    yet (sun close.jpg, SUN.jpg, sunny.jpg, sunny2.jpg, susun.jpg) — ask
+    Henry which one(s), if any.
 
 ## How to add one
 
