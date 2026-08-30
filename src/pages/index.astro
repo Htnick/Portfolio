@@ -5,15 +5,16 @@ import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
 
-// Feature the 3 most recent projects, completed work first
-const featured = allProjects
-  .sort((a, b) => {
-    if (a.data.status !== b.data.status) {
-      return a.data.status === "completed" ? -1 : 1;
-    }
-    return b.data.date.localeCompare(a.data.date);
-  })
-  .slice(0, 3);
+// Hand-picked showcase, in this order: the injector plate, the
+// regeneratively cooled engine, and the Rokinon astro rig.
+const FEATURED_SLUGS = [
+  "injector-plate-topology-optimization",
+  "regeneratively-cooled-engine",
+  "rokinon-135mm-astro-rig",
+];
+const featured = FEATURED_SLUGS
+  .map((slug) => allProjects.find((p) => p.id === slug))
+  .filter((p) => p !== undefined);
 ---
 
 <Layout title="Henry Nickless">
