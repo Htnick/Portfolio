@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://htnick.github.io',
   base: '/Portfolio/',
   trailingSlash: 'always',
+  integrations: [sitemap()],
   markdown: {
     shikiConfig: {
       // Light syntax theme to match the white/orange site theme —

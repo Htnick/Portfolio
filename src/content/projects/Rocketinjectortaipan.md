@@ -7,6 +7,7 @@ tags: ["propulsion", "liquid rockets", "Python", "CEA"]
 image: "taipan-injector-plate-01.jpg"
 draft: false
 accent: "#d6524a"
+role: "Verified performance calculations, redesigned the injector plate, built the Python performance toolset, and helped migrate test stand software, on CU SRL's propulsion team"
 ---
 
 ## Overview
@@ -23,7 +24,7 @@ The injector plate had to be redesigned around a fixed chamber pressure of 700 p
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/taipan-injector-plate-02.jpg" alt="CAD render of the Taipan injector plate, angled detail view showing the impinging orifice pattern" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: IMPINGING ORIFICE PATTERN, CAD RENDER</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: IMPINGING ORIFICE PATTERN, CAD RENDER</p>
 
 - Performed iterative flow and combustion calculations to size orifice diameters and impingement angles for consistent atomization across the new propellant combination.
 - Verified performance calculations against analytical models to confirm the redesigned plate would deliver the expected thrust output.

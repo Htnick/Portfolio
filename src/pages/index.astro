@@ -17,7 +17,10 @@ const featured = FEATURED_SLUGS
   .filter((p) => p !== undefined);
 ---
 
-<Layout title="Henry Nickless">
+<Layout
+  title="Henry Nickless"
+  description="Henry Nickless is an aerospace engineering student at CU Boulder building liquid rocket engines, injector plates, and 3D-printed telescope hardware."
+>
   <section class="hero">
     <div class="hero-layout">
       <div>
@@ -54,6 +57,10 @@ const featured = FEATURED_SLUGS
 
   <div class="cut-line"><span>Selected Work</span></div>
 
+  <p style="color: var(--paper-dim); margin-top: -0.5rem; margin-bottom: 1.75rem; max-width: 46ch;">
+    What I'm building right now at SRL, plus one favorite from last year.
+  </p>
+
   <div class="project-grid">
     {featured.map((project, i) => (
       <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
@@ -64,7 +71,7 @@ const featured = FEATURED_SLUGS
             <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
           )}
         </div>
-        <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline);" : ""}>
+        <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline-text);" : ""}>
           SHT {String(i + 1).padStart(2, "0")} / {project.data.status === "completed" ? "COMPLETE" : "IN PROGRESS"}
         </span>
         <h3>{project.data.title}</h3>
@@ -183,6 +190,6 @@ const featured = FEATURED_SLUGS
   }
   .skill-chip:hover {
     border-color: var(--redline);
-    color: var(--redline);
+    color: var(--redline-text);
   }
 </style>

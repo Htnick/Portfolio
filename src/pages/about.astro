@@ -2,10 +2,18 @@
 import Layout from "../layouts/Layout.astro";
 import ImagePlaceholder from "../components/ImagePlaceholder.astro";
 
-const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC"];
+const toolGroups = [
+  { category: "Design / CAD", tools: ["Fusion 360", "SolidWorks"] },
+  { category: "Analysis", tools: ["Python", "MATLAB", "R", "NASA CEA / RocketCEA"] },
+  { category: "Manufacturing", tools: ["3D Printing / CNC"] },
+  { category: "Languages", tools: ["C++"] },
+];
 ---
 
-<Layout title="About | Henry Nickless">
+<Layout
+  title="About | Henry Nickless"
+  description="About Henry Nickless, an aerospace engineering student at CU Boulder working on liquid rocket propulsion, telescope hardware, and astrophotography."
+>
   <section class="about">
     <span class="eyebrow">// Bio</span>
     <h1>About Me</h1>
@@ -84,9 +92,16 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
     <div class="about-panel">
       <div class="cut-line"><span>Toolset</span></div>
 
-      <div class="skills-strip">
-        {tools.map((tool) => (
-          <span class="skill-chip">{tool}</span>
+      <div class="skills-groups">
+        {toolGroups.map((group) => (
+          <div class="skills-group">
+            <span class="skills-group-label mono">{group.category}</span>
+            <div class="skills-strip">
+              {group.tools.map((tool) => (
+                <span class="skill-chip">{tool}</span>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>
@@ -112,8 +127,7 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
       I'm looking forward to developing my skills further and meeting
       like-minded people along the way. When I'm not in the lab, I'm
       usually outside with a camera pointed at the sky. You can find some
-      of that at
-      <a href="https://instagram.com/astro.htn" target="_blank" rel="noopener noreferrer">@astro.htn</a>.
+      of that at <a href="https://instagram.com/astro.htn" target="_blank" rel="noopener noreferrer">@astro.htn</a>.
     </p>
   </section>
 </Layout>
@@ -128,7 +142,7 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
 
   .about .eyebrow {
     font-family: var(--font-mono);
-    color: var(--redline);
+    color: var(--redline-text);
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -175,6 +189,25 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
     padding: 0.45rem 0.9rem;
   }
 
+  .skills-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-group-label {
+    display: block;
+    color: var(--paper-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+
+  .skills-group .skills-strip {
+    margin-bottom: 0;
+  }
+
   .field-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -204,7 +237,7 @@ const tools = ["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D P
   }
 
   .field-gallery .fg-figno {
-    color: var(--redline);
+    color: var(--redline-text);
     margin-right: 0.5rem;
     letter-spacing: 0.06em;
   }

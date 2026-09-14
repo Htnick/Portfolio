@@ -7,6 +7,8 @@ tags: ["aircraft design", "MATLAB", "Excel", "flight testing"]
 image: "glider-design-hero.jpg"
 draft: false
 accent: "#3ba7c4"
+role: "Performance simulation (MATLAB) and elevator mechanism design, on a 6-person team"
+results: "Elevator mechanism achieved a 20° trim range at under 1 g of added mass; the glider carried a 160 g payload 100 m in flight testing."
 ---
 
 ## Overview

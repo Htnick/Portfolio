@@ -48,4 +48,4 @@ a function of local light pollution that night as it is the sky itself.
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/allsky-outcome-frame.jpg" alt="A single raw allsky frame, showing the Milky Way and a light-pollution glow along one horizon" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>A SINGLE RAW ALLSKY FRAME: MILKY WAY VISIBLE OVERHEAD, SKYGLOW ALONG THE HORIZON</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>A SINGLE RAW ALLSKY FRAME: MILKY WAY VISIBLE OVERHEAD, SKYGLOW ALONG THE HORIZON</p>

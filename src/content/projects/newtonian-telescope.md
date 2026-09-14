@@ -42,7 +42,7 @@ My solution was to swap in one of my own high-resolution focusers instead of the
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/telescope-focus-adapter.jpg" alt="Custom aluminum focuser adapter, machined to fit the 8-inch scope's focal train" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>8-INCH RENDITION: CUSTOM ALUMINUM FOCUSER ADAPTER</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>8-INCH RENDITION: CUSTOM ALUMINUM FOCUSER ADAPTER</p>
 
 ### Internal reflection and flocking
 
@@ -62,7 +62,7 @@ The fan also needed a way to keep dust and debris from reaching the optics, so I
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/telescope-fan-housing.jpg" alt="3D-printed fan housing mounted on the rear cell of the 8-inch scope, with the intake mask visible on top" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 04</span>8-INCH RENDITION: FAN HOUSING AND INTAKE MASK, V2</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 04</span>8-INCH RENDITION: FAN HOUSING AND INTAKE MASK, V2</p>
 
 ### Root cause: sensor-to-corrector spacing
 

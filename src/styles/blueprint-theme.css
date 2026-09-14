@@ -29,6 +29,12 @@
   --redline: #ff6a1a;
   --redline-dim: rgba(255, 106, 26, 0.1);
   --redline-deep: #d8500a;
+  /* Darker rust variant of --redline for small text (eyebrows, FIG.
+     captions, status tags) on light backgrounds — --redline itself is
+     only ~2.7:1 against --paper/--panel-tint, well under the WCAG AA
+     4.5:1 minimum for text that size. Keep --redline for buttons/large
+     elements where the brighter orange reads fine. */
+  --redline-text: #b03c0c;
   /* Two section-block tints — warm and cool — used to visually separate
      page sections beyond the thin dashed cut-line, so pages read as
      distinct blocks rather than one continuous scroll. Kept muted so
@@ -295,7 +301,7 @@ a:focus-visible, button:focus-visible {
 
 .hero .eyebrow {
   font-family: var(--font-mono);
-  color: var(--redline);
+  color: var(--redline-text);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -565,7 +571,7 @@ a:focus-visible, button:focus-visible {
   left: 0.7rem;
   font-family: var(--font-mono);
   font-size: 0.62rem;
-  color: var(--redline);
+  color: var(--redline-text);
   letter-spacing: 0.06em;
 }
 
@@ -641,7 +647,7 @@ a:focus-visible, button:focus-visible {
 .timeline-item .t-date {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--redline);
+  color: var(--redline-text);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   padding-top: 0.2rem;
@@ -843,6 +849,9 @@ body.theme-gallery {
   --redline: #ff7a33;
   --redline-dim: rgba(255, 122, 51, 0.15);
   --redline-deep: #e8631c;
+  /* Already well above 4.5:1 against this theme's dark background, so
+     small text can use the same bright accent as everything else. */
+  --redline-text: var(--redline);
   --panel-tint: #121316;
   background-image: none;
 }

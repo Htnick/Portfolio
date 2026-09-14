@@ -3,14 +3,27 @@ import "../styles/blueprint-theme.css";
 
 interface Props {
   title: string;
+  // Used for <meta name="description">, Open Graph, and Twitter Card tags.
+  // Keep it to one plain-language sentence about the page.
+  description: string;
+  // Filename only, e.g. "taipan-hero.jpg" — resolved against
+  // BASE_URL + "images/". Falls back to a sitewide default image below.
+  image?: string;
   // "blueprint" (default) is the drafting-sheet look used everywhere.
   // "gallery" swaps in a darker, minimalist palette for the
   // astrophotography page — see .theme-gallery in blueprint-theme.css.
   variant?: "blueprint" | "gallery";
 }
 
-const { title, variant = "blueprint" } = Astro.props;
+const { title, description, image, variant = "blueprint" } = Astro.props;
 const currentPath = Astro.url.pathname;
+
+const DEFAULT_OG_IMAGE = "veil-nebula.jpg";
+const canonicalURL = new URL(currentPath, Astro.site);
+const ogImageURL = new URL(
+  `${import.meta.env.BASE_URL}images/${image ?? DEFAULT_OG_IMAGE}`,
+  Astro.site
+);
 ---
 
 <!doctype html>
@@ -21,6 +34,20 @@ const currentPath = Astro.url.pathname;
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <meta name="theme-color" content="#ff6a1a" />
     <title>{title}</title>
+
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
   </head>
   <body class={variant === "gallery" ? "theme-gallery" : undefined}>
     <div class="sheet sheet-frame">
@@ -91,6 +118,10 @@ const currentPath = Astro.url.pathname;
           <a href="mailto:Henry.Nickless@Colorado.edu">Henry.Nickless@Colorado.edu</a>
           &nbsp;/&nbsp;
           <a href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          &nbsp;/&nbsp;
+          <a href="https://github.com/Htnick" target="_blank" rel="noopener noreferrer">GitHub</a>
+          &nbsp;/&nbsp;
+          <a href={`${import.meta.env.BASE_URL}files/resume/Henry_Nickless_Resume.pdf`} target="_blank" rel="noopener noreferrer">Resume</a>
         </span>
       </footer>
     </div>

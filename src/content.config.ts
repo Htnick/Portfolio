@@ -10,6 +10,12 @@ const projects = defineCollection({
     status: z.enum(['completed', 'in-progress']),
     tags: z.array(z.string()),
     role: z.string().optional(),
+    // Short, quantified one- or two-line outcome (a real number: mass
+    // reduction, thrust vs. target, accuracy vs. reference data, etc.).
+    // Rendered as a highlighted callout near the top of the page. Only
+    // set this when there's an actual number to report — leave it off
+    // rather than writing a vague success claim.
+    results: z.string().optional(),
     // Filename only, e.g. "taipan-hero.jpg" — drop the actual file in
     // public/images/. The pages build the full URL (with the site's base
     // path) for you, so don't include a leading slash or "/Portfolio/" here.

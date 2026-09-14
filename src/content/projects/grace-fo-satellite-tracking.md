@@ -6,6 +6,9 @@ status: "completed"
 tags: ["orbital mechanics", "MATLAB", "orbit determination", "numerical methods"]
 draft: false
 accent: "#5b5ce0"
+image: "grace-fo-range-timeseries.png"
+role: "Wrote the orbit-file parser, numerical cross-check, and CSV export, and co-built the visualization, on a 2-person team (Jason Cassara wrote the range/range-rate/visibility functions)"
+results: "Range held to 179.1-181.2 km over 24 hours; ground station saw 19,869 of 86,400 one-second epochs (about 23%) above the 10° visibility threshold."
 ---
 
 ## Overview
@@ -42,6 +45,14 @@ end
 
 - **Visibility** computes the elevation angle from a fixed ground station to GFO-1 at each epoch and flags the passes where it clears a 10° threshold.
 
+<!-- Plain markdown can't reach import.meta.env.BASE_URL like the .astro
+     pages can, so this path is hardcoded to the current /Portfolio/ base.
+     If the repo or base path ever changes, update paths like this one. -->
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/grace-fo-ground-track.png" alt="GFO-1 ground track over 24 hours, a near-polar orbit traced in longitude/latitude with the ground station location marked" style="display: block; width: 100%; height: auto;" />
+</figure>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>GFO-1 GROUND TRACK, 24 HR (COMPUTED VIA ECEF-TO-GEODETIC CONVERSION)</p>
+
 ## Outcome
 
-Produced a CSV of GFO-1/GFO-2 range and range-rate over a full day, a 3-panel plot of range, range-rate, and station elevation angle, and a ground-track map (via `ecef2lla`) with the ground station marked, turning a raw JPL orbit product into the same range/range-rate measurement GRACE-FO's actual gravity-mapping mission depends on.
+Produced a CSV of GFO-1/GFO-2 range and range-rate over a full day, a 3-panel plot of range, range-rate, and station elevation angle (shown at the top of this page), and the ground-track map above, turning a raw JPL orbit product into the same range/range-rate measurement GRACE-FO's actual gravity-mapping mission depends on. Over the 24-hour window, inter-satellite range held to 179.1–181.2 km with the characteristic along-track oscillation from each satellite's orbital motion, and the ground station saw 19,869 of 86,400 one-second epochs (about 23%) above the 10° elevation threshold.

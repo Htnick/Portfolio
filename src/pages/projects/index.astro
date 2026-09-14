@@ -14,7 +14,10 @@ const inProgress = allProjects
   .sort((a, b) => b.data.date.localeCompare(a.data.date));
 ---
 
-<Layout title="Projects | Henry Nickless">
+<Layout
+  title="Projects | Henry Nickless"
+  description="Rocket engines, telescopes, and the occasional glider: a running log of what Henry Nickless has been building."
+>
   <section class="hero">
     <span class="eyebrow">// Index</span>
     <h1>Projects</h1>
@@ -61,7 +64,7 @@ const inProgress = allProjects
               <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
             )}
           </div>
-          <span class="sheet-no" style="color: var(--redline);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
+          <span class="sheet-no" style="color: var(--redline-text);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
           <h3>{project.data.title}</h3>
           <p>{project.data.description}</p>
           <div class="tags">

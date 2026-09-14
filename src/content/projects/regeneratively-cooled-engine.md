@@ -6,6 +6,7 @@ status: "in-progress"
 tags: ["propulsion", "liquid rockets", "regenerative cooling", "additive manufacturing", "Python"]
 image: "regen-engine-hero.jpg"
 draft: false
+role: "Combustion chamber sizing math, preliminary CAD, and the injector plate design, on a multi-engineer CU SRL team"
 ---
 
 ## Overview

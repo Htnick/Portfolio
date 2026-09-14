@@ -63,7 +63,7 @@ topological optimization to address manufacturability and mass:
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/regen-injector-topology.jpg" alt="Topology-optimized injector plate, CAD render showing the scalloped lightening cutouts and central orifice boss" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: TOPOLOGY-OPTIMIZED MASS DISTRIBUTION, CAD RENDER</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: TOPOLOGY-OPTIMIZED MASS DISTRIBUTION, CAD RENDER</p>
 
 ## Calculations
 

@@ -27,7 +27,7 @@ focuser that rides on top.
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/rokinon-focuser-mount.jpg" alt="Angled view of the printed focuser mount and camera-side rings on the Rokinon 135mm" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>FOCUSER MOUNT AND CAMERA-SIDE RINGS, PACKED FOR TRANSPORT</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>FOCUSER MOUNT AND CAMERA-SIDE RINGS, PACKED FOR TRANSPORT</p>
 
 ## Ring mounting system
 
@@ -110,4 +110,4 @@ imaging workflow, and gallery this rig feeds into.
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/rokinon-california-nebula.jpg" alt="The California Nebula, shot with the Rokinon 135mm rig" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>THE CALIFORNIA NEBULA, SHOT WITH THIS RIG</p>
+<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 03</span>THE CALIFORNIA NEBULA, SHOT WITH THIS RIG</p>

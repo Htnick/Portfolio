@@ -3,10 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import AstroImage from "../components/AstroImage.astro";
 import fs from "node:fs";
 import path from "node:path";
+import { GALLERY_META } from "../data/astro-gallery-meta";
 
 // Auto-discovered gallery: every JPG/PNG dropped into
 // public/images/astrophotography/ shows up here on the next build — no
-// code changes needed to add a new photo. See PHOTOS_NEEDED.md.
+// code changes needed to add a new photo. See PHOTOS_NEEDED.md. Per-image
+// target/date/integration-time overrides live in src/data/astro-gallery-meta.ts.
 const galleryDir = path.join(process.cwd(), "public/images/astrophotography");
 const galleryFiles = fs.existsSync(galleryDir)
   ? fs
@@ -22,11 +24,23 @@ function labelFor(filename: string) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-const galleryItems = galleryFiles.map((file) => ({
-  url: `${import.meta.env.BASE_URL}images/astrophotography/${file}`,
-  label: labelFor(file),
-  filename: file,
-}));
+const galleryItems = galleryFiles.map((file) => {
+  const meta = GALLERY_META[file] ?? {};
+  const label = meta.target ?? labelFor(file);
+  const captionParts = [meta.date, meta.integrationTime, meta.equipment].filter(Boolean);
+  const webpFile = file.replace(/\.(jpe?g|png)$/i, ".webp");
+  const hasWebp = fs.existsSync(path.join(galleryDir, webpFile));
+  return {
+    url: `${import.meta.env.BASE_URL}images/astrophotography/${file}`,
+    // Pre-generated WebP sibling (see scripts, or regenerate with sharp)
+    // — same content, ~40% smaller. Falls back to the JPG/PNG when a
+    // browser doesn't support it or no .webp was generated for a file.
+    webpUrl: hasWebp ? `${import.meta.env.BASE_URL}images/astrophotography/${webpFile}` : undefined,
+    label,
+    filename: file,
+    detail: captionParts.length > 0 ? captionParts.join(" · ") : undefined,
+  };
+});
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -127,7 +141,12 @@ const gear = [
 ];
 ---
 
-<Layout title="Astrophotography | Henry Nickless" variant="gallery">
+<Layout
+  title="Astrophotography | Henry Nickless"
+  description="How Henry Nickless shoots deep-sky astrophotography: gear, mounts, focusers, and the processing workflow behind the shots."
+  image="veil-nebula.jpg"
+  variant="gallery"
+>
   <a href={BASE} class="mono" style="display: inline-block; margin-bottom: 1.5rem; text-decoration: none; color: var(--paper-dim);">← Back home</a>
 
   <section class="hero" style="padding-top: 0;">
@@ -371,7 +390,11 @@ const gear = [
       <div class="astro-gallery">
         {galleryItems.map((item, i) => (
           <button type="button" class="astro-gallery-item" data-index={i} aria-label={`View ${item.label}, photo ${i + 1} of ${galleryItems.length}`}>
-            <img src={item.url} alt={item.label} title={item.label} loading="lazy" />
+            <picture>
+              {item.webpUrl && <source srcset={item.webpUrl} type="image/webp" />}
+              <img src={item.url} alt={item.label} title={item.label} loading="lazy" />
+            </picture>
+            <span class="gallery-caption">{item.label}</span>
           </button>
         ))}
       </div>
@@ -384,7 +407,10 @@ const gear = [
         <div class="astro-lightbox-stage">
           <img id="astro-lightbox-img" src="" alt="" />
           <div class="astro-lightbox-bar">
-            <span id="astro-lightbox-count" class="mono"></span>
+            <span>
+              <span id="astro-lightbox-count" class="mono"></span>
+              <span id="astro-lightbox-detail" class="mono astro-lightbox-detail"></span>
+            </span>
             <a id="astro-lightbox-download" class="mono astro-lightbox-download" download>Download ↓</a>
           </div>
         </div>
@@ -501,31 +527,50 @@ const gear = [
     letter-spacing: 0.06em;
   }
 
+  /* Masonry-style columns instead of a uniform cropped grid: each photo
+     keeps its native aspect ratio (no object-fit crop), since cropping
+     into a nebula or wide star field loses real framing. Column count
+     is responsive by itself via the CSS columns shorthand — no JS
+     layout pass needed. */
   .astro-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    columns: 4 240px;
+    column-gap: 1rem;
     margin: 0 0 1rem;
   }
   .astro-gallery-item {
     display: block;
+    width: 100%;
     padding: 0;
+    margin: 0 0 1rem;
     border: 1px solid var(--line-500);
     background: var(--ink-800);
-    aspect-ratio: 4 / 3;
     overflow: hidden;
     cursor: zoom-in;
     box-shadow: 0 1px 2px rgba(34, 27, 18, 0.05);
+    break-inside: avoid;
+  }
+  .astro-gallery-item picture {
+    display: block;
   }
   .astro-gallery-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
     transition: transform 0.3s ease;
   }
   .astro-gallery-item:hover img {
     transform: scale(1.05);
+  }
+  .astro-gallery-item .gallery-caption {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    background: var(--ink-800);
   }
 
   .astro-lightbox {
@@ -566,6 +611,15 @@ const gear = [
   .astro-lightbox-bar span {
     letter-spacing: 0.05em;
     text-transform: uppercase;
+  }
+  .astro-lightbox-detail {
+    display: block;
+    margin-top: 0.2rem;
+    color: #a39c90;
+    font-size: 0.7rem;
+  }
+  .astro-lightbox-detail:empty {
+    display: none;
   }
   .astro-lightbox-download {
     color: #fff;
@@ -620,20 +674,24 @@ const gear = [
 
 <script>
   const dataEl = document.getElementById("astro-gallery-data");
-  const items: { url: string; label: string }[] = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+  const items: { url: string; webpUrl?: string; label: string; detail?: string }[] = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
 
   const lightbox = document.getElementById("astro-lightbox") as HTMLDivElement | null;
   const lightboxImg = document.getElementById("astro-lightbox-img") as HTMLImageElement | null;
   const countEl = document.getElementById("astro-lightbox-count");
+  const detailEl = document.getElementById("astro-lightbox-detail");
   const downloadEl = document.getElementById("astro-lightbox-download") as HTMLAnchorElement | null;
   let current = 0;
 
   function render() {
     if (!lightboxImg || !countEl || !downloadEl || items.length === 0) return;
     const item = items[current];
-    lightboxImg.src = item.url;
+    // Display the lighter WebP when available; downloads always offer
+    // the original JPG/PNG for compatibility and full quality.
+    lightboxImg.src = item.webpUrl ?? item.url;
     lightboxImg.alt = item.label;
     countEl.textContent = `${item.label} (${current + 1} / ${items.length})`;
+    if (detailEl) detailEl.textContent = item.detail ?? "";
     downloadEl.href = item.url;
     downloadEl.setAttribute("download", item.url.split("/").pop() || "photo.jpg");
   }
