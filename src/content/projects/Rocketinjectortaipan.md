@@ -194,8 +194,8 @@ Mass Flow Rates:
 
 ## Test stand software migration
 
-Helped migrate the test stand software from Rust to C++ and wrote supporting scripts to keep the embedded systems running smoothly through a successful hot fire.
+Helped migrate the test stand software from Rust to C++ and wrote supporting scripts to keep the embedded systems running smoothly ahead of the upcoming hot fire.
 
 ## Outcome
 
-The redesigned injector and the RP-1/LOX propellant transition were validated through a successful hot fire, with the migrated C++ test stand software running reliably throughout.
+The redesigned injector, the RP-1/LOX propellant transition, and the migrated C++ test stand software are complete and ready, with a hot fire test planned.

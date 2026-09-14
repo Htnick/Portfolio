@@ -12,9 +12,8 @@ the shot list to actually fill them in, roughly in priority order.
 2. ~~**Taipan Liquid Rocket Engine**~~ — done. Using two CAD renders of the
    injector plate (`taipan-injector-plate-01.jpg` as the hero/thumbnail,
    `taipan-injector-plate-02.jpg` inline in the "Injector plate redesign"
-   section). Swap in a real hardware or hot-fire photo later if you want —
-   you actually fired this engine, so a real shot would hit harder than a
-   render.
+   section). Swap in a real hardware or hot-fire photo later once the
+   engine is actually fired — a real shot would hit harder than a render.
 3. ~~**Regeneratively Cooled Liquid Rocket Engine**~~ — done. Rendered
    `regen-engine-hero.jpg` (full assembly) and `regen-injector-topology.jpg`
    (the topology-optimized injector plate) directly from the STL CAD files
