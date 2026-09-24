@@ -1,45 +1,47 @@
 /* ==========================================================================
-   BLUEPRINT THEME — drafting-sheet aesthetic, "white sheet / orange pen"
+   BLUEPRINT THEME — drafting-sheet aesthetic, "white sheet / red pen"
    Variable NAMES are kept from the original dark theme (so every page that
    already references them keeps working); the VALUES are flipped to a
-   white background with an orange accent:
+   white background with a red accent:
      --ink-900   page background            (white)
      --ink-800   panel / card background    (warm cream)
      --line-500  gridlines / borders        (warm tan)
      --paper     primary text               (near-black ink)
      --paper-dim secondary text             (warm gray)
-     --redline   single accent — the engineer's pen, now true orange
+     --redline   single accent — the engineer's red pen
    Type:
-     Display: 'Space Grotesk'   — technical, geometric (headings, nav)
-     Body:    'IBM Plex Sans'   — clean, drafting-adjacent (paragraphs)
+     Display: 'Source Serif 4'  — editorial serif, sets the formal tone
+     Body:    'Inter'           — neutral and highly legible (paragraphs)
      Mono:    'IBM Plex Mono'   — data, labels, title-block fields
-     Serif:   'Fraunces'        — warm editorial serif (pull-quotes, lede)
-     Stat:    'Archivo Black'   — oversized numerals (stat band)
+     Serif:   'Source Serif 4'  — same family, italic (pull-quotes, lede)
+     Stat:    'Source Serif 4'  — oversized numerals, 700 (stat band)
+   Three families instead of five: display, body, and data. Every role a
+   page needs is covered without a typeface that is only used once.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   --ink-900: #ffffff;
-  --ink-800: #fdf6ec;
-  --line-500: #e6dac2;
-  --line-500-soft: rgba(198, 148, 84, 0.14);
-  --paper: #221b12;
-  --paper-dim: #7c6e5a;
-  --redline: #ff6a1a;
-  --redline-dim: rgba(255, 106, 26, 0.1);
-  --redline-deep: #d8500a;
-  /* Darker rust variant of --redline for small text (eyebrows, FIG.
-     captions, status tags) on light backgrounds — --redline itself is
-     only ~2.7:1 against --paper/--panel-tint, well under the WCAG AA
-     4.5:1 minimum for text that size. Keep --redline for buttons/large
-     elements where the brighter orange reads fine. */
-  --redline-text: #b03c0c;
+  --ink-800: #faf8f6;
+  --line-500: #ddd8d4;
+  --line-500-soft: rgba(120, 112, 108, 0.13);
+  --paper: #1c1b1a;
+  --paper-dim: #645f59;
+  --redline: #c4202e;
+  --redline-dim: rgba(196, 32, 46, 0.1);
+  --redline-deep: #96121f;
+  /* Deeper red for small text (eyebrows, FIG. captions, status tags).
+     Unlike the orange this replaced, --redline itself already clears the
+     WCAG AA 4.5:1 minimum on every background here (5.0:1 worst case, on
+     --panel-tint), so this darker step is for hierarchy rather than
+     legibility. It measures 6.9:1 in that same worst case. */
+  --redline-text: #9e1b28;
   /* Two section-block tints — warm and cool — used to visually separate
      page sections beyond the thin dashed cut-line, so pages read as
      distinct blocks rather than one continuous scroll. Kept muted so
-     they still sit comfortably with the white/cream/orange palette. */
-  --panel-tint: #f2e8d2;
+     they still sit comfortably with the white/warm-gray/red palette. */
+  --panel-tint: #f1eeea;
   --panel-tint-cool: #e6edf4;
 
   /* Site nav stays dark on every page, regardless of the page's own
@@ -48,11 +50,11 @@
   --nav-border: #2c2e35;
   --nav-text: #c6cad1;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-display: 'Source Serif 4', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
-  --font-serif: 'Fraunces', serif;
-  --font-stat: 'Archivo Black', sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-stat: 'Source Serif 4', Georgia, serif;
 
   --grid-size: 32px;
   --sheet-margin: clamp(1rem, 4vw, 2.5rem);
@@ -104,7 +106,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 1200px 640px at 50% -12%, rgba(255, 106, 26, 0.08), transparent 65%);
+  background: radial-gradient(ellipse 1200px 640px at 50% -12%, rgba(196, 32, 46, 0.07), transparent 65%);
   z-index: 0;
 }
 
@@ -349,7 +351,7 @@ a:focus-visible, button:focus-visible {
 
 .hero-visual .bg-centerline { stroke: var(--line-500); stroke-width: 1; }
 .hero-visual .bg-body {
-  fill: rgba(255, 106, 26, 0.06);
+  fill: rgba(196, 32, 46, 0.06);
   stroke: var(--redline);
   stroke-width: 1.6;
 }
@@ -387,6 +389,8 @@ a:focus-visible, button:focus-visible {
 
 .stat .stat-number {
   font-family: var(--font-stat);
+  /* Source Serif 4 has no built-in black weight, so ask for it explicitly. */
+  font-weight: 700;
   font-size: clamp(1.9rem, 4vw, 2.75rem);
   color: var(--redline);
   line-height: 1;
@@ -759,7 +763,7 @@ th {
   border-color: var(--redline);
 }
 
-/* Primary CTA — solid orange from the start, for the one action per page
+/* Primary CTA — solid red from the start, for the one action per page
    that matters most. */
 .btn-primary {
   color: #fff;

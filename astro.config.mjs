@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {
-      // Light syntax theme to match the white/orange site theme —
+      // Light syntax theme to match the white/red site theme —
       // the default (github-dark) clashed with a dark panel dropped
       // into an otherwise light page.
       theme: 'github-light',
