@@ -48,6 +48,27 @@ internal flow passage.
 - Designed a stacked distribution ring and manifold on the oxidizer side to feed the doublet orifices evenly.
 - Used a gothic-arch geometry on the fuel side, the same profile masonry has used for centuries to span an opening without exceeding an overhang or shear limit, to maximize usable space for preheated kerosene routing into the regenerative cooling channels while staying inside that 45° rule.
 
+<!-- CAD renders of the injector, added from Henry's exports. Deliberately
+     uncaptioned — the renders speak for themselves and the body text above
+     already explains the geometry. Alt text is still set on each image for
+     screen readers. Paths are hardcoded to the /Portfolio/ base. -->
+
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-face.jpg" alt="Injector plate viewed face-on, showing concentric rings of angled orifices, arc-shaped slots around the perimeter, and twelve bolt holes" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-face-iso.jpg" alt="Isometric view of the injector face showing the orifice pattern, perimeter slots, and the scalloped bolt flange" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-manifold-iso.jpg" alt="Reverse side of the injector showing the domed manifold volume, propellant inlet tubes, and the threaded central boss" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-section-01.jpg" alt="Cross-section through the injector showing the internal manifold volumes, angled feed passages, and the impinging doublet elements at the face" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-injector-section-02.jpg" alt="Second cross-section through the injector on a different cut plane, showing a further feed passage and the central port" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+
 ## Topological optimization
 
 Once the injector's flow geometry was locked in, I ran it through
@@ -63,7 +84,6 @@ topological optimization to address manufacturability and mass:
 <figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
   <img src="/Portfolio/images/regen-injector-topology.jpg" alt="Topology-optimized injector plate, CAD render showing the scalloped lightening cutouts and central orifice boss" style="display: block; width: 100%; height: auto;" />
 </figure>
-<p class="mono" style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.72rem; text-transform: none; letter-spacing: 0.02em;"><span style="color: var(--redline-text); margin-right: 0.5rem; letter-spacing: 0.06em;">FIG. 02</span>INJECTOR PLATE: TOPOLOGY-OPTIMIZED MASS DISTRIBUTION, CAD RENDER</p>
 
 ## Calculations
 

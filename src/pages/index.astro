@@ -5,59 +5,98 @@ import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
 
-// Hand-picked showcase, in this order: the injector plate, the
-// regeneratively cooled engine, and the Rokinon astro rig.
+// Hand-picked showcase, in this order: the regeneratively cooled engine
+// (the headline project), the injector plate that feeds it, and the
+// Rokinon astro rig.
 const FEATURED_SLUGS = [
-  "injector-plate-topology-optimization",
   "regeneratively-cooled-engine",
+  "injector-plate-topology-optimization",
   "rokinon-135mm-astro-rig",
 ];
 const featured = FEATURED_SLUGS
   .map((slug) => allProjects.find((p) => p.id === slug))
   .filter((p) => p !== undefined);
+
+// The two halves of the hero. Every figure below is taken from the
+// project pages themselves — don't add one here that isn't sourced
+// there, and don't imply hardware has been fired or flown when it
+// hasn't. The regen engine is a design effort; Taipan has not been
+// hot fired.
+const DISCIPLINES = [
+  {
+    label: "Propulsion",
+    href: "projects",
+    // Not regen-engine-hero.jpg — that already appears below as a
+    // featured project card, and an injector plate matches the claim
+    // in the headline more directly than a chamber does.
+    image: "taipan-injector-plate-02.jpg",
+    alt: "CAD render of the Taipan injector plate",
+    body:
+      "Injector plate design, combustion chamber sizing, and cooling analysis " +
+      "at CU Sounding Rocket Lab — a 650 lbf bipropellant engine and a " +
+      "2,000 lbf regenerative design.",
+    meta: "CU SRL · Liquids Team",
+  },
+  {
+    label: "Astrophotography",
+    href: "astrophotography",
+    image: "veil-nebula.jpg",
+    alt: "The Veil Nebula, astrophotography by Henry Nickless",
+    body:
+      "Forty deep-sky images shot on a rig I designed and printed myself — " +
+      "three-ring lens mounts and a belt-driven focuser around a 135mm f/2.",
+    meta: "Rokinon 135mm rig",
+  },
+];
+
+const RESUME = "files/resume/Henry_Nickless_Resume.pdf";
 ---
 
 <Layout
   title="Henry Nickless"
-  description="Henry Nickless is an aerospace engineering student at CU Boulder building liquid rocket engines, injector plates, and 3D-printed telescope hardware."
+  description="Henry Nickless is an aerospace engineering student at CU Boulder designing liquid rocket injector plates and regeneratively cooled engines, and building 3D-printed telescope hardware for deep-sky astrophotography."
 >
   <section class="hero">
-    <div class="hero-layout">
-      <div>
-        <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
-        <h1>Henry Nickless</h1>
-        <p class="lede">
-          I design and build liquid rocket engines and precision instruments,
-          currently working on injector plates and regenerative cooling at CU's
-          Sounding Rocket Lab, and 3D-printed telescope hardware on the side.
-        </p>
-        <div style="display: flex; gap: 1rem; margin-top: 1.75rem; flex-wrap: wrap;">
-          <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
-          <a class="btn" href={`${import.meta.env.BASE_URL}about`}>About Me</a>
-        </div>
+    <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
+    <h1 class="hero-claim">I design rocket injector plates.<br />I also build telescopes.</h1>
+    <p class="lede">
+      On the propulsion team at CU's Sounding Rocket Lab I size combustion
+      chambers and design injector plates — currently for a 2,000 lbf
+      regeneratively cooled engine. Off campus I print my own telescope
+      hardware and photograph the deep sky with it.
+    </p>
 
-        <div class="title-block">
-          <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
-          <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
-          <div><span class="label">Grad</span><span class="value">May 2028</span></div>
-        </div>
-      </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
+      <a class="btn" href={`${import.meta.env.BASE_URL}${RESUME}`} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
+      <a class="btn" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+    </div>
 
-      <a class="hero-photo-link" href={`${import.meta.env.BASE_URL}astrophotography`}>
-        <img
-          src={`${import.meta.env.BASE_URL}images/veil-nebula.jpg`}
-          alt="The Veil Nebula, astrophotography by Henry Nickless"
-          loading="eager"
-        />
-        <span class="hero-photo-title">Click here for my astrophotography</span>
-        <span class="hero-photo-caption">See how I took this photo</span>
-      </a>
+    <div class="title-block">
+      <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
+      <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
+      <div><span class="label">Grad</span><span class="value">May 2028</span></div>
     </div>
   </section>
 
+  <div class="cut-line"><span>Two Disciplines</span></div>
+
+  <div class="discipline-split">
+    {DISCIPLINES.map((d) => (
+      <a class="discipline" href={`${import.meta.env.BASE_URL}${d.href}`}>
+        <div class="discipline-frame">
+          <img src={`${import.meta.env.BASE_URL}images/${d.image}`} alt={d.alt} loading="eager" />
+        </div>
+        <span class="discipline-meta">{d.meta}</span>
+        <h2>{d.label}</h2>
+        <p>{d.body}</p>
+      </a>
+    ))}
+  </div>
+
   <div class="cut-line"><span>Selected Work</span></div>
 
-  <p style="color: var(--paper-dim); margin-top: -0.5rem; margin-bottom: 1.75rem; max-width: 46ch;">
+  <p class="section-intro">
     What I'm building right now at SRL, plus one favorite from last year.
   </p>
 
@@ -76,6 +115,7 @@ const featured = FEATURED_SLUGS
         </span>
         <h3>{project.data.title}</h3>
         <p>{project.data.description}</p>
+        {project.data.results && <p class="card-result">{project.data.results}</p>}
         <div class="tags">
           {project.data.tags?.slice(0, 3).map((tag: string) => (
             <span class="tag">{tag}</span>
@@ -85,20 +125,35 @@ const featured = FEATURED_SLUGS
     ))}
   </div>
 
-  <p style="text-align: right; margin-top: 1.5rem;">
-    <a class="mono" href={`${import.meta.env.BASE_URL}projects`} style="text-decoration: none; color: var(--paper-dim); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;">
-      View all projects →
-    </a>
+  <p class="all-projects">
+    <a href={`${import.meta.env.BASE_URL}projects`}>View all projects</a>
   </p>
 
   <div class="section-panel">
-    <div class="cut-line"><span>Toolset</span></div>
+    <div class="cut-line"><span>By The Numbers</span></div>
 
-    <div class="skills-strip">
-      {["Fusion 360", "SolidWorks", "Python", "MATLAB", "C++", "R", "3D Printing / CNC", "NASA CEA / RocketCEA"].map((skill) => (
-        <span class="skill-chip">{skill}</span>
-      ))}
+    <div class="stat-band">
+      <div class="stat">
+        <span class="stat-number">2,000</span>
+        <span class="stat-label">lbf regen engine — in design</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">650</span>
+        <span class="stat-label">lbf Taipan bipropellant</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">700</span>
+        <span class="stat-label">psi chamber, RP-1 / LOX</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">40</span>
+        <span class="stat-label">deep-sky images</span>
+      </div>
     </div>
+
+    <p class="toolset-line">
+      Fusion 360 · SolidWorks · Python · MATLAB · C++ · R · NASA CEA / RocketCEA · 3D printing &amp; CNC
+    </p>
   </div>
 
   <div class="section-panel section-panel--cool">
@@ -107,89 +162,134 @@ const featured = FEATURED_SLUGS
     <section class="hero" style="padding-top: 0;">
       <span class="eyebrow">// Say hello</span>
       <h2>Always happy to talk propulsion, optics, or anything in between.</h2>
-      <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+      <div class="hero-actions">
         <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
         <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn" href={`${import.meta.env.BASE_URL}${RESUME}`} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
       </div>
     </section>
   </div>
 </Layout>
 
 <style>
-  .hero-photo-link {
-    position: relative;
-    display: block;
-    max-width: 340px;
-    aspect-ratio: 6 / 5;
+  /* The claim, not the name — the name already sits in the nav bar
+     directly above, so spending the largest type on it wastes the slot. */
+  .hero-claim {
+    max-width: 18ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* Two co-equal halves: propulsion and astrophotography. The pairing is
+     the thing that distinguishes this site, so neither side is subordinate
+     and both images are given the same footprint. */
+  .discipline-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .discipline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .discipline-frame {
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     border: 1px solid var(--line-500);
-    box-shadow: 0 1px 2px rgba(34, 27, 18, 0.05);
+    background: var(--ink-800);
   }
-  .hero-photo-link img {
+
+  .discipline-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
   }
-  .hero-photo-link:hover img {
-    transform: scale(1.04);
-  }
-  .hero-photo-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 88%;
-    background: rgba(10, 12, 16, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 0.6rem 1.1rem;
-    color: #fff;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    text-align: center;
+
+  .discipline:hover .discipline-frame img {
+    transform: scale(1.03);
   }
 
-  .hero-photo-caption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.1rem 1.1rem 0.9rem;
-    background: linear-gradient(to top, rgba(10, 12, 16, 0.88), rgba(10, 12, 16, 0));
-    color: #fff;
+  .discipline-meta {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    color: var(--paper-dim);
   }
-  .hero-photo-caption::after {
-    content: "→";
-    margin-left: 0.4em;
+
+  .discipline h2 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+  }
+
+  .discipline:hover h2 {
     color: var(--redline);
   }
 
-  .skills-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
+  .discipline p {
+    margin: 0;
+    color: var(--paper-dim);
+    font-size: 0.95rem;
+    max-width: 46ch;
   }
 
-  .skill-chip {
+  .section-intro {
+    color: var(--paper-dim);
+    margin-top: -0.5rem;
+    margin-bottom: 1.75rem;
+    max-width: 46ch;
+  }
+
+  /* The quantified outcome from a project's frontmatter, when it has one.
+     Set apart from the description so it reads as evidence rather than
+     more prose. */
+  .card-result {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    letter-spacing: 0.03em;
+    line-height: 1.5;
     color: var(--paper);
-    border: 1px solid var(--line-500);
-    background: var(--ink-800);
-    padding: 0.45rem 0.9rem;
-    transition: border-color 0.15s ease, color 0.15s ease;
+    border-left: 2px solid var(--redline);
+    padding-left: 0.7rem;
+    margin: 0;
   }
-  .skill-chip:hover {
-    border-color: var(--redline);
+
+  .all-projects {
+    text-align: right;
+    margin-top: 1.5rem;
+  }
+  .all-projects a {
+    font-family: var(--font-mono);
+    text-decoration: none;
+    color: var(--paper-dim);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .all-projects a:hover {
     color: var(--redline-text);
+  }
+
+  /* Tool names kept for scanning, but demoted out of the chip grid they
+     used to sit in — a wall of generic tool chips says less than any one
+     project page does. */
+  .toolset-line {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--paper-dim);
+    margin: 1.5rem 0 0;
+    max-width: 70ch;
   }
 </style>

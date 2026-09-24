@@ -636,6 +636,21 @@ With chamber and throat dimensions established from the performance math, I buil
   <AstroImage src="/images/regen/dxf-contour-import.png" alt="DXF contour imported into CAD" figNo="03" caption="RPA-GENERATED NOZZLE CONTOUR, IMPORTED AS DXF REFERENCE GEOMETRY" />
 -->
 
+<!-- CAD renders from Henry's exports. Uncaptioned by request — the
+     surrounding text carries the explanation. Alt text is kept for
+     screen readers. Paths are hardcoded to the /Portfolio/ base,
+     since plain markdown can't reach import.meta.env.BASE_URL. -->
+
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-engine-assembly.jpg" alt="Full engine assembly, rendered in copper: injector and manifold at the top, chamber body, and the converging-diverging nozzle below" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-chamber-iso.jpg" alt="Isometric view of the chamber with the injector flange open at the top, showing the ring of cooling channel ends, side ports, and a mounting bracket" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-chamber-iso-logo.jpg" alt="Isometric view of the chamber from the opposite side, showing the CU SRL logo on the chamber wall and the coolant inlet near the nozzle" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+
 ## Injector plate
 
 The injector plate design and its topology optimization pass grew into enough of its own story that it now has its own writeup: see [Injector Plate Design & Topology Optimization](/Portfolio/projects/injector-plate-topology-optimization) for the impingement math, the NASA SP-8089 basis for the layout, and the optimization process itself.
@@ -643,6 +658,21 @@ The injector plate design and its topology optimization pass grew into enough of
 ## Cooling analysis
 
 Performed preliminary heat transfer analysis for regenerative and film cooling strategies, estimating thermal loads through the chamber wall and evaluating how effectively the preheated kerosene jacket would manage them.
+
+<!-- CAD renders from Henry's exports. Uncaptioned by request — the
+     surrounding text carries the explanation. Alt text is kept for
+     screen readers. Paths are hardcoded to the /Portfolio/ base,
+     since plain markdown can't reach import.meta.env.BASE_URL. -->
+
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-chamber-section-01.jpg" alt="Cross-section through the chamber and nozzle showing the cooling jacket as a continuous passage between the inner liner and the outer wall" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-chamber-section-02.jpg" alt="Second cross-section on a different cut plane, showing the coolant ports entering the jacket along the chamber" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
+<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
+  <img src="/Portfolio/images/regen-chamber-flange-top.jpg" alt="Chamber viewed down through the open injector flange, showing the ring of rectangular cooling channel ends around the chamber wall" loading="lazy" style="display: block; width: 100%; height: auto;" />
+</figure>
 
 ## Status
 
