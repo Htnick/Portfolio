@@ -56,6 +56,46 @@ const galleryItems = galleryFiles.map((file) => {
 
 const BASE = import.meta.env.BASE_URL;
 const WF = `${BASE}images/astro-workflow/`;
+const PX = `${BASE}images/astro-processing/`;
+
+// Processing pipeline, in the order it runs. Example data: the North
+// America Nebula (NGC 7000). `img` is a file in public/images/astro-processing/.
+const PIPELINE = [
+  {
+    stage: "Calibration & stacking",
+    steps: [
+      { img: "01-wbpp.jpg", title: "WBPP", note: "WeightedBatchPreprocessing calibrates every light frame against master bias, dark and flat frames, then registers and integrates the stack." },
+      { img: "02-stacked-linear.jpg", title: "Stacked master", note: "The integrated image is still linear: nearly all of the signal sits in the bottom few percent of the range, so it looks almost black." },
+      { img: "03-stf.jpg", title: "Screen stretch (STF)", note: "A display-only auto stretch shows what's in the data without changing a single pixel." },
+    ],
+  },
+  {
+    stage: "Linear processing",
+    steps: [
+      { img: "04-graxpert.jpg", title: "GraXpert", note: "AI gradient removal by subtraction (smoothing 0.40) takes out skyglow and light pollution that vary across the frame." },
+      { img: "05-graxpert-model.jpg", title: "Background model", note: "The gradient GraXpert modeled and removed, next to the corrected image." },
+      { img: "06-background-neutralization.jpg", title: "Background neutralization", note: "Evens out the background level across the red, green and blue channels." },
+      { img: "07-blurx-correct.jpg", title: "BlurXTerminator, correct only", note: "Fixes star shapes (residual aberrations and guiding error) without sharpening anything yet." },
+      { img: "08-imagesolver.jpg", title: "ImageSolver", note: "Plate solves the image against a star catalog at 800 mm, which SPCC needs to match stars to their spectra. Observing-site fields blurred." },
+      { img: "09-spcc.jpg", title: "SPCC", note: "Spectrophotometric color calibration against Gaia DR3 spectra, using the camera's UV/IR-cut filter curves." },
+      { img: "10-spcc-graphs.jpg", title: "White balance fit", note: "468 catalog stars fit for the red/green and blue/green white balance." },
+      { img: "11-blurx.jpg", title: "BlurXTerminator", note: "Deconvolution: sharpen stars 0.60, star halos 0.20, nonstellar detail 0.50." },
+      { img: "12-dynamic-crop.jpg", title: "DynamicCrop", note: "Trims the ragged stacking edges, down to 1498 × 992 for this binned pass." },
+      { img: "13-noisext.jpg", title: "NoiseXTerminator", note: "Noise reduction: intensity 0.65, color 0.50." },
+      { img: "14-starxt.jpg", title: "StarXTerminator", note: "Separates the stars from the nebula so each can be stretched on its own terms." },
+      { img: "15-starless-stars.jpg", title: "Starless + stars", note: "Linear processing done: a starless image and a stars-only image." },
+    ],
+  },
+  {
+    stage: "Nonlinear processing",
+    steps: [
+      { img: "16-statistical-stretch.jpg", title: "Statistical stretch", note: "Stretches the starless image to a target median of 0.25 with a linked stretch, keeping the color balance from SPCC." },
+      { img: "17-star-stretch.jpg", title: "Star stretch", note: "A separate stretch for the stars-only image (amount 5, color boost 1), so stars stay small and keep their color." },
+      { img: "18-color-saturation.jpg", title: "Color saturation", note: "A gentle saturation boost on the starless nebula." },
+      { img: "19-lhe.jpg", title: "Local histogram equalization", note: "Local contrast (kernel radius 164, contrast limit 2.0, amount 0.11) to bring out structure in the clouds." },
+    ],
+  },
+];
 
 // Rolling hero at the top of the page: filenames from the gallery, in
 // display order. Each slide links to the same lightbox as the gallery.
@@ -69,7 +109,7 @@ const sections = [
   { id: "planning", no: "03", title: "Target Planning", note: "AstroBin, Telescopius, Stellarium, Claude" },
   { id: "sequence", no: "04", title: "Imaging Sequence", note: "The NINA sequence, start to finish" },
   { id: "tilt", no: "05", title: "Sensor Tilt", note: "Why fast optics need tilt correction" },
-  { id: "processing", no: "06", title: "Processing", note: "From raw subs to a finished image" },
+  { id: "processing", no: "06", title: "Processing", note: "PixInsight pipeline, then Photoshop" },
 ];
 
 const optics = [
@@ -629,6 +669,45 @@ const gear = [
     draw the eye toward the parts of the image that matter.
   </p>
 
+
+  <h3 class="wf-subhead">The pipeline, step by step</h3>
+  <p class="pipe-lede">
+    Every image goes through the same sequence. The example here is the
+    North America Nebula (NGC 7000). Click any step to see the full screenshot.
+  </p>
+
+  {(() => { let n = 0; return PIPELINE.map((group) => (
+    <section class="pipe-stage">
+      <h4 class="pipe-stage-title mono">{group.stage}</h4>
+      <ol class="pipe-grid">
+        {group.steps.map((st) => { n += 1; return (
+          <li class="pipe-card">
+            <a href={`${PX}${st.img}`} target="_blank" rel="noopener" class="pipe-thumb">
+              <img src={`${PX}${st.img}`} alt={`${st.title} in PixInsight`} loading="lazy" />
+            </a>
+            <div class="pipe-body">
+              <span class="pipe-no mono">{String(n).padStart(2, "0")}</span>
+              <h5>{st.title}</h5>
+              <p>{st.note}</p>
+            </div>
+          </li>
+        ); })}
+      </ol>
+    </section>
+  )); })()}
+
+  <section class="pipe-stage">
+    <h4 class="pipe-stage-title mono">Finishing in Photoshop</h4>
+    <p class="pipe-lede">
+      The stretched starless image and stars go to Photoshop for final
+      color calibration and a Camera Raw pass, then the stars are blended
+      back over the nebula with a screen blend.
+    </p>
+    <div class="wf-ph">
+      <ImagePlaceholder label="Photoshop finishing" spec="Coming soon: color calibration, Camera Raw, star screen" aspect="wide" />
+    </div>
+  </section>
+
 </Layout>
 
 <style>
@@ -989,6 +1068,74 @@ const gear = [
   }
   .wf-download .btn {
     flex-shrink: 0;
+  }
+
+
+  .pipe-lede {
+    color: var(--paper-dim);
+    max-width: 70ch;
+  }
+  .pipe-stage {
+    margin: 2rem 0 0;
+  }
+  .pipe-stage-title {
+    margin: 0 0 0.9rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--redline);
+    font-weight: 500;
+  }
+  .pipe-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .pipe-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+  }
+  .pipe-thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #2a2a2a;
+    cursor: zoom-in;
+  }
+  .pipe-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .pipe-thumb:hover img {
+    transform: scale(1.04);
+  }
+  .pipe-body {
+    padding: 0.7rem 0.8rem 0.85rem;
+  }
+  .pipe-no {
+    font-size: 0.68rem;
+    color: var(--redline);
+    letter-spacing: 0.08em;
+  }
+  .pipe-body h5 {
+    margin: 0.15rem 0 0.3rem;
+    font-size: 0.95rem;
+    color: var(--paper);
+  }
+  .pipe-body p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--paper-dim);
   }
 
   /* ---------- Jump links ---------- */
