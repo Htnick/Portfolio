@@ -1,79 +1,183 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
 import { getCollection } from "astro:content";
 
+const BASE = import.meta.env.BASE_URL;
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
+const byDate = (a: any, b: any) => b.data.date.localeCompare(a.data.date);
 
-const completed = allProjects
-  .filter((p) => p.data.status === "completed")
-  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+const groups = [
+  { id: "in-progress", label: "In Progress", items: allProjects.filter((p) => p.data.status === "in-progress").sort(byDate) },
+  { id: "completed", label: "Completed", items: allProjects.filter((p) => p.data.status === "completed").sort(byDate) },
+];
 
-const inProgress = allProjects
-  .filter((p) => p.data.status === "in-progress")
-  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+const year = (d: string) => d.slice(0, 4);
 ---
 
 <Layout
   title="Projects | Henry Nickless"
   description="Rocket engines, telescopes, and the occasional glider: a running log of what Henry Nickless has been building."
+  variant="gallery"
 >
-  <section class="hero">
-    <span class="eyebrow">// Index</span>
-    <h1>Projects</h1>
-    <p class="lede">
-      Rocket engines, telescopes, and the occasional glider: a running log
-      of what I've been building.
-    </p>
-  </section>
-
-  <div class="cut-line"><span>Completed</span></div>
-
-  <div class="project-grid">
-    {completed.map((project, i) => (
-      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
-        <div class="thumb-frame">
-          {project.data.image ? (
-            <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
-          ) : (
-            <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
-          )}
-        </div>
-        <span class="sheet-no">SHT {String(i + 1).padStart(2, "0")} / COMPLETE</span>
-        <h3>{project.data.title}</h3>
-        <p>{project.data.description}</p>
-        <div class="tags">
-          {project.data.tags?.map((tag: string) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      </a>
-    ))}
-  </div>
-
-  <div class="section-panel section-panel--cool">
-    <div class="cut-line"><span>In Progress</span></div>
-
-    <div class="project-grid">
-      {inProgress.map((project, i) => (
-        <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
-          <div class="thumb-frame">
-            {project.data.image ? (
-              <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
-            ) : (
-              <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
-            )}
-          </div>
-          <span class="sheet-no" style="color: var(--redline-text);">SHT {String(i + 1).padStart(2, "0")} / IN PROGRESS</span>
-          <h3>{project.data.title}</h3>
-          <p>{project.data.description}</p>
-          <div class="tags">
-            {project.data.tags?.map((tag: string) => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-        </a>
-      ))}
+  <header class="proj-head">
+    <div>
+      <span class="eyebrow mono">// Index</span>
+      <h1>Projects</h1>
+      <p class="lede">
+        Rocket engines, telescopes, and the occasional glider: a running log
+        of what I've been building.
+      </p>
     </div>
-  </div>
+    <nav class="proj-jump mono" aria-label="Project groups">
+      {groups.map((g) => (
+        <a href={`#${g.id}`}>{g.label} <span>{g.items.length}</span></a>
+      ))}
+    </nav>
+  </header>
+
+  {groups.map((g) => (
+    <section class="proj-group" id={g.id}>
+      <h2 class="proj-group-title mono">{g.label}<span>{g.items.length}</span></h2>
+      <div class="proj-grid">
+        {g.items.map((project) => (
+          <a class="proj-card" href={`${BASE}projects/${project.id}/`}>
+            <div class="proj-thumb">
+              {project.data.image ? (
+                <img src={`${BASE}images/${project.data.image}`} alt="" loading="lazy" />
+              ) : (
+                <span class="proj-thumb-empty mono">{project.data.tags?.[0] ?? "project"}</span>
+              )}
+            </div>
+            <div class="proj-body">
+              <span class:list={["proj-meta mono", { live: g.id === "in-progress" }]}>
+                {g.id === "in-progress" ? "In progress" : "Complete"} · {year(project.data.date)}
+              </span>
+              <h3>{project.data.title}</h3>
+              <p>{project.data.description}</p>
+              <div class="proj-tags">
+                {project.data.tags?.slice(0, 3).map((tag: string) => (
+                  <span class="mono">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
 </Layout>
+
+<style>
+  .proj-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0 1.75rem;
+    border-bottom: 1px solid var(--line-500);
+    margin-bottom: 2rem;
+  }
+  .proj-head .eyebrow {
+    display: block;
+    color: var(--redline);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .proj-head h1 { margin: 0 0 0.6rem; font-size: clamp(2.2rem, 4.5vw, 3.2rem); }
+  .proj-head .lede { margin: 0; max-width: 58ch; color: var(--paper-dim); }
+  .proj-jump { display: flex; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .proj-jump a {
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--line-500);
+    color: var(--paper-dim);
+    text-decoration: none;
+  }
+  .proj-jump a:hover { border-color: var(--redline); color: var(--paper); }
+  .proj-jump span { color: var(--redline); margin-left: 0.35rem; }
+
+  .proj-group { margin: 0 0 3rem; scroll-margin-top: 1.5rem; }
+  .proj-group-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin: 0 0 1rem;
+  }
+  .proj-group-title span { color: var(--paper-dim); }
+
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.25rem;
+  }
+  .proj-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .proj-card:hover { border-color: var(--redline); transform: translateY(-2px); }
+  .proj-card:hover h3 { color: var(--redline); }
+  .proj-thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #000;
+    border-bottom: 1px solid var(--line-500);
+  }
+  .proj-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+  .proj-card:hover .proj-thumb img { transform: scale(1.04); }
+  .proj-thumb-empty {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--paper-dim);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .proj-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.1rem 1.1rem;
+    flex: 1;
+  }
+  .proj-meta { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper-dim); }
+  .proj-meta.live { color: var(--redline); }
+  .proj-body h3 { margin: 0; font-size: 1.15rem; line-height: 1.25; transition: color 0.15s ease; }
+  .proj-body p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--paper-dim);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; padding-top: 0.4rem; }
+  .proj-tags span {
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    border: 1px solid var(--line-500);
+    padding: 0.2rem 0.45rem;
+  }
+</style>
