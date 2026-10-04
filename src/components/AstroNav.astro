@@ -1,0 +1,33 @@
+---
+import { ASTRO_PAGES, astroHref } from "../data/astro-page";
+interface Props { current: string }
+const { current } = Astro.props;
+---
+
+<nav class="astro-subnav" aria-label="Astrophotography sections">
+  {ASTRO_PAGES.map((p) => (
+    <a href={astroHref(p.slug)} aria-current={p.slug === current ? "page" : undefined}>{p.title}</a>
+  ))}
+</nav>
+
+<style>
+  .astro-subnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .astro-subnav a {
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--line-500);
+    color: var(--paper-dim);
+    text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .astro-subnav a:hover { border-color: var(--redline); color: var(--paper); }
+  .astro-subnav a[aria-current="page"] { border-color: var(--redline); background: var(--redline); color: #fff; }
+</style>

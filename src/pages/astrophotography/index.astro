@@ -1,0 +1,247 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
+import AstroNav from "../../components/AstroNav.astro";
+import { ASTRO_PAGES, BASE, astroHref, galleryItems, gear, heroSlides } from "../../data/astro-page";
+import "../../styles/astro-pages.css";
+const idx = ASTRO_PAGES.findIndex((p) => p.slug === "");
+const next = ASTRO_PAGES[idx + 1];
+---
+
+<Layout
+  title="Astrophotography | Henry Nickless"
+  description="Henry Nickless's deep-sky astrophotography: a gallery of nebulae and galaxies shot on his own rig."
+  image="veil-nebula.jpg"
+  variant="gallery"
+>
+  <section class="astro-hero" aria-roledescription="carousel" aria-label="Featured astrophotography">
+    <div class="astro-hero-track">
+      {heroSlides.map((s, i) => (
+        <button type="button" class:list={["astro-hero-slide", { "is-active": i === 0 }]} data-slide={i} data-index={s.index} aria-label={`View ${s.item!.label} larger`} tabindex={i === 0 ? 0 : -1}>
+          <picture>
+            {s.item!.webpUrl && <source srcset={s.item!.webpUrl} type="image/webp" />}
+            <img src={s.item!.url} alt={s.item!.label} loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : "auto"} />
+          </picture>
+        </button>
+      ))}
+    </div>
+    <div class="astro-hero-overlay">
+      <span class="eyebrow">// Astrophotography</span>
+      <h1>Deep-Sky Imaging</h1>
+      <p class="astro-hero-caption mono">
+        {heroSlides.map((s, i) => (
+          <span class:list={["astro-hero-caption-item", { "is-active": i === 0 }]} data-caption={i}>
+            {s.item!.label}{s.item!.dateLabel && <span class="astro-hero-caption-date"> · {s.item!.dateLabel}</span>}
+          </span>
+        ))}
+      </p>
+    </div>
+    <div class="astro-hero-controls">
+      <button type="button" class="astro-hero-arrow" id="astro-hero-prev" aria-label="Previous image">‹</button>
+      <div class="astro-hero-dots" role="tablist">
+        {heroSlides.map((s, i) => (
+          <button type="button" class:list={["astro-hero-dot", { "is-active": i === 0 }]} data-dot={i} aria-label={`Show ${s.item!.label}`}></button>
+        ))}
+      </div>
+      <button type="button" class="astro-hero-arrow" id="astro-hero-next" aria-label="Next image">›</button>
+    </div>
+  </section>
+
+  <AstroNav current="" />
+
+  <nav class="astro-jump" aria-label="Astrophotography pages">
+    <p class="astro-jump-lede">
+      Everything here was captured on my own rig and processed in
+      PixInsight and Photoshop. The gallery is right below; the pages on
+      how these photos get made are linked here.
+    </p>
+    <div class="astro-jump-grid">
+      {ASTRO_PAGES.slice(1).map((pg, k) => (
+        <a href={astroHref(pg.slug)} class="astro-jump-link">
+          <span class="astro-jump-no mono">{String(k + 1).padStart(2, "0")}</span>
+          <span class="astro-jump-title">{pg.title}</span>
+          <span class="astro-jump-note">{pg.note}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <div class="cut-line" id="gallery"><span>Gallery</span></div>
+
+  {galleryItems.length > 0 ? (
+    <>
+      <p class="mono" style="color: var(--paper-dim); font-size: 0.8rem; margin: -0.5rem 0 1.5rem;">
+        {galleryItems.length} photos, newest first. Click one to view it larger or download it.
+      </p>
+      <div class="astro-gallery">
+        {galleryItems.map((item, i) => (
+          <button type="button" class="astro-gallery-item" data-index={i} aria-label={`View ${item.label}, photo ${i + 1} of ${galleryItems.length}`}>
+            <picture>
+              {item.webpUrl && <source srcset={item.webpUrl} type="image/webp" />}
+              <img src={item.url} alt={item.label} title={item.label} loading="lazy" />
+            </picture>
+            <span class="gallery-caption"><span class="gallery-caption-title">{item.label}</span>{item.dateLabel && <span class="gallery-caption-date">{item.dateLabel}</span>}</span>
+          </button>
+        ))}
+      </div>
+
+      <script type="application/json" id="astro-gallery-data" set:html={JSON.stringify(galleryItems)} />
+
+      <div id="astro-lightbox" class="astro-lightbox" hidden>
+        <button type="button" class="astro-lightbox-close" id="astro-lightbox-close" aria-label="Close">✕</button>
+        <button type="button" class="astro-lightbox-nav astro-lightbox-prev" id="astro-lightbox-prev" aria-label="Previous photo">‹</button>
+        <div class="astro-lightbox-stage">
+          <img id="astro-lightbox-img" src="" alt="" />
+          <div class="astro-lightbox-bar">
+            <span>
+              <span id="astro-lightbox-count" class="mono"></span>
+              <span id="astro-lightbox-detail" class="mono astro-lightbox-detail"></span>
+            </span>
+            <a id="astro-lightbox-download" class="mono astro-lightbox-download" download>Download ↓</a>
+          </div>
+        </div>
+        <button type="button" class="astro-lightbox-nav astro-lightbox-next" id="astro-lightbox-next" aria-label="Next photo">›</button>
+      </div>
+    </>
+  ) : (
+    <p class="editable-note">
+      No photos in the gallery yet. Drop JPGs into
+      public/images/astrophotography/ and rebuild.
+    </p>
+  )}
+
+  <div class="cut-line" id="methods"><span>How I Take These Photos</span></div>
+
+  <p>
+      Every image on this page runs through the same pipeline: a rig that
+      sets up and operates itself for the night, a fixed sequence that
+      handles focus, pointing, and calibration without help, and a
+      processing pass that turns a stack of noisy sub-exposures into a
+      finished photo. The pages linked above walk through the gear, the
+      unattended imaging sequence, the tilt-correction problem that fast
+      optics create, and how a stack of raw frames becomes a final image.
+  </p>
+
+
+  {next && (
+    <a href={astroHref(next.slug)} class="astro-next">
+      <span class="mono">Next</span>
+      <strong>{next.title} →</strong>
+      <span>{next.note}</span>
+    </a>
+  )}
+</Layout>
+
+<script>
+  const dataEl = document.getElementById("astro-gallery-data");
+  const items: { url: string; webpUrl?: string; label: string; detail?: string }[] = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+
+  const lightbox = document.getElementById("astro-lightbox") as HTMLDivElement | null;
+  const lightboxImg = document.getElementById("astro-lightbox-img") as HTMLImageElement | null;
+  const countEl = document.getElementById("astro-lightbox-count");
+  const detailEl = document.getElementById("astro-lightbox-detail");
+  const downloadEl = document.getElementById("astro-lightbox-download") as HTMLAnchorElement | null;
+  let current = 0;
+
+  function render() {
+    if (!lightboxImg || !countEl || !downloadEl || items.length === 0) return;
+    const item = items[current];
+    // Display the lighter WebP when available; downloads always offer
+    // the original JPG/PNG for compatibility and full quality.
+    lightboxImg.src = item.webpUrl ?? item.url;
+    lightboxImg.alt = item.label;
+    countEl.textContent = `${item.label} (${current + 1} / ${items.length})`;
+    if (detailEl) detailEl.textContent = item.detail ?? "";
+    downloadEl.href = item.url;
+    downloadEl.setAttribute("download", item.url.split("/").pop() || "photo.jpg");
+  }
+
+  function open(index: number) {
+    current = index;
+    render();
+    if (lightbox) {
+      lightbox.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function close() {
+    if (lightbox) {
+      lightbox.hidden = true;
+      document.body.style.overflow = "";
+    }
+  }
+
+  function prev() {
+    current = (current - 1 + items.length) % items.length;
+    render();
+  }
+
+  function next() {
+    current = (current + 1) % items.length;
+    render();
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".astro-gallery-item").forEach((btn) => {
+    btn.addEventListener("click", () => open(Number(btn.dataset.index)));
+  });
+  document.getElementById("astro-lightbox-close")?.addEventListener("click", close);
+  document.getElementById("astro-lightbox-prev")?.addEventListener("click", prev);
+  document.getElementById("astro-lightbox-next")?.addEventListener("click", next);
+  lightbox?.addEventListener("click", (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox || lightbox.hidden) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+  });
+
+  // ---------- Rolling hero ----------
+  const heroSlides = Array.from(document.querySelectorAll<HTMLButtonElement>(".astro-hero-slide"));
+  const heroCaptions = Array.from(document.querySelectorAll<HTMLElement>(".astro-hero-caption-item"));
+  const heroDots = Array.from(document.querySelectorAll<HTMLButtonElement>(".astro-hero-dot"));
+  const heroEl = document.querySelector<HTMLElement>(".astro-hero");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const HERO_INTERVAL_MS = 6500;
+  let heroCurrent = 0;
+  let heroTimer: number | undefined;
+  let heroPaused = false;
+
+  function showSlide(i: number) {
+    if (heroSlides.length === 0) return;
+    heroCurrent = (i + heroSlides.length) % heroSlides.length;
+    heroSlides.forEach((el, n) => {
+      const on = n === heroCurrent;
+      el.classList.toggle("is-active", on);
+      el.tabIndex = on ? 0 : -1;
+    });
+    heroCaptions.forEach((el, n) => el.classList.toggle("is-active", n === heroCurrent));
+    heroDots.forEach((el, n) => {
+      el.classList.toggle("is-active", n === heroCurrent);
+      el.setAttribute("aria-selected", String(n === heroCurrent));
+    });
+  }
+
+  function startHero() {
+    stopHero();
+    if (reduceMotion || heroPaused || heroSlides.length < 2) return;
+    heroTimer = window.setInterval(() => showSlide(heroCurrent + 1), HERO_INTERVAL_MS);
+  }
+  function stopHero() {
+    if (heroTimer !== undefined) window.clearInterval(heroTimer);
+    heroTimer = undefined;
+  }
+
+  heroSlides.forEach((el) => el.addEventListener("click", () => open(Number(el.dataset.index))));
+  heroDots.forEach((el, n) => el.addEventListener("click", () => { showSlide(n); startHero(); }));
+  document.getElementById("astro-hero-prev")?.addEventListener("click", () => { showSlide(heroCurrent - 1); startHero(); });
+  document.getElementById("astro-hero-next")?.addEventListener("click", () => { showSlide(heroCurrent + 1); startHero(); });
+  heroEl?.addEventListener("mouseenter", () => { heroPaused = true; stopHero(); });
+  heroEl?.addEventListener("mouseleave", () => { heroPaused = false; startHero(); });
+  heroEl?.addEventListener("focusin", () => { heroPaused = true; stopHero(); });
+  heroEl?.addEventListener("focusout", () => { heroPaused = false; startHero(); });
+  document.addEventListener("visibilitychange", () => (document.hidden ? stopHero() : startHero()));
+  startHero();
+</script>

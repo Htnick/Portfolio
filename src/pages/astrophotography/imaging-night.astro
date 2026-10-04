@@ -1,0 +1,302 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
+import AstroNav from "../../components/AstroNav.astro";
+import { ASTRO_PAGES, BASE, NT, WF, astroHref } from "../../data/astro-page";
+import "../../styles/astro-pages.css";
+const idx = ASTRO_PAGES.findIndex((p) => p.slug === "imaging-night");
+const next = ASTRO_PAGES[idx + 1];
+---
+
+<Layout
+  title="An Imaging Night | Astrophotography | Henry Nickless"
+  description="One night of optical debugging on a 200 mm f/4 Newtonian: sensor tilt, a guide-prism shadow, autofocus backlash and secondary-mirror flares."
+  image="veil-nebula.jpg"
+  variant="gallery"
+>
+  <AstroNav current="imaging-night" />
+
+  <section class="hero" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+    <span class="eyebrow">// Astrophotography</span>
+    <h1>An Imaging Night</h1>
+    <p class="lede">One night of optical debugging on the CarbonStar 200, from planning to root cause.</p>
+  </section>
+
+
+  <p>
+    Most nights are uneventful: the sequence runs and I check in from
+    inside. This one wasn't, and it shows the whole workflow under
+    pressure. Images from the CarbonStar 200 kept coming out with bad
+    stars, and I was sure it was coma; I had just bought a new coma
+    corrector to fix it. Over one night (October 1&ndash;2, 2026) I tested
+    the telescope piece by piece, with Claude analyzing frames, logs and
+    screenshots as they came in. There were five separate problems, and
+    none of them was coma: a tilted sensor, the guide prism shadowing one
+    edge of the frame, autofocus backlash, a refocus trigger too loose
+    for f/4, and a known manufacturing flaw on the secondary mirror.
+    Four were fixed before midnight.
+  </p>
+
+  <div class="night-stats">
+    <div><span class="mono">Corner focus spread</span><strong>64 → 12 µm</strong></div>
+    <div><span class="mono">Star elongation</span><strong>0.59 → 0.40</strong></div>
+    <div><span class="mono">Autofocus fit</span><strong>R² 0.88 → 1.00</strong></div>
+    <div><span class="mono">Guiding</span><strong>0.52″ RMS</strong></div>
+  </div>
+
+  <ol class="night-log">
+    <li>
+      <span class="night-time mono">18:36</span>
+      <div>
+        <h3>Planning</h3>
+        <p>
+          The target was the Pleiades: its seven bright stars make a
+          collimation check, and the faint stars in the corners would show
+          whether the new corrector fixed the "coma." A 73% Moon ruled out
+          the faint dust, so the night became a test night, shot through
+          the UV/IR-cut filter in 60&nbsp;s subs. With sky glow swamping
+          the camera's read noise 50&ndash;100× at f/4, longer subs would
+          add almost nothing but risk.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">18:57</span>
+      <div>
+        <h3>Rebuilding the sequence</h3>
+        <p>
+          A review of my old NINA sequence turned up guiding left running
+          through flats, autofocus in the wrong filter, and a 5&nbsp;°C
+          refocus trigger far too loose for an f/4 critical focus zone of
+          ±21&nbsp;µm. The rebuilt test sequence loaded but stopped
+          instantly with no error; the NINA log showed a missing dither
+          trigger crashing validation silently.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">20:14</span>
+      <div>
+        <h3>First test frames</h3>
+        <p>
+          A star-shape map of the first frame showed one edge of the field
+          softer than the other, with elongation fanning around a point off
+          the frame. Coma from wrong spacing would center on the middle of
+          the frame; an off-center pattern meant the sensor was tilted.
+          Defocused donuts showed collimation was fine.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">20:52</span>
+      <div>
+        <h3>Spacing sweep</h3>
+        <p>
+          Driving all three tilt-adjuster motors together changes the
+          corrector-to-sensor spacing remotely. A short sequence at
+          0.2, 0.7 and 1.2&nbsp;mm (autofocus, donuts, guided frames at each)
+          picked 0.7&nbsp;mm on every star-size measure.
+        </p>
+        <figure class="wf-fig wf-plot"><img src={`${NT}spacing-donut-profiles.jpg`} alt="Inside versus outside focus donut profiles at three spacing settings" loading="lazy" /><figcaption class="mono">Inside vs. outside focus profiles across the spacing sweep</figcaption></figure>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:23</span>
+      <div class="night-tilt">
+        <h3>Measuring and correcting tilt</h3>
+
+  <p>
+    Every optical system has one flat plane where the image actually
+    comes to focus. If the sensor isn't perfectly perpendicular to the
+    incoming light cone, even by a fraction of a degree, one side of
+    the frame sits slightly closer to that plane than the other, and
+    stars stretch into small ellipses toward whichever corner is
+    furthest from true focus. On a fast, wide-aperture system the depth
+    of focus is shallow enough that a tilt error worth caring about is
+    measured in thousandths of a millimeter at the sensor's edge, not
+    something that's reliably adjustable by hand, especially not
+    repeatably across setups. An automated tilt adjuster (fine
+    adjustment screws driven under motor control instead of by hand)
+    corrects that error in small, repeatable steps and lets the result
+    get verified against real star data instead of guesswork, and
+    re-checked whenever the imaging train gets reconfigured.
+  </p>
+
+  <div class="tilt-figure-row">
+    <figure class="tilt-figure">
+      <svg viewBox="0 0 460 165" role="img" aria-label="Diagram comparing star shapes across the sensor with tilt present versus corrected">
+        <g transform="translate(10,15)">
+          <rect x="0" y="0" width="180" height="110" fill="none" stroke="var(--line-500)" stroke-width="1.5" />
+          <circle cx="14" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="14" r="4.5" fill="none" stroke="var(--redline)" stroke-width="1.2" />
+          <ellipse cx="90" cy="55" rx="4" ry="3" fill="none" stroke="var(--redline)" stroke-width="1" transform="rotate(35 90 55)" />
+          <ellipse cx="14" cy="96" rx="5.5" ry="3.5" fill="none" stroke="var(--redline)" stroke-width="1.2" transform="rotate(35 14 96)" />
+          <ellipse cx="166" cy="96" rx="10" ry="4.5" fill="none" stroke="var(--redline)" stroke-width="1.5" transform="rotate(35 166 96)" />
+          <text x="90" y="130" class="tilt-cap" text-anchor="middle">TILTED</text>
+        </g>
+        <g transform="translate(265,15)">
+          <rect x="0" y="0" width="180" height="110" fill="none" stroke="var(--line-500)" stroke-width="1.5" />
+          <circle cx="14" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="14" r="2.6" fill="var(--redline)" />
+          <circle cx="90" cy="55" r="2.6" fill="var(--redline)" />
+          <circle cx="14" cy="96" r="2.6" fill="var(--redline)" />
+          <circle cx="166" cy="96" r="2.6" fill="var(--redline)" />
+          <text x="90" y="130" class="tilt-cap" text-anchor="middle">CORRECTED</text>
+        </g>
+      </svg>
+      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 01</span>STAR SHAPE ACROSS THE FRAME: TILTED VS. CORRECTED</figcaption>
+    </figure>
+
+    <figure class="tilt-figure">
+      <svg viewBox="0 0 360 230" role="img" aria-label="Side-view schematic of a tilted sensor relative to the ideal focal plane">
+        <!-- optical axis -->
+        <line x1="15" y1="115" x2="340" y2="115" stroke="var(--line-500)" stroke-width="1" stroke-dasharray="4 4" />
+        <text x="20" y="107" class="tilt-cap">OPTICAL AXIS</text>
+
+        <!-- ideal focal plane, perpendicular to the axis -->
+        <line x1="235" y1="40" x2="235" y2="190" stroke="var(--line-500)" stroke-width="1" stroke-dasharray="3 3" />
+        <line x1="145" y1="26" x2="233" y2="41" stroke="var(--line-500)" stroke-width="0.75" stroke-dasharray="2 2" />
+        <text x="55" y="29" class="tilt-cap">IDEAL FOCAL PLANE</text>
+
+        <!-- tilted sensor, crossing the ideal plane on-axis -->
+        <line x1="210" y1="40" x2="260" y2="190" stroke="var(--redline)" stroke-width="1.8" />
+        <line x1="222" y1="65" x2="278" y2="52" stroke="var(--redline)" stroke-width="0.75" stroke-dasharray="2 2" />
+        <text x="281" y="55" class="tilt-cap" fill="var(--redline)">TILTED SENSOR</text>
+
+        <!-- crossing point: sharp focus -->
+        <circle cx="235" cy="115" r="3.2" fill="var(--redline)" />
+        <line x1="238" y1="118" x2="252" y2="140" stroke="var(--redline)" stroke-width="0.75" stroke-dasharray="2 2" />
+        <text x="238" y="152" class="tilt-cap" fill="var(--redline)">SHARP FOCUS</text>
+
+        <!-- far end of sensor: defocused -->
+        <circle cx="260" cy="190" r="8" fill="none" stroke="var(--redline)" stroke-width="1.3" />
+        <line x1="255" y1="199" x2="235" y2="212" stroke="var(--redline)" stroke-width="0.75" stroke-dasharray="2 2" />
+        <text x="150" y="217" class="tilt-cap" fill="var(--redline)">DEFOCUSED, SAME EXPOSURE</text>
+      </svg>
+      <figcaption class="mono tilt-caption"><span class="tilt-fignum">FIG. 02</span>SENSOR TILT, SIDE VIEW (EXAGGERATED FOR CLARITY)</figcaption>
+    </figure>
+  </div>
+
+  <p>
+    On the CarbonStar 200 that correction is done with NINA's Hocus Focus
+    plugin driving a Wanderer ETA: it focuses the center and each corner
+    separately in one autofocus run, then moves the adjuster's three motors
+    to level the sensor. The first pass found about 45&nbsp;µm of
+    top-to-bottom tilt, roughly three times the critical focus zone. The
+    second pass measured every corner within ±4&nbsp;µm, and the third
+    changed nothing, which shows the correction converged.
+  </p>
+
+  <div class="wf-grid3">
+    <figure class="wf-fig"><img src={`${WF}tilt-pass-1.jpg`} alt="Hocus Focus pass 1 corner measurements" loading="lazy" /><figcaption class="mono">Pass 1: bottom left 41 µm out</figcaption></figure>
+    <figure class="wf-fig"><img src={`${WF}tilt-pass-2.jpg`} alt="Hocus Focus pass 2 corner measurements" loading="lazy" /><figcaption class="mono">Pass 2: all corners within ±4 µm</figcaption></figure>
+    <figure class="wf-fig"><img src={`${WF}tilt-pass-3.jpg`} alt="Hocus Focus pass 3 corner measurements" loading="lazy" /><figcaption class="mono">Pass 3: converged</figcaption></figure>
+  </div>
+  <div class="wf-grid2">
+    <figure class="wf-fig wf-plot"><img src={`${WF}tilt-field-map.jpg`} alt="Grid maps of star size and elongation across the frame before and after spacing changes" loading="lazy" /><figcaption class="mono">Star size across the frame: the tilt gradient, top edge soft</figcaption></figure>
+    <figure class="wf-fig"><img src={`${WF}tilt-eta-corrected.jpg`} alt="WandererEmpire electronic tilt adjuster control panel after correction" loading="lazy" /><figcaption class="mono">Tilt adjuster motor positions after correction</figcaption></figure>
+  </div>
+
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:47</span>
+      <div>
+        <h3>Autofocus backlash</h3>
+        <p>
+          Several autofocus curves ended in two identical points: the
+          focuser losing motion when it reverses. Setting NINA's backlash
+          compensation to overshoot, so every move arrives from the same
+          direction, brought both following curves to R²&nbsp;=&nbsp;1.00.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:54</span>
+      <div>
+        <h3>The guide prism shadow</h3>
+        <p>
+          With tilt fixed, stars along one whole edge still had comet tails,
+          and bright stars in older images carried one-sided fans of rays.
+          The only part of the train that sits on one side of the light path
+          is the off-axis guider's pickoff prism, and it was sitting right at
+          the sensor's edge. At f/4 the light cone for the edge pixels is still
+          wider than the sensor at the prism's depth, so the prism had to
+          clear at least 14.2&nbsp;mm from the optical center. Measured with
+          calipers after retracting it: 14.5&nbsp;mm, and the guide camera
+          still reached focus.
+        </p>
+        <div class="wf-grid2">
+          <figure class="wf-fig"><img src={`${NT}ninetile-prism-shadow.jpg`} alt="NINA nine-tile view with comet-tailed stars along the top row" loading="lazy" /><figcaption class="mono">Comet tails across the top row</figcaption></figure>
+          <figure class="wf-fig"><img src={`${NT}orion-prism-fans.jpg`} alt="Earlier Orion Nebula image with one-sided fans on bright stars" loading="lazy" /><figcaption class="mono">The same artifact in an older image</figcaption></figure>
+        </div>
+        <div class="wf-grid3">
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-through-corrector.jpg`} alt="View through the coma corrector showing the guide prism at the sensor edge" loading="lazy" /><figcaption class="mono">Through the corrector</figcaption></figure>
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-at-sensor-edge.jpg`} alt="Sensor with the guide prism holder touching its edge" loading="lazy" /><figcaption class="mono">Prism holder touching the sensor edge</figcaption></figure>
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-retracted.jpg`} alt="Off-axis guider face after retracting the prism" loading="lazy" /><figcaption class="mono">After retracting it</figcaption></figure>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">22:53</span>
+      <div>
+        <h3>Verifying the fix</h3>
+        <p>
+          A test flat came out symmetric top to bottom to within 0.3%. On real
+          data, the elongation in the top third of the frame dropped from 0.67
+          to 0.39, and the top-to-bottom gap closed from 0.14 to 0.01. Stars
+          now measure about 92% as wide as they are tall, which reads as round.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">23:12</span>
+      <div>
+        <h3>The flares that remained</h3>
+        <p>
+          A few of the brightest stars still flared, but these pointed away
+          from the frame center in every direction. They start just past
+          6.5&nbsp;mm from center on the sensor, exactly where the flat field
+          starts to fall off.
+        </p>
+        <div class="wf-grid2">
+          <figure class="wf-fig wf-plot"><img src={`${NT}flare-example.jpg`} alt="Bright star with a flare pointing away from the frame center" loading="lazy" /><figcaption class="mono">A flare pointing straight away from center</figcaption></figure>
+          <figure class="wf-fig wf-plot"><img src={`${NT}flat-radial-profile.jpg`} alt="Flat-field radial profile, flat to 6.5 mm then falling off" loading="lazy" /><figcaption class="mono">Flat-field falloff starts where the flares do</figcaption></figure>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">23:33</span>
+      <div>
+        <h3>Root cause: the secondary's edge</h3>
+        <p>
+          Filters, dew shield, focuser, flocking, mirror mask and corrector
+          were all ruled out, most decisively by the fact that the flares
+          predate every mod and show up with two different correctors. Other
+          CarbonStar owners have traced the same flare to an over-beveled
+          secondary mirror that leaves reflective coating on its edge. The fix
+          is a 3D-printed mask covering 2&ndash;3&nbsp;mm of the secondary's
+          edge, which is the next change to the scope.
+        </p>
+      </div>
+    </li>
+  </ol>
+
+  <h3 class="wf-subhead">What I took from it</h3>
+  <ul class="night-lessons">
+    <li><strong>Separate the symptoms before naming a cause.</strong> "Bad stars" was five problems, each with its own signature.</li>
+    <li><strong>Change one variable at a time,</strong> and record the setting next to every frame.</li>
+    <li><strong>Measure instead of eyeballing.</strong> Photos down the light path lied because of parallax; calipers and a flat didn't.</li>
+    <li><strong>History is data.</strong> "The flares have been there since day one" ruled out more than any calculation.</li>
+    <li><strong>Read the logs.</strong> A sequence that fails silently usually leaves an exception behind.</li>
+  </ul>
+
+
+  {next && (
+    <a href={astroHref(next.slug)} class="astro-next">
+      <span class="mono">Next</span>
+      <strong>{next.title} →</strong>
+      <span>{next.note}</span>
+    </a>
+  )}
+</Layout>

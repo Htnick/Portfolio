@@ -1,0 +1,195 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
+import AstroNav from "../../components/AstroNav.astro";
+import { ASTRO_PAGES, BASE, WF, astroHref, gear } from "../../data/astro-page";
+import "../../styles/astro-pages.css";
+const idx = ASTRO_PAGES.findIndex((p) => p.slug === "capture");
+const next = ASTRO_PAGES[idx + 1];
+---
+
+<Layout
+  title="Planning & Capture | Astrophotography | Henry Nickless"
+  description="How Henry Nickless plans astrophotography targets and runs an automated NINA imaging sequence."
+  image="veil-nebula.jpg"
+  variant="gallery"
+>
+  <AstroNav current="capture" />
+
+  <section class="hero" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+    <span class="eyebrow">// Astrophotography</span>
+    <h1>Planning &amp; Capture</h1>
+    <p class="lede">Choosing a target, planning the night, and the automated NINA sequence that captures it while I'm inside.</p>
+  </section>
+
+  <div class="cut-line" id="planning"><span>Target Planning</span></div>
+
+  <p>
+    Targets get chosen and planned before the mount ever goes outside,
+    in four steps: find something worth shooting, check that it suits
+    the gear, work out exactly when it's well placed in the sky, then
+    turn that plan into an automated sequence and check the rig is
+    ready for it.
+  </p>
+
+  <ol class="wf-steps">
+    <li class="wf-step">
+      <div class="wf-head">
+        <span class="wf-no mono">01</span>
+        <div>
+          <h3>Inspiration: AstroBin</h3>
+          <p>
+            AstroBin is where I find targets. Browsing what other imagers
+            have captured, especially with similar focal lengths and fields
+            of view, turns up objects and framings that a star atlas on its
+            own wouldn't suggest, and shows what's realistically achievable
+            from a given amount of integration time.
+          </p>
+        </div>
+      </div>
+      <div class="wf-grid2">
+        <figure class="wf-fig"><img src={`${WF}astrobin-home.jpg`} alt="AstroBin home page with the Image of the Day and active forum topics" loading="lazy" /><figcaption class="mono">AstroBin home: Image of the Day and the community forums</figcaption></figure>
+        <figure class="wf-fig"><img src={`${WF}astrobin-feed.jpg`} alt="AstroBin activity feed of recent deep-sky images with integration times" loading="lazy" /><figcaption class="mono">The image feed, with integration time and filter count on every image</figcaption></figure>
+      </div>
+    </li>
+
+    <li class="wf-step">
+      <div class="wf-head">
+        <span class="wf-no mono">02</span>
+        <div>
+          <h3>Target selection: Telescopius</h3>
+          <p>
+            Telescopius's Deep Sky tab narrows the list down to what's
+            actually shootable. The search filters keep only objects that
+            reach a usable altitude (30° for at least an hour between sunset
+            and sunrise), and then by object type, apparent size against my
+            field of view, and surface brightness. Each result comes with its
+            altitude curve for the night, rise, transit and set times, and
+            the date it's best placed, so it's quick to see which targets are
+            in season now.
+          </p>
+        </div>
+      </div>
+      <div class="wf-grid-side">
+        <figure class="wf-fig"><img src={`${WF}telescopius-targets-menu.jpg`} alt="Telescopius Targets menu with Deep Sky selected" loading="lazy" /><figcaption class="mono">Targets → Deep Sky</figcaption></figure>
+        <figure class="wf-fig"><img src={`${WF}telescopius-deep-sky.jpg`} alt="Telescopius Deep Sky Objects search with altitude filters and per-target altitude curves" loading="lazy" /><figcaption class="mono">Altitude filter on the left; each target with its altitude curve for the night</figcaption></figure>
+      </div>
+    </li>
+
+    <li class="wf-step">
+      <div class="wf-head">
+        <span class="wf-no mono">03</span>
+        <div>
+          <h3>Capture planning: Stellarium</h3>
+          <p>
+            Stellarium plans the night itself: when each target clears the
+            local horizon and obstructions, when it transits (and so when the
+            meridian flip will happen), where the Moon sits relative to it, and
+            what else is well placed to fill the gaps while waiting for the
+            main target to rise.
+          </p>
+        </div>
+      </div>
+      <figure class="wf-fig"><img src={`${WF}stellarium-planning.jpg`} alt="Stellarium all-sky view with deep-sky objects labeled above the horizon" loading="lazy" /><figcaption class="mono">Stellarium sky view for the evening, with deep-sky targets marked</figcaption></figure>
+    </li>
+
+    <li class="wf-step">
+      <div class="wf-head">
+        <span class="wf-no mono">04</span>
+        <div>
+          <h3>Sequencing and checks: Claude</h3>
+          <p>
+            I use Claude to turn the plan into a NINA Advanced Sequencer file
+            (generated as JSON, with every object reference checked before
+            it loads) and to review existing sequences for problems: guiding
+            left running through flats, autofocus in a different filter
+            than the imaging filter, a temperature refocus trigger far too
+            loose for an f/4 critical focus zone of ±21&nbsp;µm. It also
+            works out sub length from the measured sky background against
+            the camera's read noise, which is why the Newtonian shoots 60&nbsp;s
+            subs rather than 180&nbsp;s under a Bortle 5 sky.
+          </p>
+          <p>
+            Before committing a night to a target, Claude analyzes short test
+            frames to check the framing, the seeing, and star quality across
+            the field: star-shape maps for tilt and coma, defocused donuts for
+            collimation, and test flats for anything shadowing the light path.
+          </p>
+        </div>
+      </div>
+      <figure class="wf-fig wf-plot"><img src={`${WF}claude-star-shape-map.jpg`} alt="Star shape map across the frame, with elongation direction lines and star size colors, plus typical stars from each region" loading="lazy" /><figcaption class="mono">Star-shape map from a test frame: elongation fanning around a point off the frame, a tilt signature rather than coma</figcaption></figure>
+      <div class="wf-grid2">
+        <figure class="wf-fig wf-plot"><img src={`${WF}claude-collimation-donuts.jpg`} alt="Inside and outside focus donuts with radial profiles" loading="lazy" /><figcaption class="mono">Collimation donuts, inside vs. outside focus</figcaption></figure>
+        <figure class="wf-fig wf-plot"><img src={`${WF}claude-flat-check.jpg`} alt="Flat field brightness map with top-to-bottom and left-to-right profiles" loading="lazy" /><figcaption class="mono">Test-flat check for edge shadowing</figcaption></figure>
+      </div>
+      <div class="wf-ph"><ImagePlaceholder label="Framing checks" spec="Coming soon: framing previews against the camera's field of view" aspect="wide" /></div>
+    </li>
+  </ol>
+
+  <div class="cut-line" id="remote"><span>Data Acquisition &amp; Remote Control</span></div>
+
+  <p>
+    The rig lives outside for the night. It gets wheeled out and set up
+    on the pier before dark, then stays out (polar aligned, cabled up,
+    and running) until first light, rather than being shuttled back
+    in between targets. Once it's set up, control passes entirely to a
+    remote desktop session run from inside the house against the mini PC
+    riding on the mount: focusing, plate solving, sequencing, and
+    shutting down at the end of the night all happen over that link. The
+    only reason to go back outside is to physically move the gear, at
+    setup and again at pack-up the next morning.
+  </p>
+
+  <div class="cut-line" id="sequence"><span>Imaging Sequence</span></div>
+
+  <p>
+    A full run follows the same NINA sequence every time, almost entirely
+    unattended:
+  </p>
+
+  <ol class="seq-list">
+    <li><strong>Polar alignment</strong>: dialing in the mount's polar axis first, since tracking, guiding, and plate solving all inherit this error.</li>
+    <li><strong>Guide camera focus</strong>: set manually once per setup; the guide train just needs to lock onto guide stars, not hold focus as tightly as the imaging camera.</li>
+    <li><strong>Start block</strong>: cool the camera to −10&nbsp;°C, unpark the mount, and open the flat-panel cover.</li>
+    <li><strong>Slew, plate solve &amp; center</strong>: the mount slews to the target and a plate solve confirms (and corrects) the actual pointing against the planned coordinates before anything else happens.</li>
+    <li><strong>Autofocus, then guiding</strong>: autofocus runs in the imaging filter, and guiding starts only after centering and focus, so the mount never moves out from under the guide star.</li>
+    <li><strong>Exposure</strong>: subs through the planned filter until astronomical dawn, dithering every few frames. Triggers refocus on a 1.5&nbsp;°C temperature change or a 10% rise in star size, and handle the meridian flip.</li>
+    <li><strong>End block &amp; calibration</strong>: stop guiding, close the cover, and shoot flats and matching dark flats through NINA driving the flat panel, so the correction always matches that night's exact optical setup. Then warm the camera and park. Bias/dark frames come from a reusable library, re-shot roughly once a year.</li>
+  </ol>
+
+  <div class="wf-download">
+    <div>
+      <span class="wf-no mono">SEQUENCE FILE</span>
+      <p>
+        The production sequence from an October 2026 session: the Double
+        Cluster until the Pleiades clears 30°, then the Pleiades until dawn,
+        with flats and dark flats at the end. It contains target coordinates
+        only, no site information; dawn and altitude are computed from the
+        location set in your own NINA profile. Built for NINA 3.x; filter
+        slots and flat-panel brightness are specific to my equipment.
+      </p>
+    </div>
+    <a class="btn" href={`${BASE}files/nina/double-cluster-then-m45.json`} download>Download .json ↓</a>
+  </div>
+
+  <h3 class="wf-subhead">Acquisition, on the night</h3>
+  <div class="wf-grid2">
+    <figure class="wf-fig wf-crop"><img src={`${WF}rig-night.jpg`} alt="The CarbonStar 200 Newtonian set up outside at night, viewed from the front" loading="lazy" /><figcaption class="mono">The CarbonStar 200 set up for the night</figcaption></figure>
+    <figure class="wf-fig wf-crop"><img src={`${WF}imaging-train-bench.jpg`} alt="Imaging train on the bench: electronic tilt adjuster, off-axis guider, guide camera and filter wheel" loading="lazy" /><figcaption class="mono">The imaging train: tilt adjuster, off-axis guider, guide camera, filter wheel</figcaption></figure>
+  </div>
+  <div class="wf-grid-side">
+    <figure class="wf-fig"><img src={`${WF}nina-autofocus-before.jpg`} alt="NINA autofocus curve with a flat plateau on the right side caused by backlash" loading="lazy" /><figcaption class="mono">Autofocus before tuning: the flat right end is focuser backlash</figcaption></figure>
+    <figure class="wf-fig"><img src={`${WF}nina-autofocus-after.jpg`} alt="NINA Aberration Inspector and autofocus with a symmetric V curve, R squared 1.00" loading="lazy" /><figcaption class="mono">After backlash compensation: symmetric V, R² = 1.00</figcaption></figure>
+  </div>
+  <figure class="wf-fig"><img src={`${WF}nina-sequence-running.jpg`} alt="NINA running the Double Cluster sequence with guiding graph at 0.52 arcseconds RMS" loading="lazy" /><figcaption class="mono">NINA mid-sequence: 60 s subs on the Double Cluster, guiding at 0.52″ RMS</figcaption></figure>
+  <div class="wf-ph"><ImagePlaceholder label="Acquisition software" spec="Coming soon: NINA, PHD2 and remote-desktop screenshots" aspect="wide" /></div>
+
+
+  {next && (
+    <a href={astroHref(next.slug)} class="astro-next">
+      <span class="mono">Next</span>
+      <strong>{next.title} →</strong>
+      <span>{next.note}</span>
+    </a>
+  )}
+</Layout>

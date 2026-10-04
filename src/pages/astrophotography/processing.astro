@@ -1,0 +1,135 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
+import AstroNav from "../../components/AstroNav.astro";
+import { ASTRO_PAGES, BASE, PIPELINE, PX, astroHref, type Step } from "../../data/astro-page";
+import "../../styles/astro-pages.css";
+const idx = ASTRO_PAGES.findIndex((p) => p.slug === "processing");
+const next = ASTRO_PAGES[idx + 1];
+---
+
+<Layout
+  title="Processing | Astrophotography | Henry Nickless"
+  description="Henry Nickless's PixInsight processing pipeline for one-shot-color astrophotography, step by step."
+  image="veil-nebula.jpg"
+  variant="gallery"
+>
+  <AstroNav current="processing" />
+
+  <section class="hero" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+    <span class="eyebrow">// Astrophotography</span>
+    <h1>Processing</h1>
+    <p class="lede">From a night of raw subs to a finished image: the PixInsight pipeline, step by step.</p>
+  </section>
+
+
+  <p>
+    A finished image starts as anywhere from dozens to a few hundred
+    individual sub-exposures, each one mostly noise with a faint, real
+    signal buried in it. PixInsight combines them through pixel-by-pixel
+    integration (matrix math across the whole stack), averaging with
+    rejection algorithms that throw out satellite trails, cosmic-ray
+    hits, and other single-frame artifacts rather than simply layering
+    everything together. Signal-to-noise builds with the square root of
+    the sub count, so doubling the number of subs only buys about a 40%
+    improvement in signal-to-noise: the real tradeoff behind every
+    session, since more subs always help but with steadily diminishing
+    returns against the hours it costs to get them. Before the stack is
+    combined, every frame gets normalized, scaled and offset so that
+    frame-to-frame differences in sky brightness, transparency, or moon
+    position don't bias the result.
+  </p>
+
+  <p>
+    Everything up to that point is math. What comes after is where the
+    process gets genuinely subjective; this is the part that's art, not
+    measurement. Images here are captured in real, natural color, not
+    narrowband-mapped or artificially recolored, and stretched through a
+    histogram transform to bring out detail that's present in the linear
+    data but invisible on a straight display. That step remaps what's
+    already in the frame onto a range a screen can actually show; it
+    doesn't invent anything that isn't there. From there, a set of
+    AI-assisted tools handles gradient removal (correcting for skyglow
+    and light pollution that vary across the frame), deconvolution, and
+    noise reduction, cleaning up what the optics and the sky introduced
+    without changing what the target actually looks like. Plate solving
+    plus SPCC (Spectrophotometric Color Calibration) pins the color
+    balance to real stellar spectra in the field instead of an eyeballed
+    white balance, so the final color is a calibrated fit to actual data.
+  </p>
+
+  <p>
+    The last pass happens in Photoshop, pulling out finer local detail
+    and nudging color ever so slightly, not to invent anything, but to
+    draw the eye toward the parts of the image that matter.
+  </p>
+
+
+  <h3 class="wf-subhead">The pipeline, step by step</h3>
+  <p class="pipe-lede">
+    Every image goes through the same sequence. The example here is the
+    North America Nebula (NGC 7000). The order loosely follows Philippe
+    Bernhard's widely shared flowchart for one-shot-color cameras: linear
+    cleanup and calibration first, then stars and nebula are split and
+    stretched separately before being recombined. Click any step to see
+    the full screenshot.
+  </p>
+
+  {(() => {
+    let n = 0;
+    const card = (st: Step) => { n += 1; const no = String(n).padStart(2, "0"); return (
+      <li class="pipe-card">
+        {st.img ? (
+          <a href={`${PX}${st.img}`} target="_blank" rel="noopener" class="pipe-thumb">
+            <img src={`${PX}${st.img}`} alt={`${st.title} in PixInsight`} loading="lazy" />
+          </a>
+        ) : (
+          <div class="pipe-thumb pipe-thumb--stat"><span class="pipe-stat">{st.stat}</span><span class="pipe-stat-label mono">{st.statLabel}</span></div>
+        )}
+        <div class="pipe-body">
+          <span class="pipe-no mono">{no}</span>
+          <h5>{st.title}</h5>
+          <p>{st.note}</p>
+        </div>
+      </li>
+    ); };
+    return PIPELINE.map((group) => (
+      <section class="pipe-stage">
+        <h4 class="pipe-stage-title mono">{group.stage}</h4>
+        {group.steps && <ol class="pipe-grid">{group.steps.map(card)}</ol>}
+        {group.lanes && (
+          <div class="pipe-lanes">
+            {group.lanes.map((lane) => (
+              <div class="pipe-lane">
+                <span class="pipe-lane-name mono">{lane.name}</span>
+                <ol class="pipe-grid">{lane.steps.map(card)}</ol>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    ));
+  })()}
+
+  <section class="pipe-stage">
+    <h4 class="pipe-stage-title mono">Recombine &amp; finish</h4>
+    <div class="pipe-finish">
+      <p>
+        The stretched stars are screened back over the finished starless
+        image, and the result goes to Photoshop for final color
+        calibration, a Camera Raw pass, and the star screen. That last
+        step is where the magic happens, so it stays off the page.
+      </p>
+    </div>
+  </section>
+
+
+
+  {next && (
+    <a href={astroHref(next.slug)} class="astro-next">
+      <span class="mono">Next</span>
+      <strong>{next.title} →</strong>
+      <span>{next.note}</span>
+    </a>
+  )}
+</Layout>

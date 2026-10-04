@@ -1,0 +1,120 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ImagePlaceholder from "../../components/ImagePlaceholder.astro";
+import AstroNav from "../../components/AstroNav.astro";
+import { optics, ASTRO_PAGES, BASE, MODS, TS, astroHref, gear } from "../../data/astro-page";
+import "../../styles/astro-pages.css";
+const idx = ASTRO_PAGES.findIndex((p) => p.slug === "gear");
+const next = ASTRO_PAGES[idx + 1];
+---
+
+<Layout
+  title="Gear & Telescope | Astrophotography | Henry Nickless"
+  description="The optics, mount and supporting gear behind Henry Nickless's astrophotography, and every modification to his CarbonStar 200 Newtonian."
+  image="telescope-dew-shield.jpg"
+  variant="gallery"
+>
+  <AstroNav current="gear" />
+
+  <section class="hero" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+    <span class="eyebrow">// Astrophotography</span>
+    <h1>Gear &amp; Telescope</h1>
+    <p class="lede">The optics and supporting kit that run a full night unattended, and every change I've made to the main imaging telescope.</p>
+  </section>
+
+  <div class="cut-line" id="gear"><span>The Gear</span></div>
+
+  <h3>Optics</h3>
+  <p>
+    Four scopes and lenses in rotation, each suited to a different kind
+    of target. Two of them have their own full project writeups: the <a href={`${BASE}projects/rokinon-135mm-astro-rig`}>Rokinon 135mm f/2 rig</a> for the
+    custom ring system and focuser built around it, and the <a href={`${BASE}projects/newtonian-telescope`}>Newtonian telescope</a> project for
+    the custom components built around the CarbonStar 200 below.
+  </p>
+
+  <div class="gear-grid">
+    {optics.map((g) => (
+      <div class="gear-card">
+        <span class="gear-role mono">{g.role}</span>
+        <h3 class="gear-name">{g.name}</h3>
+        <p class="gear-note">{g.note}</p>
+        <a href={g.url} target="_blank" rel="noopener noreferrer" class="mono gear-link">View product ↗</a>
+      </div>
+    ))}
+  </div>
+
+  <h3>Supporting gear</h3>
+  <p>
+    Everything below is the rest of the kit that keeps whichever optic
+    is mounted up running through a full night unattended.
+  </p>
+
+  <div class="gear-grid">
+    {gear.map((g) => (
+      <div class="gear-card">
+        <span class="gear-role mono">{g.role}</span>
+        <h3 class="gear-name">{g.name}</h3>
+        <p class="gear-note">{g.note}</p>
+        <a href={g.url} target="_blank" rel="noopener noreferrer" class="mono gear-link">View product ↗</a>
+      </div>
+    ))}
+    <div class="gear-card">
+      <span class="gear-role mono">Dew control</span>
+      <h3 class="gear-name">Dew shields</h3>
+      <p class="gear-note">
+        Custom-made passive dew shields on both the main imaging optics
+        and the guide/OAG train, extending the effective tube length to
+        keep the front elements from radiating heat away to a clear
+        night sky.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="cut-line" id="telescope"><span>The Telescope</span></div>
+
+  <p>
+    The main imaging scope is an Apertura CarbonStar 200: 200&nbsp;mm of
+    aperture at 800&nbsp;mm focal length, f/4. Fast optics are unforgiving,
+    and almost every change below started as a specific problem in my
+    images. The full design story is in the{" "}
+    <a href={`${BASE}projects/newtonian-telescope`}>Newtonian telescope project</a>.
+  </p>
+
+  <div class="scope-intro">
+    <figure class="wf-fig scope-video">
+      <video src={`${TS}rig-walkthrough.mp4`} poster={`${TS}rig-walkthrough-poster.jpg`} controls playsinline preload="none"></video>
+      <figcaption class="mono">Walkthrough of the rig on the mount</figcaption>
+    </figure>
+    <ol class="scope-list">
+      {MODS.map((m) => (
+        <li>
+          <span class="scope-tag mono">{m.tag}</span>
+          <strong>{m.title}</strong>
+          <span>{m.note}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="scope-media">
+    <figure class="wf-fig"><img src={`${BASE}images/telescope-focus-adapter.jpg`} alt="Custom aluminum focuser mounting plate on the CarbonStar 200" loading="lazy" /><figcaption class="mono">Custom aluminum mount for the ESATTO focuser</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}dew-shield.jpg`} alt="The 3D-printed dew shield extending past the front of the CarbonStar 200" loading="lazy" /><figcaption class="mono">3D-printed dew shield</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}front-spider-flocking.jpg`} alt="Front of the tube: spider vanes, secondary mirror and flocked interior" loading="lazy" /><figcaption class="mono">Flocked upper tube, spider and secondary</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}tube-baffles-flocking.jpg`} alt="Looking down the tube at the knife-edge baffles and flocking, with the focuser opening" loading="lazy" /><figcaption class="mono">Knife-edge baffles under the flocking</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}tube-baffles.mp4`} poster={`${TS}tube-baffles-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video looking down the flocked tube and baffles"></video><figcaption class="mono">Down the tube</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}front-spider.mp4`} poster={`${TS}front-spider-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the spider vanes and secondary holder from the front"></video><figcaption class="mono">Spider and secondary holder</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}fan-intake-mask.jpg`} alt="3D-printed honeycomb intake mask over the mirror fan on the rear cell" loading="lazy" /><figcaption class="mono">Mirror fan intake mask, v2</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}fan-intake.mp4`} poster={`${TS}fan-intake-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the rear cell with the fan intake mask"></video><figcaption class="mono">Rear cell and fan housing</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}secondary-spider.mp4`} poster={`${TS}secondary-spider-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the secondary mirror on its spider, out of the tube"></video><figcaption class="mono">The secondary, out of the tube: next to get a mask</figcaption></figure>
+  </div>
+
+
+  {next && (
+    <a href={astroHref(next.slug)} class="astro-next">
+      <span class="mono">Next</span>
+      <strong>{next.title} →</strong>
+      <span>{next.note}</span>
+    </a>
+  )}
+</Layout>
