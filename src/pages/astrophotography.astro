@@ -57,42 +57,73 @@ const galleryItems = galleryFiles.map((file) => {
 const BASE = import.meta.env.BASE_URL;
 const WF = `${BASE}images/astro-workflow/`;
 const PX = `${BASE}images/astro-processing/`;
+const TS = `${BASE}images/astro-telescope/`;
+const NT = `${BASE}images/astro-night/`;
 
-// Processing pipeline, in the order it runs. Example data: the North
-// America Nebula (NGC 7000). `img` is a file in public/images/astro-processing/.
-const PIPELINE = [
+// Every change made to the CarbonStar 200 since buying it.
+const MODS = [
+  { tag: "Focus", title: "ESATTO 2\" robotic focuser", note: "Replaced the stock focuser. I designed the mounting plate, prototyped it in 3D print, then had it made in matte black anodized aluminum." },
+  { tag: "Stray light", title: "Dew shield", note: "3D-printed; its inner diameter matches the tube's outer diameter so it never vignettes the aperture." },
+  { tag: "Stray light", title: "Flocked upper tube", note: "Dark stick-on flocking inside the tube to kill internal reflections and lift contrast." },
+  { tag: "Stray light", title: "Primary mirror mask", note: "A DIY mask over the primary's edge." },
+  { tag: "Thermal", title: "Mirror fan", note: "Fan, speed controller and a 3D-printed housing to bring the mirror down to air temperature fast. The intake mask took two versions to balance dust protection against airflow." },
+  { tag: "Optics", title: "New coma corrector", note: "Apertura 1× corrector at 55 mm back focus, with the exact spacing dialed in remotely through the tilt adjuster." },
+  { tag: "Optics", title: "Electronic tilt adjuster", note: "Wanderer ETA, leveled automatically by NINA's Hocus Focus plugin." },
+  { tag: "Guiding", title: "Off-axis guider", note: "ZWO OAG-L with an ASI174MM Mini, its prism set back to 14.5 mm from center so it no longer shadows the sensor." },
+  { tag: "Calibration", title: "Motorized flat panel", note: "Opens and closes on its own and shoots flats at the end of every session." },
+  { tag: "Next", title: "Secondary mirror mask", note: "A 3D-printed mask over the secondary's over-beveled edge, the last source of flares (see the imaging night below)." },
+];
+
+// Processing pipeline, in the order it runs (loosely following Philippe
+// Bernhard's OSC flowchart). `img` is a file in public/images/astro-processing/;
+// a step with `stat` instead of `img` renders as a text tile.
+// Example data: the North America Nebula (NGC 7000).
+type Step = { img?: string; stat?: string; statLabel?: string; title: string; note: string };
+type Stage = { stage: string; steps?: Step[]; lanes?: { name: string; steps: Step[] }[] };
+const PIPELINE: Stage[] = [
   {
     stage: "Calibration & stacking",
     steps: [
-      { img: "01-wbpp.jpg", title: "WBPP", note: "WeightedBatchPreprocessing calibrates every light frame against master bias, dark and flat frames, then registers and integrates the stack." },
-      { img: "02-stacked-linear.jpg", title: "Stacked master", note: "The integrated image is still linear: nearly all of the signal sits in the bottom few percent of the range, so it looks almost black." },
+      { stat: "~50%", statLabel: "of a typical night's subs cut", title: "SubframeSelector", note: "Every calibrated sub is scored on star size, star shape and signal-to-noise. On a usual night I cut about half the data: clouds, wind gusts, satellites and soft focus all cost more than the extra integration time is worth." },
+      { img: "01-wbpp.jpg", title: "WBPP", note: "WeightedBatchPreprocessing calibrates the surviving lights against master bias, dark and flat frames, then registers and integrates the stack." },
+      { img: "02-stacked-linear.jpg", title: "RGB color stack", note: "The integrated image is still linear: nearly all of the signal sits in the bottom few percent of the range, so it looks almost black." },
       { img: "03-stf.jpg", title: "Screen stretch (STF)", note: "A display-only auto stretch shows what's in the data without changing a single pixel." },
     ],
   },
   {
     stage: "Linear processing",
     steps: [
-      { img: "04-graxpert.jpg", title: "GraXpert", note: "AI gradient removal by subtraction (smoothing 0.40) takes out skyglow and light pollution that vary across the frame." },
+      { img: "04-graxpert.jpg", title: "Gradient correction", note: "GraXpert's AI gradient removal by subtraction (smoothing 0.40) takes out skyglow and light pollution that vary across the frame." },
       { img: "05-graxpert-model.jpg", title: "Background model", note: "The gradient GraXpert modeled and removed, next to the corrected image." },
       { img: "06-background-neutralization.jpg", title: "Background neutralization", note: "Evens out the background level across the red, green and blue channels." },
       { img: "07-blurx-correct.jpg", title: "BlurXTerminator, correct only", note: "Fixes star shapes (residual aberrations and guiding error) without sharpening anything yet." },
-      { img: "08-imagesolver.jpg", title: "ImageSolver", note: "Plate solves the image against a star catalog at 800 mm, which SPCC needs to match stars to their spectra. Observing-site fields blurred." },
+      { img: "08-imagesolver.jpg", title: "Plate solve", note: "ImageSolver matches the stars to a catalog at 800 mm, which SPCC needs to look up each star's spectrum. Observing-site fields blurred." },
       { img: "09-spcc.jpg", title: "SPCC", note: "Spectrophotometric color calibration against Gaia DR3 spectra, using the camera's UV/IR-cut filter curves." },
       { img: "10-spcc-graphs.jpg", title: "White balance fit", note: "468 catalog stars fit for the red/green and blue/green white balance." },
       { img: "11-blurx.jpg", title: "BlurXTerminator", note: "Deconvolution: sharpen stars 0.60, star halos 0.20, nonstellar detail 0.50." },
       { img: "12-dynamic-crop.jpg", title: "DynamicCrop", note: "Trims the ragged stacking edges, down to 1498 × 992 for this binned pass." },
       { img: "13-noisext.jpg", title: "NoiseXTerminator", note: "Noise reduction: intensity 0.65, color 0.50." },
-      { img: "14-starxt.jpg", title: "StarXTerminator", note: "Separates the stars from the nebula so each can be stretched on its own terms." },
-      { img: "15-starless-stars.jpg", title: "Starless + stars", note: "Linear processing done: a starless image and a stars-only image." },
+      { img: "14-starxt.jpg", title: "StarXTerminator", note: "Splits the image into a starless nebula and a stars-only layer." },
+      { img: "15-starless-stars.jpg", title: "Starless + stars", note: "Linear processing done. From here the two layers are stretched separately." },
     ],
   },
   {
     stage: "Nonlinear processing",
-    steps: [
-      { img: "16-statistical-stretch.jpg", title: "Statistical stretch", note: "Stretches the starless image to a target median of 0.25 with a linked stretch, keeping the color balance from SPCC." },
-      { img: "17-star-stretch.jpg", title: "Star stretch", note: "A separate stretch for the stars-only image (amount 5, color boost 1), so stars stay small and keep their color." },
-      { img: "18-color-saturation.jpg", title: "Color saturation", note: "A gentle saturation boost on the starless nebula." },
-      { img: "19-lhe.jpg", title: "Local histogram equalization", note: "Local contrast (kernel radius 164, contrast limit 2.0, amount 0.11) to bring out structure in the clouds." },
+    lanes: [
+      {
+        name: "Starless",
+        steps: [
+          { img: "16-statistical-stretch.jpg", title: "Statistical stretch", note: "Stretches the starless image to a target median of 0.25 with a linked stretch, keeping the color balance from SPCC." },
+          { img: "18-color-saturation.jpg", title: "Color saturation", note: "A gentle saturation boost on the nebula." },
+          { img: "19-lhe.jpg", title: "Local histogram equalization", note: "Local contrast (kernel radius 164, contrast limit 2.0, amount 0.11) to bring out structure in the clouds." },
+        ],
+      },
+      {
+        name: "Stars",
+        steps: [
+          { img: "17-star-stretch.jpg", title: "Star stretch", note: "A separate stretch for the stars (amount 5, color boost 1), so they stay small and keep their color." },
+        ],
+      },
     ],
   },
 ];
@@ -105,12 +136,12 @@ const heroSlides = HERO_FILES.map((f) => ({ item: galleryItems.find((g) => g.fil
 
 const sections = [
   { id: "gear", no: "01", title: "The Gear", note: "Optics, mount, and the kit that runs all night" },
-  { id: "remote", no: "02", title: "Remote Control", note: "How the rig runs unattended" },
+  { id: "telescope", no: "02", title: "The Telescope", note: "Every change to the CarbonStar 200" },
   { id: "planning", no: "03", title: "Target Planning", note: "AstroBin, Telescopius, Stellarium, Claude" },
   { id: "sequence", no: "04", title: "Imaging Sequence", note: "The NINA sequence, start to finish" },
-  { id: "tilt", no: "05", title: "Sensor Tilt", note: "Why fast optics need tilt correction" },
-  { id: "processing", no: "06", title: "Processing", note: "PixInsight pipeline, then Photoshop" },
-];
+  { id: "processing", no: "05", title: "Processing", note: "The PixInsight pipeline" },
+  { id: "night", no: "06", title: "An Imaging Night", note: "One night of debugging, start to finish" },
+]
 
 const optics = [
   {
@@ -370,6 +401,44 @@ const gear = [
   </div>
 
 
+  <div class="cut-line" id="telescope"><span>The Telescope</span></div>
+
+  <p>
+    The main imaging scope is an Apertura CarbonStar 200: 200&nbsp;mm of
+    aperture at 800&nbsp;mm focal length, f/4. Fast optics are unforgiving,
+    and almost every change below started as a specific problem in my
+    images. The full design story is in the{" "}
+    <a href={`${BASE}projects/newtonian-telescope`}>Newtonian telescope project</a>.
+  </p>
+
+  <div class="scope-intro">
+    <figure class="wf-fig scope-video">
+      <video src={`${TS}rig-walkthrough.mp4`} poster={`${TS}rig-walkthrough-poster.jpg`} controls playsinline preload="none" muted></video>
+      <figcaption class="mono">Walkthrough of the rig on the mount</figcaption>
+    </figure>
+    <ol class="scope-list">
+      {MODS.map((m) => (
+        <li>
+          <span class="scope-tag mono">{m.tag}</span>
+          <strong>{m.title}</strong>
+          <span>{m.note}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="scope-media">
+    <figure class="wf-fig"><img src={`${BASE}images/telescope-focus-adapter.jpg`} alt="Custom aluminum focuser mounting plate on the CarbonStar 200" loading="lazy" /><figcaption class="mono">Custom aluminum mount for the ESATTO focuser</figcaption></figure>
+    <figure class="wf-fig"><img src={`${BASE}images/telescope-dew-shield.jpg`} alt="The CarbonStar 200 with its 3D-printed dew shield" loading="lazy" /><figcaption class="mono">3D-printed dew shield</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}front-spider-flocking.jpg`} alt="Front of the tube: spider vanes, secondary mirror and flocked interior" loading="lazy" /><figcaption class="mono">Flocked upper tube, spider and secondary</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}tube-baffles-flocking.jpg`} alt="Looking down the tube at the knife-edge baffles and flocking, with the focuser opening" loading="lazy" /><figcaption class="mono">Knife-edge baffles under the flocking</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}tube-baffles.mp4`} poster={`${TS}tube-baffles-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video looking down the flocked tube and baffles"></video><figcaption class="mono">Down the tube</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}front-spider.mp4`} poster={`${TS}front-spider-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the spider vanes and secondary holder from the front"></video><figcaption class="mono">Spider and secondary holder</figcaption></figure>
+    <figure class="wf-fig"><img src={`${TS}fan-intake-mask.jpg`} alt="3D-printed honeycomb intake mask over the mirror fan on the rear cell" loading="lazy" /><figcaption class="mono">Mirror fan intake mask, v2</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}fan-intake.mp4`} poster={`${TS}fan-intake-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the rear cell with the fan intake mask"></video><figcaption class="mono">Rear cell and fan housing</figcaption></figure>
+    <figure class="wf-fig"><video src={`${TS}secondary-spider.mp4`} poster={`${TS}secondary-spider-poster.jpg`} autoplay muted loop playsinline preload="none" aria-label="Video of the secondary mirror on its spider, out of the tube"></video><figcaption class="mono">The secondary, out of the tube: next to get a mask</figcaption></figure>
+  </div>
+
   <div class="cut-line" id="remote"><span>Data Acquisition &amp; Remote Control</span></div>
 
   <p>
@@ -532,7 +601,192 @@ const gear = [
   <figure class="wf-fig"><img src={`${WF}nina-sequence-running.jpg`} alt="NINA running the Double Cluster sequence with guiding graph at 0.52 arcseconds RMS" loading="lazy" /><figcaption class="mono">NINA mid-sequence: 60 s subs on the Double Cluster, guiding at 0.52″ RMS</figcaption></figure>
   <div class="wf-ph"><ImagePlaceholder label="Acquisition software" spec="Coming soon: NINA, PHD2 and remote-desktop screenshots" aspect="wide" /></div>
 
-  <div class="cut-line" id="tilt"><span>Sensor Tilt</span></div>
+  <div class="cut-line" id="processing"><span>Processing</span></div>
+
+  <p>
+    A finished image starts as anywhere from dozens to a few hundred
+    individual sub-exposures, each one mostly noise with a faint, real
+    signal buried in it. PixInsight combines them through pixel-by-pixel
+    integration (matrix math across the whole stack), averaging with
+    rejection algorithms that throw out satellite trails, cosmic-ray
+    hits, and other single-frame artifacts rather than simply layering
+    everything together. Signal-to-noise builds with the square root of
+    the sub count, so doubling the number of subs only buys about a 40%
+    improvement in signal-to-noise: the real tradeoff behind every
+    session, since more subs always help but with steadily diminishing
+    returns against the hours it costs to get them. Before the stack is
+    combined, every frame gets normalized, scaled and offset so that
+    frame-to-frame differences in sky brightness, transparency, or moon
+    position don't bias the result.
+  </p>
+
+  <p>
+    Everything up to that point is math. What comes after is where the
+    process gets genuinely subjective; this is the part that's art, not
+    measurement. Images here are captured in real, natural color, not
+    narrowband-mapped or artificially recolored, and stretched through a
+    histogram transform to bring out detail that's present in the linear
+    data but invisible on a straight display. That step remaps what's
+    already in the frame onto a range a screen can actually show; it
+    doesn't invent anything that isn't there. From there, a set of
+    AI-assisted tools handles gradient removal (correcting for skyglow
+    and light pollution that vary across the frame), deconvolution, and
+    noise reduction, cleaning up what the optics and the sky introduced
+    without changing what the target actually looks like. Plate solving
+    plus SPCC (Spectrophotometric Color Calibration) pins the color
+    balance to real stellar spectra in the field instead of an eyeballed
+    white balance, so the final color is a calibrated fit to actual data.
+  </p>
+
+  <p>
+    The last pass happens in Photoshop, pulling out finer local detail
+    and nudging color ever so slightly, not to invent anything, but to
+    draw the eye toward the parts of the image that matter.
+  </p>
+
+
+  <h3 class="wf-subhead">The pipeline, step by step</h3>
+  <p class="pipe-lede">
+    Every image goes through the same sequence. The example here is the
+    North America Nebula (NGC 7000). The order loosely follows Philippe
+    Bernhard's widely shared flowchart for one-shot-color cameras: linear
+    cleanup and calibration first, then stars and nebula are split and
+    stretched separately before being recombined. Click any step to see
+    the full screenshot.
+  </p>
+
+  {(() => {
+    let n = 0;
+    const card = (st: Step) => { n += 1; const no = String(n).padStart(2, "0"); return (
+      <li class="pipe-card">
+        {st.img ? (
+          <a href={`${PX}${st.img}`} target="_blank" rel="noopener" class="pipe-thumb">
+            <img src={`${PX}${st.img}`} alt={`${st.title} in PixInsight`} loading="lazy" />
+          </a>
+        ) : (
+          <div class="pipe-thumb pipe-thumb--stat"><span class="pipe-stat">{st.stat}</span><span class="pipe-stat-label mono">{st.statLabel}</span></div>
+        )}
+        <div class="pipe-body">
+          <span class="pipe-no mono">{no}</span>
+          <h5>{st.title}</h5>
+          <p>{st.note}</p>
+        </div>
+      </li>
+    ); };
+    return PIPELINE.map((group) => (
+      <section class="pipe-stage">
+        <h4 class="pipe-stage-title mono">{group.stage}</h4>
+        {group.steps && <ol class="pipe-grid">{group.steps.map(card)}</ol>}
+        {group.lanes && (
+          <div class="pipe-lanes">
+            {group.lanes.map((lane) => (
+              <div class="pipe-lane">
+                <span class="pipe-lane-name mono">{lane.name}</span>
+                <ol class="pipe-grid">{lane.steps.map(card)}</ol>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    ));
+  })()}
+
+  <section class="pipe-stage">
+    <h4 class="pipe-stage-title mono">Recombine &amp; finish</h4>
+    <div class="pipe-finish">
+      <p>
+        The stretched stars are screened back over the finished starless
+        image, and the result goes to Photoshop for final color
+        calibration, a Camera Raw pass, and the star screen. That last
+        step is where the magic happens, so it stays off the page.
+      </p>
+    </div>
+  </section>
+
+
+  <div class="cut-line" id="night"><span>A Typical Imaging Night</span></div>
+
+  <p>
+    Most nights are uneventful: the sequence runs and I check in from
+    inside. This one wasn't, and it shows the whole workflow under
+    pressure. Images from the CarbonStar 200 kept coming out with bad
+    stars, and I was sure it was coma; I had just bought a new coma
+    corrector to fix it. Over one night (October 1&ndash;2, 2026) I tested
+    the telescope piece by piece, with Claude analyzing frames, logs and
+    screenshots as they came in. There were five separate problems, and
+    none of them was coma: a tilted sensor, the guide prism shadowing one
+    edge of the frame, autofocus backlash, a refocus trigger too loose
+    for f/4, and a known manufacturing flaw on the secondary mirror.
+    Four were fixed before midnight.
+  </p>
+
+  <div class="night-stats">
+    <div><span class="mono">Corner focus spread</span><strong>64 → 12 µm</strong></div>
+    <div><span class="mono">Star elongation</span><strong>0.59 → 0.40</strong></div>
+    <div><span class="mono">Autofocus fit</span><strong>R² 0.88 → 1.00</strong></div>
+    <div><span class="mono">Guiding</span><strong>0.52″ RMS</strong></div>
+  </div>
+
+  <ol class="night-log">
+    <li>
+      <span class="night-time mono">18:36</span>
+      <div>
+        <h3>Planning</h3>
+        <p>
+          The target was the Pleiades: its seven bright stars make a
+          collimation check, and the faint stars in the corners would show
+          whether the new corrector fixed the "coma." A 73% Moon ruled out
+          the faint dust, so the night became a test night, shot through
+          the UV/IR-cut filter in 60&nbsp;s subs. With sky glow swamping
+          the camera's read noise 50&ndash;100× at f/4, longer subs would
+          add almost nothing but risk.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">18:57</span>
+      <div>
+        <h3>Rebuilding the sequence</h3>
+        <p>
+          A review of my old NINA sequence turned up guiding left running
+          through flats, autofocus in the wrong filter, and a 5&nbsp;°C
+          refocus trigger far too loose for an f/4 critical focus zone of
+          ±21&nbsp;µm. The rebuilt test sequence loaded but stopped
+          instantly with no error; the NINA log showed a missing dither
+          trigger crashing validation silently.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">20:14</span>
+      <div>
+        <h3>First test frames</h3>
+        <p>
+          A star-shape map of the first frame showed one edge of the field
+          softer than the other, with elongation fanning around a point off
+          the frame. Coma from wrong spacing would center on the middle of
+          the frame; an off-center pattern meant the sensor was tilted.
+          Defocused donuts showed collimation was fine.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">20:52</span>
+      <div>
+        <h3>Spacing sweep</h3>
+        <p>
+          Driving all three tilt-adjuster motors together changes the
+          corrector-to-sensor spacing remotely. A short sequence at
+          0.2, 0.7 and 1.2&nbsp;mm (autofocus, donuts, guided frames at each)
+          picked 0.7&nbsp;mm on every star-size measure.
+        </p>
+        <figure class="wf-fig wf-plot"><img src={`${NT}spacing-donut-profiles.jpg`} alt="Inside versus outside focus donut profiles at three spacing settings" loading="lazy" /><figcaption class="mono">Inside vs. outside focus profiles across the spacing sweep</figcaption></figure>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:23</span>
+      <div class="night-tilt">
+        <h3>Measuring and correcting tilt</h3>
 
   <p>
     Every optical system has one flat plane where the image actually
@@ -626,87 +880,99 @@ const gear = [
     <figure class="wf-fig"><img src={`${WF}tilt-eta-corrected.jpg`} alt="WandererEmpire electronic tilt adjuster control panel after correction" loading="lazy" /><figcaption class="mono">Tilt adjuster motor positions after correction</figcaption></figure>
   </div>
 
-  <div class="cut-line" id="processing"><span>Processing</span></div>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:47</span>
+      <div>
+        <h3>Autofocus backlash</h3>
+        <p>
+          Several autofocus curves ended in two identical points: the
+          focuser losing motion when it reverses. Setting NINA's backlash
+          compensation to overshoot, so every move arrives from the same
+          direction, brought both following curves to R²&nbsp;=&nbsp;1.00.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">21:54</span>
+      <div>
+        <h3>The guide prism shadow</h3>
+        <p>
+          With tilt fixed, stars along one whole edge still had comet tails,
+          and bright stars in older images carried one-sided fans of rays.
+          The only part of the train that sits on one side of the light path
+          is the off-axis guider's pickoff prism, and it was sitting right at
+          the sensor's edge. At f/4 the light cone for the edge pixels is still
+          wider than the sensor at the prism's depth, so the prism had to
+          clear at least 14.2&nbsp;mm from the optical center. Measured with
+          calipers after retracting it: 14.5&nbsp;mm, and the guide camera
+          still reached focus.
+        </p>
+        <div class="wf-grid2">
+          <figure class="wf-fig"><img src={`${NT}ninetile-prism-shadow.jpg`} alt="NINA nine-tile view with comet-tailed stars along the top row" loading="lazy" /><figcaption class="mono">Comet tails across the top row</figcaption></figure>
+          <figure class="wf-fig"><img src={`${NT}orion-prism-fans.jpg`} alt="Earlier Orion Nebula image with one-sided fans on bright stars" loading="lazy" /><figcaption class="mono">The same artifact in an older image</figcaption></figure>
+        </div>
+        <div class="wf-grid3">
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-through-corrector.jpg`} alt="View through the coma corrector showing the guide prism at the sensor edge" loading="lazy" /><figcaption class="mono">Through the corrector</figcaption></figure>
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-at-sensor-edge.jpg`} alt="Sensor with the guide prism holder touching its edge" loading="lazy" /><figcaption class="mono">Prism holder touching the sensor edge</figcaption></figure>
+          <figure class="wf-fig wf-crop"><img src={`${NT}prism-retracted.jpg`} alt="Off-axis guider face after retracting the prism" loading="lazy" /><figcaption class="mono">After retracting it</figcaption></figure>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">22:53</span>
+      <div>
+        <h3>Verifying the fix</h3>
+        <p>
+          A test flat came out symmetric top to bottom to within 0.3%. On real
+          data, the elongation in the top third of the frame dropped from 0.67
+          to 0.39, and the top-to-bottom gap closed from 0.14 to 0.01. Stars
+          now measure about 92% as wide as they are tall, which reads as round.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">23:12</span>
+      <div>
+        <h3>The flares that remained</h3>
+        <p>
+          A few of the brightest stars still flared, but these pointed away
+          from the frame center in every direction. They start just past
+          6.5&nbsp;mm from center on the sensor, exactly where the flat field
+          starts to fall off.
+        </p>
+        <div class="wf-grid2">
+          <figure class="wf-fig wf-plot"><img src={`${NT}flare-example.jpg`} alt="Bright star with a flare pointing away from the frame center" loading="lazy" /><figcaption class="mono">A flare pointing straight away from center</figcaption></figure>
+          <figure class="wf-fig wf-plot"><img src={`${NT}flat-radial-profile.jpg`} alt="Flat-field radial profile, flat to 6.5 mm then falling off" loading="lazy" /><figcaption class="mono">Flat-field falloff starts where the flares do</figcaption></figure>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="night-time mono">23:33</span>
+      <div>
+        <h3>Root cause: the secondary's edge</h3>
+        <p>
+          Filters, dew shield, focuser, flocking, mirror mask and corrector
+          were all ruled out, most decisively by the fact that the flares
+          predate every mod and show up with two different correctors. Other
+          CarbonStar owners have traced the same flare to an over-beveled
+          secondary mirror that leaves reflective coating on its edge. The fix
+          is a 3D-printed mask covering 2&ndash;3&nbsp;mm of the secondary's
+          edge, which is the next change to the scope.
+        </p>
+      </div>
+    </li>
+  </ol>
 
-  <p>
-    A finished image starts as anywhere from dozens to a few hundred
-    individual sub-exposures, each one mostly noise with a faint, real
-    signal buried in it. PixInsight combines them through pixel-by-pixel
-    integration (matrix math across the whole stack), averaging with
-    rejection algorithms that throw out satellite trails, cosmic-ray
-    hits, and other single-frame artifacts rather than simply layering
-    everything together. Signal-to-noise builds with the square root of
-    the sub count, so doubling the number of subs only buys about a 40%
-    improvement in signal-to-noise: the real tradeoff behind every
-    session, since more subs always help but with steadily diminishing
-    returns against the hours it costs to get them. Before the stack is
-    combined, every frame gets normalized, scaled and offset so that
-    frame-to-frame differences in sky brightness, transparency, or moon
-    position don't bias the result.
-  </p>
-
-  <p>
-    Everything up to that point is math. What comes after is where the
-    process gets genuinely subjective; this is the part that's art, not
-    measurement. Images here are captured in real, natural color, not
-    narrowband-mapped or artificially recolored, and stretched through a
-    histogram transform to bring out detail that's present in the linear
-    data but invisible on a straight display. That step remaps what's
-    already in the frame onto a range a screen can actually show; it
-    doesn't invent anything that isn't there. From there, a set of
-    AI-assisted tools handles gradient removal (correcting for skyglow
-    and light pollution that vary across the frame), deconvolution, and
-    noise reduction, cleaning up what the optics and the sky introduced
-    without changing what the target actually looks like. Plate solving
-    plus SPCC (Spectrophotometric Color Calibration) pins the color
-    balance to real stellar spectra in the field instead of an eyeballed
-    white balance, so the final color is a calibrated fit to actual data.
-  </p>
-
-  <p>
-    The last pass happens in Photoshop, pulling out finer local detail
-    and nudging color ever so slightly, not to invent anything, but to
-    draw the eye toward the parts of the image that matter.
-  </p>
-
-
-  <h3 class="wf-subhead">The pipeline, step by step</h3>
-  <p class="pipe-lede">
-    Every image goes through the same sequence. The example here is the
-    North America Nebula (NGC 7000). Click any step to see the full screenshot.
-  </p>
-
-  {(() => { let n = 0; return PIPELINE.map((group) => (
-    <section class="pipe-stage">
-      <h4 class="pipe-stage-title mono">{group.stage}</h4>
-      <ol class="pipe-grid">
-        {group.steps.map((st) => { n += 1; return (
-          <li class="pipe-card">
-            <a href={`${PX}${st.img}`} target="_blank" rel="noopener" class="pipe-thumb">
-              <img src={`${PX}${st.img}`} alt={`${st.title} in PixInsight`} loading="lazy" />
-            </a>
-            <div class="pipe-body">
-              <span class="pipe-no mono">{String(n).padStart(2, "0")}</span>
-              <h5>{st.title}</h5>
-              <p>{st.note}</p>
-            </div>
-          </li>
-        ); })}
-      </ol>
-    </section>
-  )); })()}
-
-  <section class="pipe-stage">
-    <h4 class="pipe-stage-title mono">Finishing in Photoshop</h4>
-    <p class="pipe-lede">
-      The stretched starless image and stars go to Photoshop for final
-      color calibration and a Camera Raw pass, then the stars are blended
-      back over the nebula with a screen blend.
-    </p>
-    <div class="wf-ph">
-      <ImagePlaceholder label="Photoshop finishing" spec="Coming soon: color calibration, Camera Raw, star screen" aspect="wide" />
-    </div>
-  </section>
+  <h3 class="wf-subhead">What I took from it</h3>
+  <ul class="night-lessons">
+    <li><strong>Separate the symptoms before naming a cause.</strong> "Bad stars" was five problems, each with its own signature.</li>
+    <li><strong>Change one variable at a time,</strong> and record the setting next to every frame.</li>
+    <li><strong>Measure instead of eyeballing.</strong> Photos down the light path lied because of parallax; calipers and a flat didn't.</li>
+    <li><strong>History is data.</strong> "The flares have been there since day one" ruled out more than any calculation.</li>
+    <li><strong>Read the logs.</strong> A sequence that fails silently usually leaves an exception behind.</li>
+  </ul>
 
 </Layout>
 
@@ -1137,6 +1403,193 @@ const gear = [
     line-height: 1.45;
     color: var(--paper-dim);
   }
+
+
+  .pipe-lanes {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .pipe-lane {
+    border-left: 2px solid var(--redline);
+    padding-left: 0.9rem;
+  }
+  .pipe-lane-name {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  .pipe-lane:last-child .pipe-grid { grid-template-columns: 1fr; }
+  @media (max-width: 860px) {
+    .pipe-lanes { grid-template-columns: 1fr; }
+  }
+  .pipe-thumb--stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: var(--ink-900);
+    border-bottom: 1px solid var(--line-500);
+    cursor: default;
+  }
+  .pipe-stat {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    color: var(--redline);
+    line-height: 1;
+  }
+  .pipe-stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  .pipe-finish {
+    border: 1px solid var(--line-500);
+    border-left: 2px solid var(--redline);
+    background: var(--ink-800);
+    padding: 1rem 1.2rem;
+    max-width: 70ch;
+  }
+  .pipe-finish p { margin: 0; color: var(--paper-dim); }
+
+  .scope-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 1.5rem;
+    align-items: start;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 760px) {
+    .scope-intro { grid-template-columns: 1fr; }
+  }
+  .scope-video video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 640px;
+    object-fit: cover;
+    background: #000;
+    border: 1px solid var(--line-500);
+  }
+  .scope-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.1rem;
+  }
+  .scope-list li {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    column-gap: 0.9rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-500);
+  }
+  .scope-list li > span:last-child {
+    grid-column: 2;
+    color: var(--paper-dim);
+    font-size: 0.9rem;
+  }
+  .scope-list strong { grid-column: 2; color: var(--paper); }
+  .scope-tag {
+    grid-row: span 2;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--redline);
+    padding-top: 0.2rem;
+  }
+  .scope-media {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .scope-media img,
+  .scope-media video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border: 1px solid var(--line-500);
+    background: #000;
+  }
+
+  .night-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--line-500);
+    border: 1px solid var(--line-500);
+    margin: 1.5rem 0 2rem;
+  }
+  .night-stats div {
+    background: var(--ink-800);
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .night-stats span {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  .night-stats strong {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .night-log {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--line-500);
+  }
+  .night-log > li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0 0 2.25rem;
+    position: relative;
+  }
+  .night-log > li::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.45rem;
+    width: 9px;
+    height: 9px;
+    background: var(--redline);
+  }
+  .night-time {
+    padding: 0.2rem 0 0 1rem;
+    font-size: 0.8rem;
+    color: var(--redline);
+  }
+  .night-log h3 {
+    margin: 0 0 0.5rem;
+  }
+  .night-log p {
+    max-width: 72ch;
+  }
+  @media (max-width: 640px) {
+    .night-log > li { grid-template-columns: 1fr; gap: 0.2rem; }
+    .night-time { padding-left: 1rem; }
+    .night-log > li > div { padding-left: 1rem; }
+  }
+  .night-lessons {
+    max-width: 75ch;
+    padding-left: 1.2rem;
+  }
+  .night-lessons li { margin-bottom: 0.5rem; color: var(--paper-dim); }
+  .night-lessons strong { color: var(--paper); }
 
   /* ---------- Jump links ---------- */
   .astro-jump {
