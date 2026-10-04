@@ -96,6 +96,27 @@ By April the aircraft had moved to foam: foam-board fuselage with an internal pa
 
 Alongside the MATLAB performance work, I used Excel to track the design against manufacturability constraints, keeping tabs on part mass budgets, material availability, and build tolerances so the design stayed something the team could actually produce with the tools on hand, not just something that looked good in simulation.
 
+### Airfoil data
+
+The wing used the AG13 airfoil. I tabulated its lift and drag polar from −5° to 12° angle of attack: lift climbs almost linearly to a C<sub>l</sub> of 1.34 at 11° before stalling at 12°, and the best lift-to-drag ratio, about 50, sits near 5°.
+
+| α | 0° | 2° | 4° | 5° | 6° | 8° | 10° | 11° | 12° |
+|---|---|---|---|---|---|---|---|---|---|
+| C<sub>l</sub> | 0.41 | 0.63 | 0.85 | 0.95 | 1.05 | 1.21 | 1.32 | 1.34 | 1.25 |
+| C<sub>d</sub> | 0.0142 | 0.0148 | 0.0175 | 0.0192 | 0.0215 | 0.0285 | 0.042 | 0.055 | 0.075 |
+| L/D | 29 | 43 | 49 | 49 | 49 | 42 | 31 | 24 | 17 |
+
+### Mass budget
+
+The manufacturing plan budgeted every part out of a single foam blank (400 × 1200 × 52 mm) before anything was cut:
+
+| Part | Key dimensions | Mass (solid) |
+|---|---|---|
+| Fuselage half | 710 mm long, 95 mm tall | 29.1 g |
+| Wing panel | 500 mm span, 150 → 120 mm chord, 74 mm MAC | 3.6 g |
+| Horizontal tail | 330 mm span, 85 → 82 mm chord | 3.25 g |
+| Vertical tail | 145 mm span, 100 → 67 mm chord | 1.45 g |
+
 
 ## Test flights
 
