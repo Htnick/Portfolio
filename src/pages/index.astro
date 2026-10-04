@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import "../styles/project-cards.css";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
@@ -25,7 +25,7 @@ const featured = FEATURED_SLUGS
 const DISCIPLINES = [
   {
     label: "Propulsion",
-    href: "projects",
+    href: "projects/",
     // A 4:3 crop of the standing-engine render, not regen-engine-hero.jpg —
     // that one is the regen project's own card image and appears directly
     // below, so using it here would show the same render twice.
@@ -39,265 +39,225 @@ const DISCIPLINES = [
   },
   {
     label: "Astrophotography",
-    href: "astrophotography",
+    href: "astrophotography/",
     image: "veil-nebula.jpg",
     alt: "The Veil Nebula, astrophotography by Henry Nickless",
     body:
-      "Forty deep-sky images shot on a rig I designed and printed myself — " +
-      "three-ring lens mounts and a belt-driven focuser around a 135mm f/2.",
-    meta: "Rokinon 135mm rig",
+      "Deep-sky images from my own rigs: a heavily modified 8-inch f/4 " +
+      "Newtonian and a 3D-printed 135mm lens rig.",
+    meta: "CarbonStar 200 · Rokinon 135mm",
   },
 ];
 
 const RESUME = "files/resume/Henry_Nickless_Resume.pdf";
+const BASE = import.meta.env.BASE_URL;
+const year = (d: string) => d.slice(0, 4);
 ---
 
 <Layout
   title="Henry Nickless"
   description="Henry Nickless is an aerospace engineering student at CU Boulder designing liquid rocket injector plates and regeneratively cooled engines, and building 3D-printed telescope hardware for deep-sky astrophotography."
+  variant="gallery"
 >
-  <section class="hero">
-    <span class="eyebrow">// Aerospace Engineering, CU Boulder</span>
-    <h1>Henry Nickless</h1>
-    <p class="hero-tagline">I take pictures of the night&nbsp;sky and build rocket engines.</p>
-    <p class="lede">
-      On the propulsion team at CU's Sounding Rocket Lab I size combustion
-      chambers and design injector plates — currently for a 2,000 lbf
-      regeneratively cooled engine. Off campus I print my own telescope
-      hardware and photograph the deep sky with it.
-    </p>
-
-    <div class="hero-actions">
-      <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}projects`}>View Projects</a>
-      <a class="btn" href={`${import.meta.env.BASE_URL}${RESUME}`} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
-      <a class="btn" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+  <section class="home-hero">
+    <div class="home-hero-text">
+      <span class="eyebrow mono">// Aerospace Engineering, CU Boulder · Class of 2028</span>
+      <h1>Henry Nickless</h1>
+      <p class="hero-tagline">I take pictures of the night&nbsp;sky and build rocket engines.</p>
+      <p class="lede">
+        On the propulsion team at CU's Sounding Rocket Lab I size combustion
+        chambers and design injector plates, currently for a 2,000 lbf
+        regeneratively cooled engine. Off campus I print my own telescope
+        hardware and photograph the deep sky with it.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`${BASE}projects/`}>View Projects</a>
+        <a class="btn" href={`${BASE}${RESUME}`} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
+        <a class="btn" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+      </div>
     </div>
 
-    <div class="title-block">
-      <div><span class="label">Program</span><span class="value">Aerospace Eng.</span></div>
-      <div><span class="label">Institution</span><span class="value">CU Boulder</span></div>
-      <div><span class="label">Grad</span><span class="value">May 2028</span></div>
+    <div class="home-hero-tiles">
+      {DISCIPLINES.map((d) => (
+        <a class="discipline" href={`${BASE}${d.href}`}>
+          <img src={`${BASE}images/${d.image}`} alt={d.alt} loading="eager" />
+          <div class="discipline-caption">
+            <span class="mono">{d.meta}</span>
+            <h2>{d.label} →</h2>
+            <p>{d.body}</p>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 
-  <div class="cut-line"><span>Two Disciplines</span></div>
-
-  <div class="discipline-split">
-    {DISCIPLINES.map((d) => (
-      <a class="discipline" href={`${import.meta.env.BASE_URL}${d.href}`}>
-        <div class="discipline-frame">
-          <img src={`${import.meta.env.BASE_URL}images/${d.image}`} alt={d.alt} loading="eager" />
-        </div>
-        <span class="discipline-meta">{d.meta}</span>
-        <h2>{d.label}</h2>
-        <p>{d.body}</p>
-      </a>
-    ))}
+  <div class="stat-row">
+    <div><strong>2,000</strong><span class="mono">lbf regen engine, in design</span></div>
+    <div><strong>650</strong><span class="mono">lbf Taipan bipropellant</span></div>
+    <div><strong>700</strong><span class="mono">psi chamber, RP-1 / LOX</span></div>
+    <div><strong>40</strong><span class="mono">deep-sky images</span></div>
   </div>
 
-  <div class="cut-line"><span>Selected Work</span></div>
-
-  <p class="section-intro">
-    What I'm building right now at SRL, plus one favorite from last year.
-  </p>
-
-  <div class="project-grid">
-    {featured.map((project, i) => (
-      <a class="project-card" href={`${import.meta.env.BASE_URL}projects/${project.id}`}>
-        <div class="thumb-frame">
-          {project.data.image ? (
-            <img src={`${import.meta.env.BASE_URL}images/${project.data.image}`} alt={project.data.title} loading="lazy" />
-          ) : (
-            <ImagePlaceholder label={`Photo: ${project.data.title}`} spec="1600×1000" figNo={String(i + 1).padStart(2, "0")} />
-          )}
-        </div>
-        <span class="sheet-no" style={project.data.status === "in-progress" ? "color: var(--redline-text);" : ""}>
-          SHT {String(i + 1).padStart(2, "0")} / {project.data.status === "completed" ? "COMPLETE" : "IN PROGRESS"}
-        </span>
-        <h3>{project.data.title}</h3>
-        <p>{project.data.description}</p>
-        {project.data.results && <p class="card-result">{project.data.results}</p>}
-        <div class="tags">
-          {project.data.tags?.slice(0, 3).map((tag: string) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      </a>
-    ))}
-  </div>
-
-  <p class="all-projects">
-    <a href={`${import.meta.env.BASE_URL}projects`}>View all projects</a>
-  </p>
-
-  <div class="section-panel">
-    <div class="cut-line"><span>By The Numbers</span></div>
-
-    <div class="stat-band">
-      <div class="stat">
-        <span class="stat-number">2,000</span>
-        <span class="stat-label">lbf regen engine — in design</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">650</span>
-        <span class="stat-label">lbf Taipan bipropellant</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">700</span>
-        <span class="stat-label">psi chamber, RP-1 / LOX</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">40</span>
-        <span class="stat-label">deep-sky images</span>
-      </div>
+  <section class="home-section">
+    <div class="home-section-head">
+      <h2 class="mono">Selected Work</h2>
+      <a class="mono" href={`${BASE}projects/`}>All projects →</a>
     </div>
+    <div class="proj-grid home-grid">
+      {featured.map((project) => (
+        <a class="proj-card" href={`${BASE}projects/${project.id}/`}>
+          <div class="proj-thumb">
+            {project.data.image && <img src={`${BASE}images/${project.data.image}`} alt="" loading="lazy" />}
+          </div>
+          <div class="proj-body">
+            <span class:list={["proj-meta mono", { live: project.data.status === "in-progress" }]}>
+              {project.data.status === "in-progress" ? "In progress" : "Complete"} · {year(project.data.date)}
+            </span>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.description}</p>
+            {project.data.results && <p class="card-result">{project.data.results}</p>}
+            <div class="proj-tags">
+              {project.data.tags?.slice(0, 3).map((tag: string) => <span class="mono">{tag}</span>)}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 
-    <p class="toolset-line">
-      Fusion 360 · SolidWorks · Python · MATLAB · C++ · R · NASA CEA / RocketCEA · 3D printing &amp; CNC
-    </p>
-  </div>
-
-  <div class="section-panel section-panel--cool">
-    <div class="cut-line"><span>Get In Touch</span></div>
-
-    <section class="hero" style="padding-top: 0;">
-      <span class="eyebrow">// Say hello</span>
+  <section class="contact-bar">
+    <div>
       <h2>Always happy to talk propulsion, optics, or anything in between.</h2>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
-        <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a class="btn" href={`${import.meta.env.BASE_URL}${RESUME}`} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
-      </div>
-    </section>
-  </div>
+      <p class="mono">Fusion 360 · SolidWorks · Python · MATLAB · C++ · R · NASA CEA / RocketCEA · 3D printing &amp; CNC</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:Henry.Nickless@Colorado.edu">Email Me</a>
+      <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="btn" href={`${BASE}about/`}>About Me</a>
+    </div>
+  </section>
 </Layout>
 
 <style>
-  /* Name first, then the one-line version of what he does. The tagline
-     carries the claim the h1 used to, so it is sized to be read as a
-     headline rather than as body copy. */
+  .home-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 3rem;
+    align-items: center;
+    padding: 1rem 0 2.5rem;
+  }
+  @media (max-width: 960px) {
+    .home-hero { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  .home-hero .eyebrow {
+    display: block;
+    color: var(--redline);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .home-hero h1 { margin: 0 0 0.6rem; font-size: clamp(2.6rem, 5.5vw, 4rem); line-height: 1.05; }
   .hero-tagline {
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.7vw, 1.8rem);
-    font-weight: 400;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
     line-height: 1.3;
     color: var(--paper);
-    max-width: 30ch;
-    margin: -0.2rem 0 1.1rem;
+    max-width: 26ch;
+    margin: 0 0 1.1rem;
   }
+  .home-hero .lede { color: var(--paper-dim); max-width: 52ch; margin: 0; }
+  .hero-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
 
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.75rem;
-    flex-wrap: wrap;
-  }
-
-  /* Two co-equal halves: propulsion and astrophotography. The pairing is
-     the thing that distinguishes this site, so neither side is subordinate
-     and both images are given the same footprint. */
-  .discipline-split {
+  .home-hero-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
-
+  @media (max-width: 560px) {
+    .home-hero-tiles { grid-template-columns: 1fr; }
+  }
   .discipline {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .discipline-frame {
-    aspect-ratio: 4 / 3;
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     border: 1px solid var(--line-500);
-    background: var(--ink-800);
+    background: #000;
+    text-decoration: none;
+    color: #fff;
   }
-
-  .discipline-frame img {
+  .discipline img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
   }
-
-  .discipline:hover .discipline-frame img {
-    transform: scale(1.03);
+  .discipline:hover img { transform: scale(1.04); }
+  .discipline:hover { border-color: var(--redline); }
+  .discipline-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 3.5rem 1.1rem 1.1rem;
+    background: linear-gradient(to top, rgba(5, 6, 9, 0.92), rgba(5, 6, 9, 0.55) 60%, transparent);
   }
+  .discipline-caption span { font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c9c4bc; }
+  .discipline-caption h2 { margin: 0.2rem 0 0.35rem; font-size: 1.45rem; color: #fff; }
+  .discipline:hover .discipline-caption h2 { color: var(--redline); }
+  .discipline-caption p { margin: 0; font-size: 0.85rem; line-height: 1.45; color: #d6d2cb; }
 
-  .discipline-meta {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--paper-dim);
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line-500);
+    border-bottom: 1px solid var(--line-500);
+    margin-bottom: 2.75rem;
   }
-
-  .discipline h2 {
-    margin: 0;
-    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+  @media (max-width: 700px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-row div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.1rem 1rem;
+    border-left: 1px solid var(--line-500);
   }
+  .stat-row div:first-child { border-left: none; padding-left: 0; }
+  .stat-row strong { font-family: var(--font-stat); font-size: 2rem; font-weight: 600; color: var(--redline); line-height: 1; }
+  .stat-row span { font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--paper-dim); }
 
-  .discipline:hover h2 {
-    color: var(--redline);
-  }
+  .home-section { margin-bottom: 2.75rem; }
+  .home-section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+  .home-section-head h2 { margin: 0; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper); }
+  .home-section-head a { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--paper-dim); text-decoration: none; }
+  .home-section-head a:hover { color: var(--redline); }
+  .home-grid { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
 
-  .discipline p {
-    margin: 0;
-    color: var(--paper-dim);
-    font-size: 0.95rem;
-    max-width: 46ch;
-  }
-
-  .section-intro {
-    color: var(--paper-dim);
-    margin-top: -0.5rem;
-    margin-bottom: 1.75rem;
-    max-width: 46ch;
-  }
-
-  /* The quantified outcome from a project's frontmatter, when it has one.
-     Set apart from the description so it reads as evidence rather than
-     more prose. */
   .card-result {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     line-height: 1.5;
-    color: var(--paper);
+    color: var(--paper) !important;
     border-left: 2px solid var(--redline);
     padding-left: 0.7rem;
     margin: 0;
+    -webkit-line-clamp: unset !important;
   }
 
-  .all-projects {
-    text-align: right;
-    margin-top: 1.5rem;
+  .contact-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border: 1px solid var(--line-500);
+    background: var(--ink-800);
+    padding: 1.5rem 1.75rem;
   }
-  .all-projects a {
-    font-family: var(--font-mono);
-    text-decoration: none;
-    color: var(--paper-dim);
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .all-projects a:hover {
-    color: var(--redline-text);
-  }
-
-  /* Tool names kept for scanning, but demoted out of the chip grid they
-     used to sit in — a wall of generic tool chips says less than any one
-     project page does. */
-  .toolset-line {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    line-height: 1.9;
-    color: var(--paper-dim);
-    margin: 1.5rem 0 0;
-    max-width: 70ch;
-  }
+  .contact-bar h2 { margin: 0 0 0.5rem; font-size: clamp(1.2rem, 2.2vw, 1.5rem); }
+  .contact-bar p { margin: 0; font-size: 0.72rem; color: var(--paper-dim); line-height: 1.7; max-width: 70ch; }
+  .contact-bar .hero-actions { margin-top: 0; }
 </style>
