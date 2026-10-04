@@ -90,6 +90,8 @@ By April the aircraft had moved to foam: foam-board fuselage with an internal pa
 <figure style="margin:0;"><img src="/Portfolio/images/glider/transport.jpg" alt="Glider in the back of a car for transport" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid var(--line-500);aspect-ratio:3/4;object-fit:cover;" /><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Headed to testing</figcaption></figure>
 </div>
 
+<div style="max-width:420px;margin:1.5rem 0;"><figure style="margin:0;"><img src="/Portfolio/images/glider/shop-build.jpg" alt="Holding the finished glider in the shop" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid var(--line-500);" /><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Finished glider in the shop</figcaption></figure></div>
+
 ## Excel manufacturability tracking
 
 Alongside the MATLAB performance work, I used Excel to track the design against manufacturability constraints, keeping tabs on part mass budgets, material availability, and build tolerances so the design stayed something the team could actually produce with the tools on hand, not just something that looked good in simulation.
@@ -102,15 +104,15 @@ Alongside the MATLAB performance work, I used Excel to track the design against 
 The first flights were hand launches off the top of a hill, on a cold, overcast day with snow still on the ground, to check that the glider was stable and trimmed before launch day.
 
 <div style="max-width:340px;margin:1.5rem 0;">
-<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-hill-test.mp4" poster="/Portfolio/images/glider/flight-hill-test-poster.jpg" controls playsinline muted preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;aspect-ratio:9/16;max-height:560px;object-fit:contain;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Hand launch off the hill</figcaption></figure>
+<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-hill-test.mp4" poster="/Portfolio/images/glider/flight-hill-test-poster.jpg" controls playsinline preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;aspect-ratio:9/16;max-height:560px;object-fit:contain;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Hand launch off the hill</figcaption></figure>
 </div>
 
 ### Launch day: what went wrong (April 24)
 
 On launch day I threw the glider far too hard. It made far too much lift right off the bat, and because the aircraft was so light it couldn't carry that energy smoothly: instead of settling into a glide, it struggled to recover. The lesson was that a glider this light needs a gentle, level release at close to its trim speed; extra launch speed doesn't buy distance, it just turns into lift the airframe can't manage.
 
-<div style="max-width:340px;margin:1.5rem 0;">
-<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-overthrow.mp4" poster="/Portfolio/images/glider/flight-overthrow-poster.jpg" controls playsinline muted preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;aspect-ratio:9/16;max-height:560px;object-fit:contain;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Overthrown launch: too much lift off the release</figcaption></figure>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.8rem;margin:1.5rem 0;max-width:720px;"><figure style="margin:0;"><img src="/Portfolio/images/glider/launch-day.jpg" alt="Checking the glider at the launch site" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid var(--line-500);" /><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">At the launch site</figcaption></figure>
+<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-overthrow.mp4" poster="/Portfolio/images/glider/flight-overthrow-poster.jpg" controls playsinline preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;aspect-ratio:9/16;max-height:560px;object-fit:contain;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Overthrown launch: too much lift off the release</figcaption></figure>
 </div>
 
 ### Final flights
@@ -118,8 +120,8 @@ On launch day I threw the glider far too hard. It made far too much lift right o
 Later flights launched from the same balcony, recorded by an onboard 360° camera, with a ground-track overlay in the edited cut.
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0.8rem;margin:1.5rem 0;">
-<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-onboard.mp4" poster="/Portfolio/images/glider/flight-onboard-poster.jpg" controls playsinline muted preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Onboard 360° camera</figcaption></figure>
-<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-final-edit.mp4" poster="/Portfolio/images/glider/flight-final-edit-poster.jpg" controls playsinline muted preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Edited flight with ground-track overlay</figcaption></figure>
+<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-onboard.mp4" poster="/Portfolio/images/glider/flight-onboard-poster.jpg" controls playsinline preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Onboard 360° camera</figcaption></figure>
+<figure style="margin:0;"><video src="/Portfolio/images/glider/flight-final-edit.mp4" poster="/Portfolio/images/glider/flight-final-edit-poster.jpg" controls playsinline preload="none" style="display:block;width:100%;border:1px solid var(--line-500);background:#000;"></video><figcaption class="mono" style="margin-top:0.4rem;font-size:0.7rem;text-transform:none;color:var(--paper-dim);">Edited flight with ground-track overlay</figcaption></figure>
 </div>
 
 ## Outcome
