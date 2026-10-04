@@ -6,9 +6,8 @@ the shot list to actually fill them in, roughly in priority order.
 
 ## Must-have
 
-1. ~~**Headshot**~~ — skipped by request. Henry doesn't want a headshot on
-   the site, so the About page placeholder stays as-is on purpose. Leave it
-   alone unless he changes his mind.
+1. ~~**Headshot**~~ — done. `images/about/headshot.jpg` on the About page
+   (added Oct 2026 at Henry's request).
 2. ~~**Taipan Liquid Rocket Engine**~~ — done. Using two CAD renders of the
    injector plate (`taipan-injector-plate-01.jpg` as the hero/thumbnail,
    `taipan-injector-plate-02.jpg` inline in the "Injector plate redesign"

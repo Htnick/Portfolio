@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ImagePlaceholder from "../components/ImagePlaceholder.astro";
 
 const toolGroups = [
   { category: "Design / CAD", tools: ["Fusion 360", "SolidWorks"] },
@@ -13,38 +12,61 @@ const toolGroups = [
 <Layout
   title="About | Henry Nickless"
   description="About Henry Nickless, an aerospace engineering student at CU Boulder working on liquid rocket propulsion, telescope hardware, and astrophotography."
+  image="about/headshot.jpg"
+  variant="gallery"
 >
   <section class="about">
-    <span class="eyebrow">// Bio</span>
-    <h1>About Me</h1>
-
-    <div class="about-intro">
-      <!-- Henry doesn't want a headshot on the site; left as an optional slot.
-           Swap in a workshop/action photo here if you want something, or
-           delete this placeholder and let the bio text run full-width. -->
-      <ImagePlaceholder label="Photo: optional, no headshot" aspect="portrait" spec="Portrait, min. 800×1000px" figNo="01" />
-
-      <div>
-        <p>
-          Since my first engineering class in high school, I've been curious
-          about the delicacy and precision that go into the engineering process.
-          Taking apart old electronics wasn't enough to stifle that curiosity;
-          it's just pulled me further into the engineering rabbit hole ever
-          since.
-        </p>
-
-        <p>
-          I'm studying to become an aerospace engineer at the University of
-          Colorado Boulder (Class of 2028), minoring in Astrophysical and
-          Planetary Sciences. When I'm not studying, I'm usually playing
-          volleyball or working on engineering projects, split between
-          astrophotography builds and CU's Sounding Rocket Lab. I frequently
-          work with other people to push ideas forward and like collaborating
-          through the problems that come up along the way. Most people know me
-          as a hard worker who adjusts easily to new situations.
-        </p>
+    <aside class="about-side">
+      <figure class="about-headshot">
+        <img src={`${import.meta.env.BASE_URL}images/about/headshot.jpg`} alt="Henry Nickless" width="900" height="1125" />
+      </figure>
+      <div class="about-meta mono">
+        <span>Aerospace Engineering, CU Boulder</span>
+        <span>Class of 2028 · Minor in Astrophysical &amp; Planetary Sciences</span>
       </div>
-    </div>
+      <div class="about-links">
+        <a class="btn" href={`${import.meta.env.BASE_URL}files/resume/Henry_Nickless_Resume.pdf`} target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+        <a class="btn" href="mailto:Henry.Nickless@Colorado.edu">Email</a>
+        <a class="btn" href="https://linkedin.com/in/henrynickless/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="about-toolset">
+        <span class="about-side-label mono">Toolset</span>
+      <div class="skills-groups">
+        {toolGroups.map((group) => (
+          <div class="skills-group">
+            <span class="skills-group-label mono">{group.category}</span>
+            <div class="skills-strip">
+              {group.tools.map((tool) => (
+                <span class="skill-chip">{tool}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      </div>
+    </aside>
+
+    <div class="about-main">
+      <span class="eyebrow">// Bio</span>
+      <h1>About Me</h1>
+      <p>
+        Since my first engineering class in high school, I've been curious
+        about the delicacy and precision that go into the engineering process.
+        Taking apart old electronics wasn't enough to stifle that curiosity;
+        it's just pulled me further into the engineering rabbit hole ever
+        since.
+      </p>
+
+      <p>
+        I'm studying to become an aerospace engineer at the University of
+        Colorado Boulder (Class of 2028), minoring in Astrophysical and
+        Planetary Sciences. When I'm not studying, I'm usually playing
+        volleyball or working on engineering projects, split between
+        astrophotography builds and CU's Sounding Rocket Lab. I frequently
+        work with other people to push ideas forward and like collaborating
+        through the problems that come up along the way. Most people know me
+        as a hard worker who adjusts easily to new situations.
+      </p>
 
     <p class="pull-quote">
       "Most people know me as a hard worker who adjusts easily to new
@@ -89,22 +111,7 @@ const toolGroups = [
       with a 20° trim range at under a gram of mass.
     </p>
 
-    <div class="about-panel">
-      <div class="cut-line"><span>Toolset</span></div>
 
-      <div class="skills-groups">
-        {toolGroups.map((group) => (
-          <div class="skills-group">
-            <span class="skills-group-label mono">{group.category}</span>
-            <div class="skills-strip">
-              {group.tools.map((tool) => (
-                <span class="skill-chip">{tool}</span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
 
     <div class="cut-line"><span>In The Field</span></div>
 
@@ -129,116 +136,113 @@ const toolGroups = [
       usually outside with a camera pointed at the sky. You can find some
       of that at <a href="https://instagram.com/astro.htn" target="_blank" rel="noopener noreferrer">@astro.htn</a>.
     </p>
+
+    </div>
   </section>
 </Layout>
 
 <style>
   .about {
-    max-width: 760px;
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 3rem 1.5rem;
+    padding: 1rem 0 3rem;
+    display: grid;
+    grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+    gap: 3.5rem;
+    align-items: start;
     line-height: 1.7;
   }
-
-  .about .eyebrow {
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-side { position: static !important; max-width: 420px; }
+  }
+  .about-side {
+    position: sticky;
+    top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .about-headshot { margin: 0; }
+  .about-headshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--line-500);
+  }
+  .about-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.74rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+  .about-meta span:first-child { color: var(--paper); }
+  .about-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .about-links .btn { font-size: 0.72rem; padding: 0.45rem 0.8rem; }
+  .about-side-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--redline);
+    margin-bottom: 0.75rem;
+  }
+  .about-main { max-width: 72ch; }
+  .about-main .eyebrow {
     font-family: var(--font-mono);
-    color: var(--redline-text);
+    color: var(--redline);
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     display: block;
   }
-
-  .about h1 {
-    margin-bottom: 1.75rem;
-    font-size: 2rem;
-  }
-
-  .about p {
-    margin-bottom: 1.25rem;
-  }
-
-  .about a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
-  .about-panel {
-    background: var(--panel-tint);
-    border-top: 1px solid var(--line-500);
-    border-bottom: 1px solid var(--line-500);
-    margin: 2.5rem -1.5rem;
-    padding: 1.75rem 1.5rem 0.5rem;
-  }
-
-  .about .skills-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-  }
+  .about-main h1 { margin-bottom: 1.5rem; font-size: clamp(2rem, 4vw, 2.8rem); }
+  .about p { margin-bottom: 1.2rem; }
+  .about-main a { color: inherit; text-decoration: underline; }
 
   .about .skill-chip {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     letter-spacing: 0.03em;
     color: var(--paper);
     border: 1px solid var(--line-500);
     background: var(--ink-800);
-    padding: 0.45rem 0.9rem;
+    padding: 0.35rem 0.7rem;
   }
-
-  .skills-groups {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
+  .skills-groups { display: flex; flex-direction: column; gap: 0.9rem; }
   .skills-group-label {
     display: block;
     color: var(--paper-dim);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.06em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
-
-  .skills-group .skills-strip {
-    margin-bottom: 0;
-  }
+  .about .skills-strip { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 
   .field-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.25rem;
-    margin: 1.5rem 0;
+    gap: 1rem;
+    margin: 1.25rem 0 2rem;
   }
-
-  .field-gallery figure {
-    margin: 0;
-  }
-
+  .field-gallery figure { margin: 0; }
   .field-gallery img {
     display: block;
     width: 100%;
-    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
     border: 1px solid var(--line-500);
-    background: var(--ink-800);
-    padding: 0.4rem;
-    box-sizing: border-box;
   }
-
   .field-gallery figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.72rem;
+    margin-top: 0.45rem;
+    font-size: 0.7rem;
     color: var(--paper-dim);
     letter-spacing: 0.02em;
   }
-
-  .field-gallery .fg-figno {
-    color: var(--redline-text);
-    margin-right: 0.5rem;
-    letter-spacing: 0.06em;
-  }
+  .field-gallery .fg-figno { color: var(--redline); margin-right: 0.5rem; letter-spacing: 0.06em; }
 </style>
