@@ -82,17 +82,19 @@ lens's 14-micron critical focus zone.
 3D-printable files for the ring system and focuser mount, for reference or
 reuse:
 
-<div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0 2rem;">
-  <a href="/Portfolio/files/rokinon-rig/v2-lens-ring-1.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Lens Ring ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-lens-ring-2.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Lens Ring 2 ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-mid-ring-1.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Mid Ring 1 ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-mid-ring-2.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Mid Ring 2 ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-camera-ring-1.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Camera Ring 1 ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-camera-ring-2.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Camera Ring 2 ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-cam-hold.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Camera Hold ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/v2-focuser-mount.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">V2 Focuser Mount ↓</a>
-  <a href="/Portfolio/files/rokinon-rig/gear-ring.stl" download class="mono" style="color: var(--paper); text-decoration: none; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.45rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.03em;">Gear Ring ↓</a>
-</div>
+| File | Part | Size |
+|---|---|---|
+| [v2-lens-ring-1.stl](/Portfolio/files/rokinon-rig/v2-lens-ring-1.stl) | V2 lens ring, half 1 | 142 × 65 × 18 mm |
+| [v2-lens-ring-2.stl](/Portfolio/files/rokinon-rig/v2-lens-ring-2.stl) | V2 lens ring, half 2 | 142 × 65 × 18 mm |
+| [v2-mid-ring-1.stl](/Portfolio/files/rokinon-rig/v2-mid-ring-1.stl) | V2 mid ring, half 1 | 130 × 65 × 18 mm |
+| [v2-mid-ring-2.stl](/Portfolio/files/rokinon-rig/v2-mid-ring-2.stl) | V2 mid ring, half 2 | 130 × 65 × 18 mm |
+| [v2-camera-ring-1.stl](/Portfolio/files/rokinon-rig/v2-camera-ring-1.stl) | V2 camera ring, half 1 | 142 × 63 × 18 mm |
+| [v2-camera-ring-2.stl](/Portfolio/files/rokinon-rig/v2-camera-ring-2.stl) | V2 camera ring, half 2 | 142 × 63 × 18 mm |
+| [v2-focuser-mount.stl](/Portfolio/files/rokinon-rig/v2-focuser-mount.stl) | V2 focuser mount for the ZWO EAF | 88 × 73 × 70 mm |
+| [gear-ring.stl](/Portfolio/files/rokinon-rig/gear-ring.stl) | Pulley ring for the GT2 belt, around the focus collar | 96 × 96 × 8 mm |
+| [v2-accessory-plate.stl](/Portfolio/files/rokinon-rig/v2-accessory-plate.stl) | V2 accessory plate | 90 × 35 × 8 mm |
+| [dovetail-adapter.stl](/Portfolio/files/rokinon-rig/dovetail-adapter.stl) | Dovetail adapter | 220 × 100 × 7 mm |
+
 
 ## Outcome
 

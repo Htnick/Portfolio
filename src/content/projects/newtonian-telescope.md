@@ -85,7 +85,7 @@ heat-set inserts modeled, so add those after printing.
 <div class="fig-grid fig-grid--3">
 <figure class="fig"><img src="/Portfolio/images/telescope-print-dew-shield.jpg" alt="Dew shield: a thin-walled cylinder 242 mm across and 125 mm tall" loading="lazy" /></figure>
 <figure class="fig"><img src="/Portfolio/images/telescope-print-fan-intake-mesh.jpg" alt="Fan intake mesh: a 144 mm round mesh with four mounting tabs" loading="lazy" /></figure>
-<figure class="fig"><img src="/Portfolio/images/telescope-print-fan-housing-test-2.jpg" alt="Fan housing ring: a curved bracket with mounting holes that fits around the rear of the tube" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/telescope-print-fan-mount.jpg" alt="Fan mount: a curved bracket that holds the fan to the back of the tube" loading="lazy" /></figure>
 <figure class="fig"><img src="/Portfolio/images/telescope-print-focus-adapter.jpg" alt="Focus adapter: a stepped 85 mm ring" loading="lazy" /></figure>
 <figure class="fig"><img src="/Portfolio/images/telescope-print-mirror-mask.jpg" alt="Mirror mask: a flat 220 mm ring with paired mounting holes" loading="lazy" /></figure>
 </div>
@@ -94,7 +94,7 @@ heat-set inserts modeled, so add those after printing.
 |---|---|---|
 | [dew-shield.stl](/Portfolio/files/telescope/dew-shield.stl) | Dew shield for the front of the tube | 242 × 125 mm |
 | [fan-intake-mesh.stl](/Portfolio/files/telescope/fan-intake-mesh.stl) | Intake mask over the 140 mm fan | 144 mm |
-| [fan-housing-test-1.stl](/Portfolio/files/telescope/fan-housing-test-1.stl) | Fan housing, first test fit | 186 × 93 × 15 mm |
-| [fan-housing-test-2.stl](/Portfolio/files/telescope/fan-housing-test-2.stl) | Fan housing, second test fit | 186 × 93 × 15 mm |
+| [fan-mount-v1.stl](/Portfolio/files/telescope/fan-mount-v1.stl) | Fan mount, version 1: holds the fan to the back of the tube | 186 × 93 × 15 mm |
+| [fan-mount-v2.stl](/Portfolio/files/telescope/fan-mount-v2.stl) | Fan mount, version 2: holds the fan to the back of the tube | 186 × 93 × 15 mm |
 | [focus-adapter.stl](/Portfolio/files/telescope/focus-adapter.stl) | Focus adapter, the print used to prototype the aluminum part | 85 × 20 mm |
 | [mirror-mask.stl](/Portfolio/files/telescope/mirror-mask.stl) | Mirror mask for the 8-inch primary | 220 mm |
