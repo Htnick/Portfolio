@@ -55,12 +55,12 @@ files, so add them after printing.
 </div>
 
 <div class="download-card">
-<p><strong>allsky-head-dome-fan-mount.3mf</strong>Upper housing: dome flange on top, 40 mm fan mount on the side.</p>
-<a class="btn" href="/Portfolio/files/allsky/allsky-head-dome-fan-mount.3mf" download>Download</a>
+<p><strong>allsky-head-dome-fan-mount.stl</strong>Upper housing: dome flange on top, 40 mm fan mount on the side.</p>
+<a class="btn" href="/Portfolio/files/allsky/allsky-head-dome-fan-mount.stl" download>Download</a>
 </div>
 <div class="download-card">
-<p><strong>allsky-lower-sleeve.3mf</strong>Lower sleeve, slotted, with a mounting tab.</p>
-<a class="btn" href="/Portfolio/files/allsky/allsky-lower-sleeve.3mf" download>Download</a>
+<p><strong>allsky-lower-sleeve.stl</strong>Lower sleeve, slotted, with a mounting tab.</p>
+<a class="btn" href="/Portfolio/files/allsky/allsky-lower-sleeve.stl" download>Download</a>
 </div>
 
 ## Outcome

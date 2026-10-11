@@ -7,7 +7,7 @@ tags: ["avionics", "embedded", "Zephyr", "C", "DAQ", "liquid rockets"]
 image: "test-stand-photo.jpg"
 draft: false
 accent: "#4a6fa5"
-role: "Firmware and hardware bring-up on CU SRL's DIABLO team"
+role: "Contributed to the firmware on CU SRL's DIABLO team"
 results: "The custom STM32H743 board was brought up and successfully flashed with the Zephyr firmware. The project has been handed to SRL's avionics team to finish integration."
 ---
 
@@ -19,9 +19,9 @@ drives the valves, and talks to a LabVIEW ground station over Ethernet,
 so the technician running a test never has to touch the stand itself.
 
 The hardware is a custom board built around an STM32H743 (Arm Cortex-M7),
-and the firmware runs on Zephyr RTOS. I worked on the firmware and on bringing
-the board up: getting a custom board definition to build and flash, and
-proving the hardware was alive before the full DAQ firmware went on it.
+and the firmware runs on Zephyr RTOS. I did a little bit of work on the software,
+alongside the team that wrote most of the firmware and brought the board
+up.
 
 <div class="stat-strip">
 <div><span class="stat-value">STM32H743</span><span class="stat-label">Cortex-M7 on a custom board</span></div>
@@ -74,6 +74,6 @@ multimeter.
 
 ## Status
 
-Completed for my part: the board has been brought up and successfully
+Completed: the board has been brought up and successfully
 flashed, and DIABLO has been handed over to SRL's avionics team to
 finish the remaining integration.
