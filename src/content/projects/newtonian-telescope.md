@@ -67,3 +67,12 @@ The fan also needed a way to keep dust and debris from reaching the optics, so I
 ### Root cause: sensor-to-corrector spacing
 
 In the end, the star artifacts weren't internal reflection at all; the actual issue was the spacing between the camera sensor and the coma corrector. Getting that distance right is what finally resolved the problem the flocking and dew shield had only partially masked.
+
+
+## Parts list: cooling (8-inch rendition)
+
+| Part | Used for | Approx. price |
+|---|---|---|
+| [Noctua NF-A14x25r G2 PWM chromax.black, 140 mm](https://www.amazon.com/dp/B0FXGV5X12) | Main cooling fan in the printed housing on the rear cell | $45 |
+| [OwlTree USB-C 5 V to 12 V 4-pin PWM fan controller](https://www.amazon.com/dp/B0GS1JJH23) | Steps USB-C power up to 12 V and sets the fan speed | $10 |
+| Heat-set inserts | Threaded mounting points in the printed parts | not included |

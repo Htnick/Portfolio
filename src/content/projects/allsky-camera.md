@@ -17,7 +17,7 @@ of the gear outside. The design leans on off-the-shelf parts wherever
 possible to keep the build simple. The optical tube is an old guide
 scope already on hand, repurposed rather than bought new for the job,
 with the 3D-printed housing doing the structural and environmental work:
-a clear printed dome bolted over the front end, sealing the optics off
+a clear acrylic dome bolted over the front end, sealing the optics off
 from the weather while keeping the sky in frame.
 
 The hardest problem wasn't optical, it was thermal. A sealed housing
@@ -30,6 +30,38 @@ airflow moving through the enclosure so moisture never has a still,
 cold surface to condense on. That airflow does double duty: it also
 keeps the housing itself cool enough that it could be printed in plain
 PLA without worrying about the plastic softening or warping in the sun.
+
+## Parts list
+
+The camera and the optical tube were already on hand, so the build only
+needed a handful of parts on top of the two printed pieces.
+
+| Part | Used for | Approx. price |
+|---|---|---|
+| [LOTOWELZON 60 mm ID acrylic dome](https://www.amazon.com/dp/B0FQBR4S4Q) (ID 60 mm × H 30 mm, 4-hole flange) | Weather-sealed window over the lens | $11 |
+| [AmRunJe 40 mm USB fans, 2-pack](https://www.amazon.com/dp/B0DQY46J34) (5 V, with speed control) | One intake across the electronics, one exhaust out the bottom | $14 |
+| [EZQuest USB-C 5-in-1 hub](https://www.amazon.com/dp/B0GQ5F335R) | USB hub for the fans and electronics | $30 |
+| Heat-set inserts | Threaded mounting points in the printed housing | not included |
+| Camera and repurposed guide scope | Optics and sensor | already on hand |
+
+## 3D print files
+
+Two parts, printed in PLA. The heat-set inserts aren't modeled in the
+files, so add them after printing.
+
+<div class="fig-grid">
+<figure class="fig"><img src="/Portfolio/images/allsky-print-head.jpg" alt="Upper housing: the dome bolts to the four holes on top, and the side has a square four-hole mount and cutout for a 40 mm fan" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/allsky-print-sleeve.jpg" alt="Lower sleeve: a slotted cylinder with a mounting tab at the top" loading="lazy" /></figure>
+</div>
+
+<div class="download-card">
+<p><strong>allsky-head-dome-fan-mount.3mf</strong>Upper housing: dome flange on top, 40 mm fan mount on the side.</p>
+<a class="btn" href="/Portfolio/files/allsky/allsky-head-dome-fan-mount.3mf" download>Download</a>
+</div>
+<div class="download-card">
+<p><strong>allsky-lower-sleeve.3mf</strong>Lower sleeve, slotted, with a mounting tab.</p>
+<a class="btn" href="/Portfolio/files/allsky/allsky-lower-sleeve.3mf" download>Download</a>
+</div>
 
 ## Outcome
 
