@@ -132,7 +132,7 @@ html {
   background: none;
   cursor: zoom-in;
   opacity: 0;
-  transition: opacity 1.4s ease;
+  transition: opacity 2.2s ease;
 }
 .astro-hero-slide.is-active {
   opacity: 1;
@@ -147,7 +147,7 @@ html {
 .astro-hero-slide img {
   object-fit: cover;
   transform: scale(1.0);
-  transition: transform 7.5s ease-out;
+  transition: transform 13s ease-out;
 }
 .astro-hero-slide.is-active img {
   transform: scale(1.07);

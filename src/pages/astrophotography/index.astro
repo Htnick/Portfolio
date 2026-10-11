@@ -19,8 +19,8 @@ const next = ASTRO_PAGES[idx + 1];
       {heroSlides.map((s, i) => (
         <button type="button" class:list={["astro-hero-slide", { "is-active": i === 0 }]} data-slide={i} data-index={s.index} aria-label={`View ${s.item!.label} larger`} tabindex={i === 0 ? 0 : -1}>
           <picture>
-            {s.item!.webpUrl && <source srcset={s.item!.webpUrl} type="image/webp" />}
-            <img src={s.item!.url} alt={s.item!.label} loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : "auto"} />
+            {(s.heroWebpUrl ?? s.item!.webpUrl) && <source srcset={s.heroWebpUrl ?? s.item!.webpUrl} type="image/webp" />}
+            <img src={s.heroUrl ?? s.item!.url} alt={s.item!.label} loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : "auto"} />
           </picture>
         </button>
       ))}
@@ -204,7 +204,7 @@ const next = ASTRO_PAGES[idx + 1];
   const heroDots = Array.from(document.querySelectorAll<HTMLButtonElement>(".astro-hero-dot"));
   const heroEl = document.querySelector<HTMLElement>(".astro-hero");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const HERO_INTERVAL_MS = 6500;
+  const HERO_INTERVAL_MS = 11000;
   let heroCurrent = 0;
   let heroTimer: number | undefined;
   let heroPaused = false;

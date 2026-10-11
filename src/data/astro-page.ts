@@ -128,9 +128,24 @@ export const PIPELINE: Stage[] = [
 
 // Rolling hero at the top of the page: filenames from the gallery, in
 // display order. Each slide links to the same lightbox as the gallery.
-export const HERO_FILES = ["viel.jpg", "rosette.jpg", "californianebula.jpg", "heasrt.jpg", "m16.jpg", "flyspiderflame.jpg"];
-export const heroSlides = HERO_FILES.map((f) => ({ item: galleryItems.find((g) => g.filename === f), index: galleryItems.findIndex((g) => g.filename === f) }))
-  .filter((s) => s.item);
+export const HERO_FILES = ["m31.jpg", "viel.jpg", "rosette.jpg", "californianebula.jpg", "heasrt.jpg", "m16.jpg", "flyspiderflame.jpg"];
+// The hero is full-bleed, so it uses dedicated 3200px exports from the
+// full-resolution originals in public/images/astro-hero/ (same stem as the
+// gallery file). The gallery copies are 2000px, which looked soft when
+// stretched across a wide or high-DPI screen. Falls back to the gallery
+// image when no hero export exists.
+const heroDir = path.join(process.cwd(), "public", "images", "astro-hero");
+export const heroSlides = HERO_FILES.map((f) => {
+  const stem = f.replace(/\.(jpe?g|png)$/i, "");
+  const hasHero = fs.existsSync(path.join(heroDir, `${stem}.jpg`));
+  const hasHeroWebp = fs.existsSync(path.join(heroDir, `${stem}.webp`));
+  return {
+    item: galleryItems.find((g) => g.filename === f),
+    index: galleryItems.findIndex((g) => g.filename === f),
+    heroUrl: hasHero ? `${import.meta.env.BASE_URL}images/astro-hero/${stem}.jpg` : undefined,
+    heroWebpUrl: hasHeroWebp ? `${import.meta.env.BASE_URL}images/astro-hero/${stem}.webp` : undefined,
+  };
+}).filter((s) => s.item);
 
 // Sub-pages of the astrophotography section, in reading order.
 export const ASTRO_PAGES = [

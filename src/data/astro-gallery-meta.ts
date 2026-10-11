@@ -27,6 +27,8 @@ export interface GalleryMeta {
 export const GALLERY_META: Record<string, GalleryMeta> = {
   "bodes.jpg": { target: "M81 (Bode's Galaxy)", date: "2026-03-21" },
   "bubble.jpg": { target: "Bubble Nebula (NGC 7635)", date: "2025-10-24" },
+  "california-crop.jpg": { target: "California Nebula (NGC 1499), close crop", date: "2026-10-05" },
+  "california-wide.jpg": { target: "California Nebula (NGC 1499)", date: "2026-10-05" },
   "californianebula.jpg": { target: "California Nebula (NGC 1499)", date: "2024-12-09" },
   "caliuvir.jpg": { date: "2025-09-27" },
   "crabfl.jpg": { target: "Crab Nebula (M1)", date: "2025-10-17" },
@@ -44,6 +46,8 @@ export const GALLERY_META: Record<string, GalleryMeta> = {
   "lionnebula.jpg": { target: "Lion Nebula (Sh2-132)", date: "2025-06-23" },
   "m106final.jpg": { target: "M106", date: "2025-02-23" },
   "m16.jpg": { target: "Eagle Nebula (M16)", date: "2026-06-20" },
+  "m31.jpg": { target: "Andromeda Galaxy (M31)", date: "2026-10-09" },
+  "m45.jpg": { target: "Pleiades (M45)", date: "2026-10-03" },
   "m51.jpg": { target: "Whirlpool Galaxy (M51)", date: "2025-03-02" },
   "m63final.jpg": { target: "Sunflower Galaxy (M63)", date: "2026-02-04" },
   "m71.jpg": { target: "M71", date: "2026-05-13" },
