@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import AstroImage from '../../components/AstroImage.astro';
 import { getCollection, render } from 'astro:content';
+import '../../styles/project-extras.css';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -18,7 +19,7 @@ const { Content, headings } = await render(entry);
 // This is the one project page long enough (4,000+ words, one giant
 // embedded trade-study script) that a reader benefits from jumping
 // straight to a section instead of scrolling linearly.
-const showToc = entry.id === "regeneratively-cooled-engine";
+const showToc = ["regeneratively-cooled-engine", "regen-engine-tvc", "injector-plate-topology-optimization"].includes(entry.id);
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
 // Each project can set its own --redline accent, but the raw accent is
@@ -112,6 +113,129 @@ const accentVars = entry.data.accent
     </div>
   </article>
 </Layout>
+
+<script>
+  // Turns every fenced code block on a project page into a code panel:
+  // file name + line count bar, copy button, a section outline built from
+  // the script's own "# ==== NAME ====" banner comments, line numbers, and
+  // a collapsed preview so a 500-line script doesn't swallow the page.
+  // An optional <div class="code-meta" data-file="..." data-desc="...">
+  // placed right before the fence supplies the file name and a summary.
+  function buildPanels() {
+    const blocks = document.querySelectorAll<HTMLPreElement>('.project-content pre.astro-code');
+    blocks.forEach((pre, idx) => {
+      if (pre.closest('.code-panel')) return;
+      const meta = pre.previousElementSibling as HTMLElement | null;
+      const hasMeta = meta?.classList.contains('code-meta');
+      const lang = pre.dataset.language || 'code';
+      const file = (hasMeta && meta!.dataset.file) || `${lang} snippet`;
+      const desc = hasMeta ? meta!.dataset.desc : undefined;
+      const lines = Array.from(pre.querySelectorAll<HTMLElement>('.line'));
+      const total = lines.length;
+
+      const panel = document.createElement('div');
+      panel.className = 'code-panel';
+      const long = total > 30;
+      if (long) panel.classList.add('is-collapsed');
+
+      const bar = document.createElement('div');
+      bar.className = 'code-panel__bar';
+      bar.innerHTML = `<span class="code-panel__file"></span><span class="code-panel__meta"></span>`;
+      (bar.querySelector('.code-panel__file') as HTMLElement).textContent = file;
+      (bar.querySelector('.code-panel__meta') as HTMLElement).textContent = `${lang} · ${total} lines`;
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'code-panel__btn';
+      copy.textContent = 'Copy';
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(lines.map((l) => l.textContent ?? '').join('\n'));
+          copy.textContent = 'Copied';
+        } catch {
+          copy.textContent = 'Select & copy';
+        }
+        setTimeout(() => (copy.textContent = 'Copy'), 1600);
+      });
+      bar.appendChild(copy);
+
+      let toggle: HTMLButtonElement | null = null;
+      if (long) {
+        toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'code-panel__btn';
+        toggle.textContent = 'Expand';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.addEventListener('click', () => setOpen(!panel.classList.contains('is-collapsed') ? false : true));
+        bar.appendChild(toggle);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'code-panel__body';
+      pre.parentNode!.insertBefore(panel, pre);
+      panel.appendChild(bar);
+      if (desc) {
+        const d = document.createElement('p');
+        d.className = 'code-panel__desc';
+        d.textContent = desc;
+        panel.appendChild(d);
+      }
+
+      // Outline from banner comments like "# ===== NOZZLE CONFIGURATIONS =====".
+      const sections: { name: string; line: HTMLElement }[] = [];
+      lines.forEach((l) => {
+        const m = (l.textContent ?? '').match(/^\s*(?:#|\/\/|%)\s*=+\s*(.+?)\s*=+\s*$/);
+        if (m) sections.push({ name: m[1].toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase()), line: l });
+      });
+      if (sections.length >= 2) {
+        const nav = document.createElement('div');
+        nav.className = 'code-panel__outline';
+        nav.innerHTML = '<span>Jump to</span>';
+        sections.forEach((sec) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = sec.name;
+          b.addEventListener('click', () => {
+            setOpen(true);
+            lines.forEach((l) => l.classList.remove('is-target'));
+            sec.line.classList.add('is-target');
+            sec.line.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+          nav.appendChild(b);
+        });
+        panel.appendChild(nav);
+      }
+
+      panel.appendChild(body);
+      body.appendChild(pre);
+      if (hasMeta) meta!.remove();
+
+      let foot: HTMLDivElement | null = null;
+      if (long) {
+        foot = document.createElement('div');
+        foot.className = 'code-panel__foot';
+        const more = document.createElement('button');
+        more.type = 'button';
+        more.className = 'code-panel__btn';
+        more.textContent = `Show all ${total} lines`;
+        more.addEventListener('click', () => setOpen(true));
+        foot.appendChild(more);
+        panel.appendChild(foot);
+      }
+
+      function setOpen(open: boolean) {
+        if (!long) return;
+        panel.classList.toggle('is-collapsed', !open);
+        if (toggle) {
+          toggle.textContent = open ? 'Collapse' : 'Expand';
+          toggle.setAttribute('aria-expanded', String(open));
+        }
+        if (foot) foot.hidden = open;
+        if (!open) panel.scrollIntoView({ block: 'nearest' });
+      }
+    });
+  }
+  buildPanels();
+</script>
 
 <style>
   /* Hero photo (FIG. 01) on a project detail page — kept smaller than

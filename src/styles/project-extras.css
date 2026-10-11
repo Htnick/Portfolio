@@ -1,0 +1,435 @@
+/* ==========================================================================
+   PROJECT PAGE EXTRAS
+   Shared building blocks for the long engineering write-ups (regen engine,
+   TVC, injector). Written as plain classes so the markdown files can use
+   them as raw HTML without an MDX setup.
+   ========================================================================== */
+
+/* ---- Figures ---------------------------------------------------------- */
+.project-content .fig {
+  margin: 1.75rem 0;
+  border: 1px solid var(--line-500);
+  background: var(--ink-800);
+  padding: 0.4rem;
+  line-height: 0;
+}
+.project-content .fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.project-content .fig--chart {
+  background: #fff;
+  padding: 0.75rem;
+}
+.project-content .fig-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.75rem 0;
+}
+.project-content .fig-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.project-content .fig-grid .fig {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-content .fig-grid .fig--wide {
+  grid-column: 1 / -1;
+}
+@media (max-width: 640px) {
+  .project-content .fig-grid,
+  .project-content .fig-grid--3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- Key-number strip ------------------------------------------------- */
+.project-content .stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border: 1px solid var(--line-500);
+  margin: 1.75rem 0;
+}
+.project-content .stat-strip > div {
+  padding: 0.9rem 1rem;
+  border-right: 1px solid var(--line-500);
+  border-bottom: 1px solid var(--line-500);
+  margin-right: -1px;
+  margin-bottom: -1px;
+  background: var(--ink-900);
+}
+.project-content .stat-strip .stat-value {
+  display: block;
+  font-family: var(--font-stat);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--paper);
+}
+.project-content .stat-strip .stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* ---- Download card ---------------------------------------------------- */
+.project-content .download-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line-500);
+  border-left: 3px solid var(--redline);
+  background: var(--panel-tint);
+  padding: 0.9rem 1.1rem;
+  margin: 1.75rem 0;
+}
+.project-content .download-card p {
+  margin: 0;
+  flex: 1 1 260px;
+  font-size: 0.92rem;
+}
+.project-content .download-card strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+.project-content .download-card a.btn {
+  flex: 0 0 auto;
+}
+
+/* ---- Design-choice cards ---------------------------------------------- */
+.project-content .choices {
+  list-style: none;
+  padding: 0 !important;
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.75rem;
+  counter-reset: choice;
+}
+.project-content .choices > li {
+  counter-increment: choice;
+  margin: 0;
+  border: 1px solid var(--line-500);
+  border-top: 3px solid var(--redline);
+  background: var(--ink-800);
+  padding: 0.85rem 1rem 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.project-content .choices > li::before {
+  content: "CHOICE " counter(choice, decimal-leading-zero);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  color: var(--redline-text);
+  margin-bottom: 0.3rem;
+}
+.project-content .choices .choice-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.project-content .choices .choice-num {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--ink-900);
+  border: 1px solid var(--line-500);
+  padding: 0.05em 0.35em;
+  white-space: nowrap;
+}
+
+/* ---- Calculation sheet (Desmos values / spreadsheet tabs) -------------- */
+.project-content .calc-sheet {
+  border: 1px solid var(--line-500);
+  margin: 1.75rem 0;
+  background: var(--ink-900);
+}
+.project-content .calc-sheet__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line-500);
+  background: var(--ink-800);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.project-content .calc-sheet__head a {
+  color: var(--redline-text);
+}
+.project-content .calc-sheet table {
+  margin: 0;
+  font-size: 0.8rem;
+  border: none;
+}
+.project-content .calc-sheet th,
+.project-content .calc-sheet td {
+  border-left: none;
+  border-right: none;
+  vertical-align: middle;
+}
+.project-content .calc-sheet tr.calc-group th {
+  background: var(--panel-tint);
+  color: var(--paper);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  padding-top: 0.6rem;
+}
+.project-content .calc-sheet td.calc-sym {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.project-content .calc-sheet td.calc-eq {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+}
+.project-content .calc-sheet td.calc-val {
+  text-align: right;
+  font-weight: 600;
+  color: var(--paper);
+  white-space: nowrap;
+}
+.project-content .calc-sheet td.calc-unit {
+  color: var(--paper-dim);
+  white-space: nowrap;
+}
+.project-content .calc-sheet td.calc-note {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+  min-width: 14rem;
+}
+.project-content .calc-sheet tr.calc-key td {
+  background: rgba(196, 32, 46, 0.045);
+}
+.project-content .calc-sheet tr.calc-key td.calc-val {
+  color: var(--redline-text);
+}
+.project-content .calc-scroll {
+  overflow-x: auto;
+}
+.project-content .calc-sheet math {
+  font-size: 1.05em;
+}
+
+/* Spreadsheet tabs: native <details>, styled like sheet tabs */
+.project-content details.sheet-tab {
+  border: 1px solid var(--line-500);
+  margin: 0.6rem 0;
+  background: var(--ink-900);
+}
+.project-content details.sheet-tab > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  background: var(--ink-800);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+.project-content details.sheet-tab > summary::-webkit-details-marker {
+  display: none;
+}
+.project-content details.sheet-tab > summary::after {
+  content: "+";
+  color: var(--redline-text);
+  font-weight: 600;
+}
+.project-content details.sheet-tab[open] > summary::after {
+  content: "−";
+}
+.project-content details.sheet-tab > summary .tab-desc {
+  flex: 1;
+  color: var(--paper-dim);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+}
+.project-content details.sheet-tab > .calc-scroll {
+  border-top: 1px solid var(--line-500);
+}
+.project-content details.sheet-tab table {
+  margin: 0;
+}
+.project-content td.ok {
+  color: #1d6b3a;
+  font-weight: 600;
+}
+.project-content td.flag {
+  color: #8a5a00;
+  font-weight: 600;
+}
+.project-content td.bad {
+  color: var(--redline-text);
+  font-weight: 600;
+}
+
+/* ---- Code panel (built by the script on the project page) ------------- */
+.project-content .code-panel {
+  border: 1px solid var(--line-500);
+  border-left: 3px solid var(--redline);
+  margin: 1.75rem 0;
+  background: var(--ink-800);
+}
+.project-content .code-panel__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--line-500);
+  background: var(--panel-tint);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+.project-content .code-panel__file {
+  font-weight: 600;
+  color: var(--paper);
+}
+.project-content .code-panel__meta {
+  color: var(--paper-dim);
+  flex: 1;
+}
+.project-content .code-panel__btn {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--ink-900);
+  color: var(--paper);
+  border: 1px solid var(--line-500);
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+}
+.project-content .code-panel__btn:hover {
+  border-color: var(--redline);
+  color: var(--redline-text);
+}
+.project-content .code-panel__desc {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line-500);
+  font-size: 0.86rem;
+  color: var(--paper-dim);
+  background: var(--ink-900);
+}
+.project-content .code-panel__outline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--line-500);
+  background: var(--ink-900);
+}
+.project-content .code-panel__outline span {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  align-self: center;
+  margin-right: 0.25rem;
+}
+.project-content .code-panel__outline button {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: var(--ink-800);
+  border: 1px solid var(--line-500);
+  color: var(--paper);
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+}
+.project-content .code-panel__outline button:hover {
+  border-color: var(--redline);
+  color: var(--redline-text);
+}
+.project-content .code-panel__body {
+  position: relative;
+}
+.project-content .code-panel pre {
+  margin: 0;
+  border: none;
+  border-left: none;
+  counter-reset: codeline;
+  max-height: none;
+}
+.project-content .code-panel pre .line {
+  counter-increment: codeline;
+}
+.project-content .code-panel pre .line::before {
+  content: counter(codeline);
+  display: inline-block;
+  width: 2.6rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: #b3aca5;
+  user-select: none;
+}
+.project-content .code-panel pre .line.is-target {
+  background: rgba(196, 32, 46, 0.09);
+}
+.project-content .code-panel.is-collapsed pre {
+  max-height: 22rem;
+  overflow: hidden;
+}
+.project-content .code-panel.is-collapsed .code-panel__body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5rem;
+  background: linear-gradient(to bottom, rgba(250, 248, 246, 0), var(--ink-800));
+  pointer-events: none;
+}
+.project-content .code-panel__foot {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  border-top: 1px solid var(--line-500);
+}
+
+.project-content > .fig--chart {
+  max-width: 780px;
+}
+.project-content > .fig--narrow {
+  max-width: 560px;
+}
+.project-content details.sheet-tab th,
+.project-content details.sheet-tab td {
+  padding: 0.35rem 0.7rem;
+}
+
+/* Markdown tables scroll sideways on narrow screens instead of widening the page */
+@media (max-width: 760px) {
+  .project-content > table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+.project-content .code-panel,
+.project-content .code-panel__body {
+  min-width: 0;
+  max-width: 100%;
+}

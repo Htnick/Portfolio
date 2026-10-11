@@ -20,6 +20,18 @@ Before any CAD work started, the combustion chamber had to be sized from first p
 
 I had already completed a simpler version of this for the taipan engine, so i just added a little bit more complexity to each process until i saw it had reached a good point. I used many parameter to help size the image and ended up rewriting a lot of heat transfer equations and flow uniformity checks within the python script. I still dont fully understand how these equations are derived or what their biggest limitations are, but being able to have a baseline to start with was really important. This was also made during the very beginning stages of this rockets engineering so, I made sure to use plenty of figures, graphs, and charts to help deliver the information I was gathering to the rest of my team. 
 
+<div class="stat-strip">
+<div><span class="stat-value">2,000 lbf</span><span class="stat-label">Thrust, fixed</span></div>
+<div><span class="stat-value">500 psia</span><span class="stat-label">Chamber pressure</span></div>
+<div><span class="stat-value">1.8</span><span class="stat-label">O/F, LOX / RP-1</span></div>
+<div><span class="stat-value">52</span><span class="stat-label">Cases: 4 nozzles × 13 expansion ratios</span></div>
+<div><span class="stat-value">6</span><span class="stat-label">Pass/fail constraints per case</span></div>
+</div>
+
+Every case runs NASA CEA through RocketCEA, applies separate combustion (η<sub>c*</sub> = 0.92), friction (0.97) and divergence losses, sizes the throat, exit and chamber, and then checks six constraints: chamber pressure, a 6 in maximum exit diameter, hoop-stress factor of safety ≥ 2, exit pressure ≥ 0.45 of ambient so the nozzle doesn't separate at Boulder's 12.2 psia, ε greater than the contraction ratio, and exit-to-chamber diameter ≥ 1.15. The script ranks the passing cases by delivered Isp and saves a nine-panel figure and a CSV.
+
+<div class="code-meta" data-file="nozzle_trade_study.py" data-desc="LOX/RP-1 nozzle configuration trade study: conical 15°, 80% bell, 90% bell and MOC bell across ε = 4.5–10 plus the ambient-matched optimum. Use the Jump to buttons to go straight to a section."></div>
+
 ```python
 import numpy as np
 import math
@@ -641,19 +653,58 @@ With chamber and throat dimensions established from the performance math, I buil
      screen readers. Paths are hardcoded to the /Portfolio/ base,
      since plain markdown can't reach import.meta.env.BASE_URL. -->
 
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-engine-assembly.jpg" alt="Full engine assembly, rendered in copper: injector and manifold at the top, chamber body, and the converging-diverging nozzle below" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-chamber-iso.jpg" alt="Isometric view of the chamber with the injector flange open at the top, showing the ring of cooling channel ends, side ports, and a mounting bracket" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-chamber-iso-logo.jpg" alt="Isometric view of the chamber from the opposite side, showing the CU SRL logo on the chamber wall and the coolant inlet near the nozzle" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
+<div class="fig-grid fig-grid--3">
+<figure class="fig"><img src="/Portfolio/images/regen-engine-assembly.jpg" alt="Full engine assembly, rendered in copper: injector and manifold at the top, chamber body, and the converging-diverging nozzle below" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-chamber-iso.jpg" alt="Isometric view of the chamber with the injector flange open at the top, showing the ring of cooling channel ends, side ports, and a mounting bracket" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-chamber-iso-logo.jpg" alt="Isometric view of the chamber from the opposite side, showing the CU SRL logo on the chamber wall and the coolant inlet near the nozzle" loading="lazy" /></figure>
+</div>
+
+The September revision of the thrust chamber assembly added the TVC clevis brackets, the injector bolt circle and the coolant fittings to the same model.
+
+<div class="fig-grid">
+<figure class="fig"><img src="/Portfolio/images/regen-tca-render.jpg" alt="Rendered thrust chamber assembly in copper with the injector and its feed fittings on top, a TVC clevis bracket on the chamber wall and the coolant inlet near the nozzle exit" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-engine-dimensions.jpg" alt="Front view of the chamber CAD with overall dimensions: 378.678 mm long and 126.16 mm across the nozzle exit" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-tca-flange.jpg" alt="Looking down into the chamber through the injector flange: twelve bolt lobes, the ring of cooling channel ends and the throat visible at the bottom" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-tca-back.jpg" alt="Back view of the thrust chamber assembly showing the SRL logo and the second TVC bracket" loading="lazy" /></figure>
+</div>
+
+## Thrust vector control
+
+The chamber is gimbaled for thrust vector control by two linear actuators mounted 90° apart, one per axis, each pinned to a clevis bracket printed onto the chamber wall. I sized that system end to end in one spreadsheet: kinematics, gimbal torque, actuator selection, a clearance sweep against this chamber's profile, and margins on every joint from the printed lugs to the thrust structure. The full write-up is on its own page, [Thrust Vector Control for the 2,000 lbf Regen Engine](/Portfolio/projects/regen-engine-tvc/).
+
+<div class="stat-strip">
+<div><span class="stat-value">±10.75°</span><span class="stat-label">Usable gimbal, per axis (req. ±10°)</span></div>
+<div><span class="stat-value">IMA33-RN04</span><span class="stat-label">Tolomatic linear servo, 1-stack</span></div>
+<div><span class="stat-value">+0.88</span><span class="stat-label">Continuous force margin</span></div>
+<div><span class="stat-value">25.4 mm</span><span class="stat-label">Clearance to chamber at neutral</span></div>
+</div>
+
+<div class="fig-grid">
+<figure class="fig"><img src="/Portfolio/images/regen-tca-front.jpg" alt="Thrust chamber assembly with the TVC clevis bracket on the chamber wall below the injector flange" loading="lazy" /></figure>
+<figure class="fig fig--chart"><img src="/Portfolio/images/tvc/tvc-layout.svg" alt="Planar TVC layout: gimbal at the origin, rear pin at 250, 100, chamber pin at 95.9, -200, actuator drawn at neutral, +10.75 and -12 degrees against the chamber profile" loading="lazy" /></figure>
+<figure class="fig fig--wide"><img src="/Portfolio/images/tvc-clevis-joint.jpg" alt="Front joint diagram: structural ring on the chamber, two-lug clevis bracket, pin in double shear, rod end ball on the pin, threaded shank with jam nut, actuator rod and body" loading="lazy" /></figure>
+</div>
+
+The bracket is part of the chamber print, so its lugs are GRCop-42 and their allowables depend on how hot that part of the wall runs. That ties the TVC margins back to the cooling analysis below.
+
+<div class="download-card">
+<p><strong>tvc-sizing.xlsx</strong>The TVC sizing spreadsheet: Inputs, Geometry, Loads, Validation, CAD dims, the actuator catalog and my original hand work.</p>
+<a class="btn" href="/Portfolio/files/tvc/tvc-sizing.xlsx" download>Download spreadsheet</a>
+</div>
 
 ## Injector plate
 
-The injector plate design and its topology optimization pass grew into enough of its own story that it now has its own writeup: see [Injector Plate Design & Topology Optimization](/Portfolio/projects/injector-plate-topology-optimization) for the impingement math, the NASA SP-8089 basis for the layout, and the optimization process itself.
+The injector is an unlike-doublet plate printed in Inconel by an outside vendor: 24 doublet pairs in two rings, 24 fuel film-cooling holes around the edge, and an ASI port at the center. Both manifolds run at 420 psi into a 350 psi chamber, a 20% pressure drop, and the impingement angles (67.7° ox, 52.3° fuel) come out of a momentum balance so each spray fan points straight down the chamber.
+
+The first design didn't survive the vendor's manufacturability review. It came back flagged for overhangs and trapped powder: passages and manifold roofs that would have needed supports inside the part, and cavities that couldn't drain unfused powder. We redesigned the whole plate for additive rather than patching it: a 45° overhang limit on every internal surface, gothic-arch fuel passages, triangular and conical manifold roofs, no enclosed volumes, and a topology optimization pass run against the same printer rules.
+
+<div class="fig-grid">
+<figure class="fig"><img src="/Portfolio/images/regen-injector-v2-face.jpg" alt="Injector face with two rings of doublet orifices, the film-cooling ring and the central ASI port" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-injector-v2-top.jpg" alt="Back of the injector: domed manifold, inlet tubes and the central ASI boss" loading="lazy" /></figure>
+<figure class="fig fig--wide"><img src="/Portfolio/images/regen-injector-v2-section-0.jpg" alt="Injector section showing manifold volumes with 45 degree roofs and the angled feed passages" loading="lazy" /></figure>
+</div>
+
+The full story, including the sizing sheet with every value and the reasoning behind each choice, is on its own page: [Injector Plate Design & Topology Optimization](/Portfolio/projects/injector-plate-topology-optimization).
 
 ## Cooling analysis
 
@@ -664,15 +715,16 @@ Performed preliminary heat transfer analysis for regenerative and film cooling s
      screen readers. Paths are hardcoded to the /Portfolio/ base,
      since plain markdown can't reach import.meta.env.BASE_URL. -->
 
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-chamber-section-01.jpg" alt="Cross-section through the chamber and nozzle showing the cooling jacket as a continuous passage between the inner liner and the outer wall" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-chamber-section-02.jpg" alt="Second cross-section on a different cut plane, showing the coolant ports entering the jacket along the chamber" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
-<figure style="margin: 1.75rem 0; border: 1px solid var(--line-500); background: var(--ink-800); padding: 0.4rem; line-height: 0;">
-  <img src="/Portfolio/images/regen-chamber-flange-top.jpg" alt="Chamber viewed down through the open injector flange, showing the ring of rectangular cooling channel ends around the chamber wall" loading="lazy" style="display: block; width: 100%; height: auto;" />
-</figure>
+<div class="fig-grid fig-grid--3">
+<figure class="fig"><img src="/Portfolio/images/regen-chamber-section-01.jpg" alt="Cross-section through the chamber and nozzle showing the cooling jacket as a continuous passage between the inner liner and the outer wall" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-chamber-section-02.jpg" alt="Second cross-section on a different cut plane, showing the coolant ports entering the jacket along the chamber" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-chamber-flange-top.jpg" alt="Chamber viewed down through the open injector flange, showing the ring of rectangular cooling channel ends around the chamber wall" loading="lazy" /></figure>
+</div>
+
+<div class="fig-grid">
+<figure class="fig"><img src="/Portfolio/images/regen-tca-section-0.jpg" alt="Section through the latest thrust chamber assembly showing the cooling jacket from the injector flange to the nozzle exit and the coolant inlet fitting" loading="lazy" /></figure>
+<figure class="fig"><img src="/Portfolio/images/regen-tca-section-97.jpg" alt="Section on a second plane through the chamber, cutting through the TVC bracket and the side ports" loading="lazy" /></figure>
+</div>
 
 ## Status
 
